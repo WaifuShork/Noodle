@@ -11,9 +11,11 @@ namespace Noodle.Modules
 {
     public sealed partial class EmoteModule   
     {
-        [Command("rename"), Alias("renmote")]
-        [RequireContext(ContextType.Guild)]
-        public async Task RenameEmoteAsync([OverrideTypeReader(typeof(EmoteTypeReader))] Emote emote, string newName)
+        [Command("renmote"), Alias("rename")]
+        [Summary("Renames an emote")]
+        [Remarks("renmote <emote> <newName>")]
+        public async Task RenameEmoteAsync([Summary("The emote to rename"), OverrideTypeReader(typeof(EmoteTypeReader))] Emote emote, 
+                                           [Summary("The new name of the emote")] string newName)
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
@@ -28,8 +30,7 @@ namespace Noodle.Modules
         [Command("rotate"), Alias("rot")]
         [Summary("Rotate an image by degrees")]
         [Remarks("rotate <url> <degrees>")]
-        [RequireContext(ContextType.Guild)]
-        public async Task RotateEmoteAsync([Summary("Image/Gif url to rotate")] string url, 
+        public async Task RotateEmoteAsync([Summary("The url of the gif or image to rotate")] string url, 
                                            [Summary("Degrees to rotate by")] double degrees = 0)
         {
             using (var _ = Context.Channel.EnterTypingState())
@@ -71,8 +72,9 @@ namespace Noodle.Modules
         }
 
         [Command("flipflop"), Alias("flopflip")]
-        [RequireContext(ContextType.Guild)]
-        public async Task FlipEmoteXAndY(string url)
+        [Summary("Flips and flops an image or gif")]
+        [Remarks("flipflop <url>")]
+        public async Task FlipEmoteXAndY([Summary("The url of the gif or image to flipflop")] string url)
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
@@ -112,19 +114,15 @@ namespace Noodle.Modules
         }
         
         [Command("xflip"), Alias("flipx", "flop")]
-        [RequireContext(ContextType.Guild)]
-        public async Task FlipEmoteX(string url)
+        [Summary("Fips an image horizontally")]
+        [Remarks("xflip <url>")]
+        public async Task FlipEmoteX([Summary("The extension of the image or gif")] string extension, 
+                                     [Summary("The url of the gif or image to flip horizontally")] string url)
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
                 url = url.SanitizeUrl();
 
-                var extension = "png";
-                if (url.EndsWith("gif"))
-                {
-                    extension = "gif";
-                }
-            
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
                 var fileName = $"flipx.{extension}";
 
@@ -151,8 +149,10 @@ namespace Noodle.Modules
         }
         
         [Command("yflip"), Alias("flipy", "flip")]
-        [RequireContext(ContextType.Guild)]
-        public async Task FlipEmoteY(string extension, string url)
+        [Summary("The image to flip vertically")]
+        [Remarks("yflip <url>")]
+        public async Task FlipEmoteY([Summary("The extension of the image or gif")] string extension, 
+                                     [Summary("The url of the gif or image to flip vertically")]  string url)
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
@@ -187,10 +187,12 @@ namespace Noodle.Modules
         [Command("resize")]
         [Summary("Resize an image via url")]
         [Remarks("resize <extension> <flag> <width = 100> <height = 100>")]
-        [RequireContext(ContextType.Guild)]
-        public async Task ResizeImageAsync(string extension, string url, int width = 100, int height = 100, bool ignoreRatio = true)
+        public async Task ResizeImageAsync([Summary("The extension of the gif or image to resize")] string extension, 
+                                           [Summary("The url of the gif or image")] string url, 
+                                           [Summary("The width of the gif or image")] int width = 100,
+                                           [Summary("The height of the gif or image")] int height = 100,
+                                           [Summary("Whether or not to ignore aspect ratio when resizing")] bool ignoreRatio = true)
         {
-
             using (var _ = Context.Channel.EnterTypingState())
             {
                 url = url.SanitizeUrl();
@@ -231,21 +233,15 @@ namespace Noodle.Modules
         [Command("invert")]
         [Summary("Invert an images colorspace via url")]
         [Remarks("invert <url>")]
-        [RequireContext(ContextType.Guild)]
-        public async Task InvertImageAsync(string url)
+        public async Task InvertImageAsync([Summary("The extension of the gif or image")] string extension, 
+                                           [Summary("The url of the image or gif")] string url)
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
                 url = url.SanitizeUrl();
 
-                var extension = "png";
-                if (url.Contains("gif"))
-                {
-                    extension = "gif";
-                }
-            
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
-                var fileName = $"negated.{extension}";
+                var fileName = $"inverted.{extension}";
 
                 switch (extension)
                 {

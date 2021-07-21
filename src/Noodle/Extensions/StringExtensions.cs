@@ -48,5 +48,30 @@ namespace Noodle.Extensions
             
             return string.Concat(str.Take(maxLength - 3)) + "...";
         }
+
+        public static string AsNullIfEmpty(this string str)
+        {
+            return string.IsNullOrWhiteSpace(str) ? null : str;
+        }
+
+        public static string WithAlternative(this string str, string alternative)
+        {
+            return str.AsNullIfEmpty() ?? alternative;
+        }
+
+        public static string SanitizeModule(this string moduleName)
+        {
+            if (moduleName.Contains("module"))
+            {
+                return moduleName.Replace("module", "");
+            }
+
+            if (moduleName.Contains("Module"))
+            {
+                return moduleName.Replace("Module", "");
+            }
+
+            return moduleName;
+        }
     }
 }

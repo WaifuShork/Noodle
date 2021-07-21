@@ -9,6 +9,8 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Noodle.Extensions;
+using Serilog;
 
 namespace Noodle.Services
 {
@@ -68,36 +70,57 @@ namespace Noodle.Services
             await _commandService.ExecuteAsync(context, argPos, _provider);
         }
 
-
-        // This method has a ton of potential
         private async Task OnCommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, IResult result)
         {
+            var prefix = _config["prefix"];
+
+            var content = context.Message.Content[prefix.Length..];
+            var commandName = content.Split(' ')[0]; 
+
             if (!result.IsSuccess)
             {
                 switch (result.Error)
                 {
                     case CommandError.UnknownCommand:
-                        await context.Channel.SendMessageAsync("Unknown command");
+                        await context.Channel.SendMessageAsync($"Unknown command: **{commandName}**");
                         break;
                     case CommandError.ParseFailed:
+                        await context.Channel.SendAsync(new EmbedBuilder()
+                            .WithTitle("Parse Failed")
+                            .WithColor(Color.Red)
+                            .WithDescription(result.ErrorReason));                        
                         break;
                     case CommandError.BadArgCount:
-                        // maybe send help on bad args?
+                        await command.Value.DisplayCommandHelpAsync(context, prefix);
                         break;
                     case CommandError.ObjectNotFound:
-                        // print the exception for why?
+                        await context.Channel.SendAsync(new EmbedBuilder()
+                            .WithTitle("Object Not Found")
+                            .WithColor(Color.Red)
+                            .WithDescription(result.ErrorReason));
                         break;
                     case CommandError.MultipleMatches:
-                        // notify the user that multiple commands with the same arguments were located? 
+                        await context.Channel.SendAsync(new EmbedBuilder()
+                            .WithTitle("Multiple Matches")
+                            .WithColor(Color.Red)
+                            .WithDescription(result.ErrorReason));
                         break;
                     case CommandError.UnmetPrecondition:
-                        // access denied?
+                        await context.Channel.SendAsync(new EmbedBuilder()
+                            .WithColor(Color.Red)
+                            .WithDescription("Access denied."));
                         break;
                     case CommandError.Exception:
-                        // log error?
+                        await context.Channel.SendAsync(new EmbedBuilder()
+                            .WithTitle("Exception")
+                            .WithColor(Color.Red)
+                            .WithDescription(result.ErrorReason));
                         break;
                     case CommandError.Unsuccessful:
-                        // why?
+                        await context.Channel.SendAsync(new EmbedBuilder()
+                            .WithTitle("Unsuccessful")
+                            .WithColor(Color.Red)
+                            .WithDescription(result.ErrorReason));
                         break;
                     case null:
                         break;

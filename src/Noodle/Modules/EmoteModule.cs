@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using ImageMagick;
-using Noodle;
+using Noodle.Attributes;
 using Noodle.Extensions;
 
 namespace Noodle.Modules
 {
+    [ModuleName("Emote")]
+    [RequireContext(ContextType.Guild)]
     [RequireUserPermission(GuildPermission.Administrator)]
     public sealed partial class EmoteModule : NoodleModuleBase
     {

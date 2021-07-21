@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Discord;
@@ -10,83 +12,6 @@ namespace Noodle.Modules
 {
     public sealed partial class EmoteModule    
     {
-        [Command("fry")]
-        public async Task FryAsync(string extension, string url, int count = 0)
-        {
-            using (var _ = Context.Channel.EnterTypingState())
-            {
-                switch (extension)
-                {
-                    case "png":
-                    {
-                        var image = await GetAsMagickAsync<MagickImage>(url);
-
-                        for (var k = 0; k <= count; k++)
-                        {
-                            image.Sharpen(20, 20, Channels.RGB);
-                            image.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                            image.Colorize(new MagickColor(100, 0, 0), new Percentage(45));
-                            for (var i = 0; i < 10; i++)
-                            {
-                                image.Contrast(true);
-                            }
-
-                            image.BrightnessContrast(new Percentage(5), new Percentage(0), Channels.RGB);
-
-                            image.Quality = -10;
-                            
-                            image.RotationalBlur(2, Channels.RGB);
-                            image.Settings.Format = MagickFormat.Jpeg;
-                            image.Settings.AntiAlias = false;
-                        }
-                        
-                        await Context.Channel.SendFileAsync(new MemoryStream(image.ToByteArray()), "fried.png");
-                        break;
-                    }
-                    case "gif":
-                    {
-                        var collection = await GetAsMagickAsync<MagickImageCollection>(url);
-                        for (var k = 0; k <= count; k++)
-                        {
-                            foreach (var image in collection)
-                            {
-                                image.Sharpen(20, 20, Channels.RGB);
-                                image.AddNoise(NoiseType.MultiplicativeGaussian, 1000, Channels.RGB);
-                                image.Colorize(new MagickColor(100, 0, 0), new Percentage(45));
-                                for (var i = 0; i < 10; i++)
-                                {
-                                    image.Contrast(true);
-                                }
-                            }
-
-                        }
-                        
-                        await Context.Channel.SendFileAsync(new MemoryStream(collection.ToByteArray()), "fried.gif");
-                        break;
-                    }
-                }
-            }
-        }
-
-        [Command("shake")]
-        public async Task ShakeAsync(string url)
-        {
-            using (var _ = Context.Channel.EnterTypingState())
-            {
-                using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
-                foreach (var image in collection)
-                {
-                    image.Sharpen(20, 20, Channels.RGB);
-                    image.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                    image.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
-                    image.RotationalBlur(-20);
-                }
-            
-                await Context.Channel.SendFileAsync(new MemoryStream(collection.ToByteArray()), "shook.gif");
-            }
-        }
-        
-        
         [Command("addmote")]
         [Summary("Add an emote to the server via url")]
         [Remarks("addmote <extension> <url> <name> <width = 100> <height = 100>")]
@@ -111,7 +36,7 @@ namespace Noodle.Modules
                 var normal = emotes.Where(e => !e.Animated).ToList();
                 
                 var success = false;
-
+                
                 switch (extension)
                 {
                     case "png":
@@ -138,13 +63,23 @@ namespace Noodle.Modules
                         }
                         break;
                     }
-                    case "":
-                        await SendErrorEmbedAsync("You must specify a file extension");
-                        return;
+                    case "hack":
+                    {
+                        if (animated.Count() < animatedCap)
+                        {
+                            success = await UploadHackedAsync(url, name, width, height);
+                        }
+                        else
+                        {
+                            await SendErrorEmbedAsync($"Server at emote limit\n\nEmote Cap: {animatedCap}\nEmote Count: {animated.Count}");
+                        }
+                        break;
+                    }
                 }
 
-                if (!success)
+                if (success == false)
                 {
+                    await SendErrorEmbedAsync("Unable to upload emote");
                     return;
                 }
                 
@@ -157,7 +92,6 @@ namespace Noodle.Modules
                         .Build();
                 });
             }
-            
         }
         
         private async Task<bool> UploadNormalAsync(string url, string name, int width, int height)
@@ -178,8 +112,9 @@ namespace Noodle.Modules
                 await Context.Guild.CreateEmoteAsync(name, new Image(new MemoryStream(image.ToByteArray())));
                 return true;
             }
-            catch
+            catch (Exception exception)
             {
+                await SendErrorEmbedAsync(exception.Message);
                 return false;
             }
         }
@@ -194,8 +129,34 @@ namespace Noodle.Modules
                 await Context.Guild.CreateEmoteAsync(name, new Image(new MemoryStream(collection.ToByteArray())));
                 return true;
             }
-            catch
+            catch (Exception exception)
             {
+                await SendErrorEmbedAsync(exception.Message);
+                return false;
+            }
+        }
+
+        private async Task<bool> UploadHackedAsync(string url, string name, int width, int height)
+        {
+            await using var stream = await Constants.HttpClient.GetStreamAsync(url.SanitizeUrl());
+            
+
+            using var collection = new MagickImageCollection(stream);
+            using var image = new MagickImage(collection[0]);
+            collection.Add(image);
+            collection.Resize(width, height, true);
+
+            try
+            {
+                using var memoryStream = new MemoryStream(collection.ToByteArray());
+                using var discordImage = new Image(memoryStream);
+                
+                await Context.Guild.CreateEmoteAsync(name, discordImage);
+                return true;
+            }
+            catch (Exception exception)
+            {
+                await SendErrorEmbedAsync(exception.Message);
                 return false;
             }
         }

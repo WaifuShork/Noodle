@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Serilog;
@@ -7,7 +6,6 @@ using Serilog;
 using Discord;
 using Discord.Net;
 using Discord.Commands;
-using Discord.WebSocket;
 using Discord.Addons.Interactive;
 
 namespace Noodle
@@ -41,7 +39,7 @@ namespace Noodle
             // I'm entirely unsure of the cause, but I started logging it just to keep up with when it does happen, you're more than welcome to remove this
             catch (HttpException e)
             {
-                Log.Warning($"TimedDeletionAsync caught {typeof(HttpException)}\n\nMessage: {e.Message}\n\nInner Exception: {e.InnerException}");
+                Log.Warning(e, "TimedDeletionAsync caught {Exception}\n\nMessage: {Message}", typeof(HttpException), e.Message);
             }
         }
 
@@ -75,11 +73,6 @@ namespace Noodle
                 .Build();
             
             return await Context.Channel.SendMessageAsync(string.Empty, false, embed);
-        }
-
-        protected async Task<IMessage> SendAsync(EmbedBuilder embed)
-        {
-            return await Context.Channel.SendMessageAsync(string.Empty, false, embed.Build());
         }
     }
 }

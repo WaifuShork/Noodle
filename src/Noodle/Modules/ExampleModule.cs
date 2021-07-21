@@ -3,12 +3,11 @@ using System.Threading.Tasks;
     
 using Discord.Commands;
 
-using Microsoft.Extensions.Logging;
-
-using Noodle.Services;
+using Noodle.Attributes;
 
 namespace Noodle.Modules
 {
+    [ModuleName("Example")]
     public class ExampleModule : NoodleModuleBase
     {
         [Command("ping")]

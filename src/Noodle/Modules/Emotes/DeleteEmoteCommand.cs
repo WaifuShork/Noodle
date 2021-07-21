@@ -8,8 +8,9 @@ namespace Noodle.Modules
     public sealed partial class EmoteModule    
     {
         [Command("delmote")]
-        [RequireContext(ContextType.Guild)]
-        public async Task DeleteEmoteAsync([OverrideTypeReader(typeof(EmoteTypeReader))] Emote emote)
+        [Summary("Deletes an emote from a server")]
+        [Remarks("delmote <emote>")]
+        public async Task DeleteEmoteAsync([Summary("The emote to delete"), OverrideTypeReader(typeof(EmoteTypeReader))] Emote emote)
         {
             var em = await Context.Guild.GetEmoteAsync(emote.Id);
             try

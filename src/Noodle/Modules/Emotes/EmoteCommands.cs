@@ -3,13 +3,15 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Noodle.Extensions;
 
 namespace Noodle.Modules
 {
     public sealed partial class EmoteModule   
     {
         [Command("emoteupdate"), Alias("eu", "emotestatus", "emotecount", "es")]
-        [RequireContext(ContextType.Guild)]
+        [Summary("Shows the current emote count in the emote servers")]
+        [Remarks("es")]
         public async Task DisplayEmoteCountAsync()
         {
             var guilds = Context.User.MutualGuilds;
@@ -20,7 +22,7 @@ namespace Noodle.Modules
             var animatedEmotes = emotes.Where(e => e.Animated).ToList();
             var normalEmotes = emotes.Where(e => !e.Animated).ToList();
             
-            await SendAsync(CreateEmbed()
+            await Context.Channel.SendAsync(CreateEmbed()
                     .WithTitle("Emote Status")
                     .AddField("Normal", normalEmotes.Count)
                     .AddField("Animated", animatedEmotes.Count)
