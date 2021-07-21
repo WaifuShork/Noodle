@@ -227,4 +227,4 @@ project.lock.json
 # If you create a repo from this, uncomment appsettings.json 
 # so you don't push your token :) 
 
-# appsettings.json
+appsettings.json
