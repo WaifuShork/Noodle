@@ -20,7 +20,7 @@ TODO:
 
 ```
 {
-   "token": "token"
+   "token": "token",
    "prefix": "!",
 }
 ```
