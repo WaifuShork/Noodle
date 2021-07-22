@@ -1,0 +1,29 @@
+2021-07-22 07:09:33.725 -04:00 [INF] Starting Noodle
+2021-07-22 07:10:44.528 -04:00 [INF] Unable to upload emote
+Discord.Net.HttpException: The server responded with error 400: BadRequest
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadAnimatedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 139
+2021-07-22 07:11:29.663 -04:00 [INF] Starting Noodle
+2021-07-22 07:11:40.869 -04:00 [INF] Unable to upload emote
+Discord.Net.HttpException: The server responded with error 400: BadRequest
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadAnimatedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 139
+2021-07-22 07:14:46.082 -04:00 [INF] Unable to upload emote
+Discord.Net.HttpException: The server responded with error 400: BadRequest
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadAnimatedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 139

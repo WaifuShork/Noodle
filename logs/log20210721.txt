@@ -52,3 +52,79 @@
 2021-07-21 13:37:10.118 -04:00 [INF] Starting Noodle
 2021-07-21 13:38:17.700 -04:00 [INF] Starting Noodle
 2021-07-21 13:38:41.164 -04:00 [INF] Starting Noodle
+2021-07-21 14:02:29.720 -04:00 [INF] Starting Noodle
+2021-07-21 14:04:15.694 -04:00 [INF] Starting Noodle
+2021-07-21 14:09:03.661 -04:00 [INF] Starting Noodle
+2021-07-21 14:09:49.044 -04:00 [INF] Starting Noodle
+2021-07-21 14:11:37.560 -04:00 [INF] Starting Noodle
+2021-07-21 14:11:44.014 -04:00 [INF] Unable to upload emote
+System.IO.IOException: The process cannot access the file 'C:\Users\death\Desktop\Ash's Shit\Noodle\SuperKai64.png' because it is being used by another process.
+   at System.IO.FileSystem.DeleteFile(String fullPath)
+   at System.IO.File.Delete(String path)
+   at Noodle.Modules.EmoteModule.<>c__DisplayClass2_0.<UploadNormalAsync>b__0(Task`1 _) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 114
+   at System.Threading.Tasks.ContinuationTaskFromResultTask`1.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Noodle.Modules.EmoteModule.UploadNormalAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 112
+2021-07-21 14:14:35.431 -04:00 [INF] Starting Noodle
+2021-07-21 14:14:55.498 -04:00 [INF] Unable to upload emote
+Discord.Net.HttpException: The server responded with error 30008: Maximum number of emojis reached (50)
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadHackedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 160
+2021-07-21 14:15:50.160 -04:00 [INF] Starting Noodle
+2021-07-21 14:17:39.666 -04:00 [INF] Starting Noodle
+2021-07-21 14:17:59.073 -04:00 [INF] Unable to upload emote
+System.IO.IOException: The process cannot access the file 'C:\Users\death\Desktop\Ash's Shit\Noodle\emote.gif' because it is being used by another process.
+   at System.IO.FileSystem.DeleteFile(String fullPath)
+   at System.IO.File.Delete(String path)
+   at Noodle.Modules.EmoteModule.<>c.<UploadHackedAsync>b__4_0() in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 163
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Noodle.Modules.EmoteModule.UploadHackedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 161
+2021-07-21 14:26:12.152 -04:00 [INF] Starting Noodle
+2021-07-21 14:26:20.960 -04:00 [INF] Unable to upload emote
+Discord.Net.HttpException: The server responded with error 400: BadRequest
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadHackedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 162
+2021-07-21 14:27:27.715 -04:00 [INF] Starting Noodle
+2021-07-21 14:27:33.669 -04:00 [INF] Unable to upload emote
+Discord.Net.HttpException: The server responded with error 400: BadRequest
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadHackedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 162
+2021-07-21 14:37:31.995 -04:00 [INF] Starting Noodle
+2021-07-21 14:38:21.469 -04:00 [INF] Starting Noodle
+2021-07-21 14:39:00.373 -04:00 [INF] Starting Noodle
+2021-07-21 15:06:31.082 -04:00 [INF] Starting Noodle
+2021-07-21 15:06:47.184 -04:00 [INF] Unable to upload emote
+Discord.Net.HttpException: The server responded with error 400: BadRequest
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadHackedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 161

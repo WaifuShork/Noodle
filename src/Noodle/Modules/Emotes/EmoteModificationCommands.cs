@@ -264,5 +264,43 @@ namespace Noodle.Modules
                 await message.DeleteAsync();
             }
         }
+
+        [Command("jpeg")]
+        public async Task JpegAsync(string extension, string url)
+        {
+            using (var _ = Context.Channel.EnterTypingState())
+            {
+                url = url.SanitizeUrl();
+
+                var message = await Context.Channel.SendMessageAsync("This may take a minute...");
+                var fileName = $"jpeg.{extension}";
+
+                switch (extension)
+                {
+                    case "png":
+                    {
+                        using var image = await GetAsMagickAsync<MagickImage>(url);
+                        image.Quality = -20000;
+                        image.Format = MagickFormat.Jpeg;
+
+                        await Context.Channel.SendFileAsync(new MemoryStream(image.ToByteArray()), fileName);
+                        break;
+                    }
+                    case "gif":
+                    {
+                        using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
+                        foreach (var image in collection)
+                        {
+                            image.Quality = -20000;
+                            image.Format = MagickFormat.Jpeg;
+                        }
+                        await Context.Channel.SendFileAsync(new MemoryStream(collection.ToByteArray()), fileName);
+                        break;
+                    }
+                }
+            
+                await message.DeleteAsync();
+            }
+        }
     }
 }

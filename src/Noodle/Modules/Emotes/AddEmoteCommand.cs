@@ -7,6 +7,7 @@ using Discord;
 using Discord.Commands;
 using ImageMagick;
 using Noodle.Extensions;
+using Serilog;
 
 namespace Noodle.Modules
 {
@@ -15,9 +16,8 @@ namespace Noodle.Modules
         [Command("addmote")]
         [Summary("Add an emote to the server via url")]
         [Remarks("addmote <extension> <url> <name> <width = 100> <height = 100>")]
-        [RequireContext(ContextType.Guild)]
-        public async Task AddEmoteAsync([Summary("Image/Gif url to upload as an emote")] string url, 
-                                        [Summary("The extension of the emote to upload")] string extension,
+        public async Task AddEmoteAsync([Summary("The extension of the emote to upload")] string extension,
+                                        [Summary("Image/Gif url to upload as an emote")] string url,    
                                         [Summary("The name of the emote to upload")] string name,
                                         [Summary("The width of the image/gif")] int width = 100,
                                         [Summary("The height of the image/gif")] int height = 100)
@@ -37,12 +37,13 @@ namespace Noodle.Modules
                 
                 var success = false;
                 
-                switch (extension)
+                switch (extension.ToLowerInvariant())
                 {
                     case "png":
                     {
                         if (normal.Count < normalCap)
                         {
+                            await ReplyAsync("Uploading normal");
                             success = await UploadNormalAsync(url, name, width, height);
                         }
                         else
@@ -55,6 +56,7 @@ namespace Noodle.Modules
                     {
                         if (animated.Count < animatedCap)
                         {
+                            await ReplyAsync("Uploading animated");
                             success = await UploadAnimatedAsync(url, name, width, height);
                         }
                         else
@@ -67,6 +69,7 @@ namespace Noodle.Modules
                     {
                         if (animated.Count() < animatedCap)
                         {
+                            await ReplyAsync("Uploading animated");
                             success = await UploadHackedAsync(url, name, width, height);
                         }
                         else
@@ -76,7 +79,7 @@ namespace Noodle.Modules
                         break;
                     }
                 }
-
+                
                 if (success == false)
                 {
                     await SendErrorEmbedAsync("Unable to upload emote");
@@ -85,7 +88,7 @@ namespace Noodle.Modules
                 
                 await message.ModifyAsync(m =>
                 {
-                    m.Embed = new EmbedBuilder()
+                    m.Embed = CreateEmbed()
                         .WithTitle("Success")
                         .WithColor(Color.Green)
                         .WithDescription($"Added :{name}:")
@@ -96,6 +99,7 @@ namespace Noodle.Modules
         
         private async Task<bool> UploadNormalAsync(string url, string name, int width, int height)
         {
+            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.png");
             var image = await GetAsMagickAsync<MagickImage>(url);
             
             var size = new MagickGeometry
@@ -106,14 +110,17 @@ namespace Noodle.Modules
             };
                     
             image.Resize(size);
-
+            await image.WriteAsync(path);
+            
             try
             {
-                await Context.Guild.CreateEmoteAsync(name, new Image(new MemoryStream(image.ToByteArray())));
+                using var discordImage = new Image(path);
+                await Context.Guild.CreateEmoteAsync(name, discordImage);
                 return true;
             }
             catch (Exception exception)
             {
+                Log.Information(exception, "Unable to upload emote");
                 await SendErrorEmbedAsync(exception.Message);
                 return false;
             }
@@ -121,16 +128,20 @@ namespace Noodle.Modules
 
         private async Task<bool> UploadAnimatedAsync(string url, string name, int width, int height)
         {
+            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
             using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
             collection.Resize(width, height, true);
-            
+
+            await collection.WriteAsync(path);
             try
             {
-                await Context.Guild.CreateEmoteAsync(name, new Image(new MemoryStream(collection.ToByteArray())));
+                using var discordGif = new Image(path); 
+                await Context.Guild.CreateEmoteAsync(name, discordGif);
                 return true;
             }
             catch (Exception exception)
             {
+                Log.Information(exception, "Unable to upload emote");
                 await SendErrorEmbedAsync(exception.Message);
                 return false;
             }
@@ -138,24 +149,25 @@ namespace Noodle.Modules
 
         private async Task<bool> UploadHackedAsync(string url, string name, int width, int height)
         {
-            await using var stream = await Constants.HttpClient.GetStreamAsync(url.SanitizeUrl());
-            
+            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
+            await using var stream = await _httpClient.GetStreamAsync(url.SanitizeUrl());
 
             using var collection = new MagickImageCollection(stream);
             using var image = new MagickImage(collection[0]);
             collection.Add(image);
             collection.Resize(width, height, true);
 
+            await collection.WriteAsync(path);
+            
             try
             {
-                using var memoryStream = new MemoryStream(collection.ToByteArray());
-                using var discordImage = new Image(memoryStream);
-                
+                using var discordImage = new Image(path);
                 await Context.Guild.CreateEmoteAsync(name, discordImage);
                 return true;
             }
             catch (Exception exception)
             {
+                Log.Information(exception, "Unable to upload emote");
                 await SendErrorEmbedAsync(exception.Message);
                 return false;
             }

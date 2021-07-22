@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 using Discord;
@@ -93,10 +94,13 @@ namespace Noodle
                 })
                 .ConfigureServices((_, services) =>
                 {
-                    services.AddHostedService<CommandHandler>()
-                            .AddHostedService<StartupService>();
+                    services
+                        .AddHostedService<StartupService>()
+                        .AddHostedService<CommandHandler>();
                     
-                    services.AddSingleton<InteractiveService>();
+                    services
+                        .AddSingleton<HttpClient>()
+                        .AddSingleton<InteractiveService>();
                 })
                 .UseConsoleLifetime();
         }

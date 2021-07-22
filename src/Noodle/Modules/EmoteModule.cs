@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -13,7 +14,14 @@ namespace Noodle.Modules
     [RequireUserPermission(GuildPermission.Administrator)]
     public sealed partial class EmoteModule : NoodleModuleBase
     {
-        private static async Task<T> GetAsMagickAsync<T>(string url) where T : class
+        private readonly HttpClient _httpClient;
+        
+        public EmoteModule(HttpClient client)
+        {
+            _httpClient = client;
+        }
+        
+        private async Task<T> GetAsMagickAsync<T>(string url) where T : class
         {
             if (string.IsNullOrWhiteSpace(url))
             {
@@ -21,7 +29,7 @@ namespace Noodle.Modules
             }
             
             url = Uri.UnescapeDataString(url.SanitizeUrl());
-            await using var stream = await Constants.HttpClient.GetStreamAsync(url);
+            await using var stream = await _httpClient.GetStreamAsync(url);
 
             if (typeof(T) == typeof(MagickImageCollection))
             {
