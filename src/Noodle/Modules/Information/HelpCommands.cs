@@ -46,7 +46,7 @@ namespace Noodle.Modules
             
             if (commandInfo == null && moduleInfo == null)
             {
-                await SendErrorEmbedAsync($"Unable to locate any command or module by the name of '{identifier}'");
+                await Context.Channel.SendErrorEmbedAsync($"Unable to locate any command or module by the name of '{identifier}'");
             }
 
             if (commandInfo != null && moduleInfo == null)

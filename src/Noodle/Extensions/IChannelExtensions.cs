@@ -15,5 +15,21 @@ namespace Noodle.Extensions
 
             return null;
         }
+
+        public static async Task<IMessage> SendSuccessEmbedAsync(this IChannel channel, string contents)
+        {
+            return await channel.SendAsync(new EmbedBuilder()
+                .WithTitle("Success")
+                .WithColor(Color.Green)
+                .WithDescription(contents));
+        }
+
+        public static async Task<IMessage> SendErrorEmbedAsync(this IChannel channel, string contents)
+        {
+            return await channel.SendAsync(new EmbedBuilder()
+                .WithTitle("Error")
+                .WithColor(Color.Red)
+                .WithDescription(contents));
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace Noodle.Modules
                 var animated = emotes.Where(e => e.Animated).ToList();
                 var normal = emotes.Where(e => !e.Animated).ToList();
                 
-                var success = false;
+                var error = string.Empty;
                 
                 switch (extension.ToLowerInvariant())
                 {
@@ -43,12 +43,11 @@ namespace Noodle.Modules
                     {
                         if (normal.Count < normalCap)
                         {
-                            await ReplyAsync("Uploading normal");
-                            success = await UploadNormalAsync(url, name, width, height);
+                            error = await UploadNormalAsync(url, name, width, height);
                         }
                         else
                         {
-                            await SendErrorEmbedAsync($"Server at emote limit\n\nEmote Cap: {normalCap}\nEmote Count: {normal.Count}");
+                            await Context.Channel.SendErrorEmbedAsync($"Server at emote limit\n\nEmote Cap: {normalCap}\nEmote Count: {normal.Count}");
                         }
                         break;
                     }
@@ -56,33 +55,46 @@ namespace Noodle.Modules
                     {
                         if (animated.Count < animatedCap)
                         {
-                            await ReplyAsync("Uploading animated");
-                            success = await UploadAnimatedAsync(url, name, width, height);
+                            error = await UploadAnimatedAsync(url, name, width, height);
                         }
                         else
                         {
-                            await SendErrorEmbedAsync($"Server at emote limit\n\nEmote Cap: {animatedCap}\nEmote Count: {animated.Count}");
+                            await message.ModifyAsync(m =>
+                            {
+                                m.Embed = CreateEmbed()
+                                    .WithTitle("Emote Limit Reached")
+                                    .AddField("Normal Emotes", normal.Count)
+                                    .AddField("Animated Emotes", animated.Count)
+                                    .Build();
+                            });
                         }
                         break;
                     }
                     case "hack":
                     {
-                        if (animated.Count() < animatedCap)
+                        if (animated.Count < animatedCap)
                         {
-                            await ReplyAsync("Uploading animated");
-                            success = await UploadHackedAsync(url, name, width, height);
+                            error = await UploadHackedAsync(url, name, width, height);
                         }
                         else
                         {
-                            await SendErrorEmbedAsync($"Server at emote limit\n\nEmote Cap: {animatedCap}\nEmote Count: {animated.Count}");
+                            await message.ModifyAsync(m =>
+                            {
+                                m.Embed = CreateEmbed()
+                                    .WithTitle("Emote Limit Reached")
+                                    .AddField("Normal Emotes", normal.Count)
+                                    .AddField("Animated Emotes", animated.Count)
+                                    .Build();
+                            });
                         }
                         break;
                     }
                 }
                 
-                if (success == false)
+                if (!string.IsNullOrWhiteSpace(error))
                 {
-                    await SendErrorEmbedAsync("Unable to upload emote");
+                    await message.DeleteAsync();
+                    await Context.Channel.SendErrorEmbedAsync(error);
                     return;
                 }
                 
@@ -97,7 +109,7 @@ namespace Noodle.Modules
             }
         }
         
-        private async Task<bool> UploadNormalAsync(string url, string name, int width, int height)
+        private async Task<string> UploadNormalAsync(string url, string name, int width, int height)
         {
             var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.png");
             var image = await GetAsMagickAsync<MagickImage>(url);
@@ -110,44 +122,53 @@ namespace Noodle.Modules
             };
                     
             image.Resize(size);
+            image.Format = MagickFormat.Png;
+            
             await image.WriteAsync(path);
+            
+            if (!image.ToByteArray().IsSmallEnough(out var sizes))
+            {
+                return $"File size too large ({sizes})";
+            }
             
             try
             {
-                using var discordImage = new Image(path);
-                await Context.Guild.CreateEmoteAsync(name, discordImage);
-                return true;
+                using var img = new Image(path);
+                await Context.Guild.CreateEmoteAsync(name, img);
+                return string.Empty;
             }
             catch (Exception exception)
             {
-                Log.Information(exception, "Unable to upload emote");
-                await SendErrorEmbedAsync(exception.Message);
-                return false;
+                return exception.Message;
             }
         }
 
-        private async Task<bool> UploadAnimatedAsync(string url, string name, int width, int height)
+        private async Task<string> UploadAnimatedAsync(string url, string name, int width, int height)
         {
             var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
             using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
             collection.Resize(width, height, true);
 
             await collection.WriteAsync(path);
+            
+            if (!collection.ToByteArray().IsSmallEnough(out var size))
+            {
+                return $"File size too large ({size})";
+            }
+            
             try
             {
-                using var discordGif = new Image(path); 
-                await Context.Guild.CreateEmoteAsync(name, discordGif);
-                return true;
+                using var img = new Image(path);
+                await Context.Guild.CreateEmoteAsync(name, img);
+                return string.Empty;
             }
             catch (Exception exception)
             {
-                Log.Information(exception, "Unable to upload emote");
-                await SendErrorEmbedAsync(exception.Message);
-                return false;
+                return exception.Message;
             }
         }
 
-        private async Task<bool> UploadHackedAsync(string url, string name, int width, int height)
+        private async Task<string> UploadHackedAsync(string url, string name, int width, int height)
         {
             var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
             await using var stream = await _httpClient.GetStreamAsync(url.SanitizeUrl());
@@ -158,18 +179,21 @@ namespace Noodle.Modules
             collection.Resize(width, height, true);
 
             await collection.WriteAsync(path);
+
+            if (!collection.ToByteArray().IsSmallEnough(out var size))
+            {
+                return $"File size too large ({size})";
+            }
             
             try
             {
-                using var discordImage = new Image(path);
-                await Context.Guild.CreateEmoteAsync(name, discordImage);
-                return true;
+                using var img = new Image(path);
+                await Context.Guild.CreateEmoteAsync(name, img);
+                return string.Empty;
             }
             catch (Exception exception)
             {
-                Log.Information(exception, "Unable to upload emote");
-                await SendErrorEmbedAsync(exception.Message);
-                return false;
+                return exception.Message;
             }
         }
     }

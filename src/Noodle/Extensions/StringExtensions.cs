@@ -73,5 +73,40 @@ namespace Noodle.Extensions
 
             return moduleName;
         }
+        
+        public static bool IsSmallEnough(this byte[] fileSize, out string size)
+        {
+            if (fileSize.Length > 256000)
+            {
+                size = fileSize.LongLength.FormatSize();
+                return false;
+            }
+
+            size = fileSize.LongLength.FormatSize();
+            return true;
+        }
+        
+        public static string FormatSize(this long bytes)
+        {
+            var suffixes = new[]
+            {
+                "Bytes",
+                "KB",
+                "MB",
+                "GB",
+                "TB",
+                "PB"
+            };
+            
+            var counter = 0;
+            var number = (decimal) bytes;
+            while (Math.Round(number / 1024) >= 1)
+            {
+                number /= 1024;
+                counter++;
+            }
+
+            return $"{number:n1}{suffixes[counter]}";
+        }
     }
 }

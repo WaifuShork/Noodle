@@ -36,6 +36,7 @@ namespace Noodle.Extensions
             foreach (var image in collection)
             {
                 image.Resize(size);
+                image.Format = MagickFormat.Png;
             }
         }
 

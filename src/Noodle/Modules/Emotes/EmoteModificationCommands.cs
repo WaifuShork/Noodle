@@ -23,7 +23,7 @@ namespace Noodle.Modules
                 var em = await Context.Guild.GetEmoteAsync(emote.Id);
                 await Context.Guild.ModifyEmoteAsync(em, properties => properties.Name = newName);
             
-                await SendSuccessEmbedAsync($"**{emote.Name}** -> **{newName}**");
+                await Context.Channel.SendSuccessEmbedAsync($"**{emote.Name}** -> **{newName}**");
             }
         }
 

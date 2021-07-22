@@ -54,25 +54,5 @@ namespace Noodle
         {
             return new EmbedBuilder().WithCurrentTimestamp();
         }
-
-        protected async Task<IMessage> SendSuccessEmbedAsync(string contents)
-        {
-            var embed = CreateEmbed("Success")
-                .WithColor(Color.Green)
-                .WithDescription(contents)
-                .Build();
-
-            return await Context.Channel.SendMessageAsync(string.Empty, false, embed);
-        }
-
-        protected async Task<IMessage> SendErrorEmbedAsync(string contents)
-        {
-            var embed = CreateEmbed("Error")
-                .WithColor(Color.Red)
-                .WithDescription(contents)
-                .Build();
-            
-            return await Context.Channel.SendMessageAsync(string.Empty, false, embed);
-        }
     }
 }
