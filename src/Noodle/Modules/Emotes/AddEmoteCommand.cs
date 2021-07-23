@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +6,8 @@ using Discord;
 using Discord.Commands;
 using ImageMagick;
 using Noodle.Extensions;
-using Serilog;
+using Noodle.Models;
+using Noodle.TypeReaders;
 
 namespace Noodle.Modules
 {
@@ -16,7 +16,7 @@ namespace Noodle.Modules
         [Command("addmote")]
         [Summary("Add an emote to the server via url")]
         [Remarks("addmote <extension> <url> <name> <width = 100> <height = 100>")]
-        public async Task AddEmoteAsync([Summary("The extension of the emote to upload")] string extension,
+        public async Task AddEmoteAsync([Summary("The extension of the emote to upload")] EmoteType extension,
                                         [Summary("Image/Gif url to upload as an emote")] string url,    
                                         [Summary("The name of the emote to upload")] string name,
                                         [Summary("The width of the image/gif")] int width = 100,
@@ -36,28 +36,11 @@ namespace Noodle.Modules
                 var normal = emotes.Where(e => !e.Animated).ToList();
                 
                 var error = string.Empty;
-                
-                switch (extension.ToLowerInvariant())
+
+                switch (extension)
                 {
-                    case "png":
-                    {
-                        if (normal.Count < normalCap)
-                        {
-                            error = await UploadNormalAsync(url, name, width, height);
-                        }
-                        else
-                        {
-                            await Context.Channel.SendErrorEmbedAsync($"Server at emote limit\n\nEmote Cap: {normalCap}\nEmote Count: {normal.Count}");
-                        }
-                        break;
-                    }
-                    case "gif":
-                    {
-                        if (animated.Count < animatedCap)
-                        {
-                            error = await UploadAnimatedAsync(url, name, width, height);
-                        }
-                        else
+                    case EmoteType.Gif or EmoteType.Hack:
+                        if (animated.Count >= animatedCap)
                         {
                             await message.ModifyAsync(m =>
                             {
@@ -67,16 +50,11 @@ namespace Noodle.Modules
                                     .AddField("Animated Emotes", animated.Count)
                                     .Build();
                             });
+                            return;
                         }
                         break;
-                    }
-                    case "hack":
-                    {
-                        if (animated.Count < animatedCap)
-                        {
-                            error = await UploadHackedAsync(url, name, width, height);
-                        }
-                        else
+                    case EmoteType.Png:
+                        if (normal.Count >= normalCap)
                         {
                             await message.ModifyAsync(m =>
                             {
@@ -86,7 +64,26 @@ namespace Noodle.Modules
                                     .AddField("Animated Emotes", animated.Count)
                                     .Build();
                             });
+                            return;
                         }
+                        break;
+                }
+
+                switch (extension)
+                {
+                    case EmoteType.Png:
+                    {
+                        error = await UploadNormalAsync(url, name, width, height);
+                        break;
+                    }
+                    case EmoteType.Gif:
+                    {
+                        error = await UploadAnimatedAsync(url, name, width, height);
+                        break;
+                    }
+                    case EmoteType.Hack:
+                    {
+                        error = await UploadHackedAsync(url, name, width, height);
                         break;
                     }
                 }
@@ -112,28 +109,18 @@ namespace Noodle.Modules
         private async Task<string> UploadNormalAsync(string url, string name, int width, int height)
         {
             var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.png");
-            var image = await GetAsMagickAsync<MagickImage>(url);
+            await using var magick = new MagickSystem<MagickImage>(url);
+            magick.Resize(width, height);
+            await magick.WriteAsync(path);
             
-            var size = new MagickGeometry
-            {
-                Width = width,
-                Height = height,
-                IgnoreAspectRatio = true
-            };
-                    
-            image.Resize(size);
-            image.Format = MagickFormat.Png;
-            
-            await image.WriteAsync(path);
-            
-            if (!image.ToByteArray().IsSmallEnough(out var sizes))
+            if (!magick.Image.ToByteArray().IsSmallEnough(out var sizes))
             {
                 return $"File size too large ({sizes})";
             }
             
             try
             {
-                using var img = new Image(path);
+                using var img = magick.ToImage();
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return string.Empty;
             }
@@ -146,19 +133,18 @@ namespace Noodle.Modules
         private async Task<string> UploadAnimatedAsync(string url, string name, int width, int height)
         {
             var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
-            using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
-            collection.Resize(width, height, true);
-
-            await collection.WriteAsync(path);
+            await using var magick = new MagickSystem<MagickImageCollection>(url);
+            magick.Resize(width, height);
+            await magick.WriteAsync(path);
             
-            if (!collection.ToByteArray().IsSmallEnough(out var size))
+            if (!magick.Collection.ToByteArray().IsSmallEnough(out var size))
             {
                 return $"File size too large ({size})";
             }
             
             try
             {
-                using var img = new Image(path);
+                using var img = magick.ToImage();
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return string.Empty;
             }
@@ -171,23 +157,22 @@ namespace Noodle.Modules
         private async Task<string> UploadHackedAsync(string url, string name, int width, int height)
         {
             var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
-            await using var stream = await _httpClient.GetStreamAsync(url.SanitizeUrl());
 
-            using var collection = new MagickImageCollection(stream);
-            using var image = new MagickImage(collection[0]);
-            collection.Add(image);
-            collection.Resize(width, height, true);
-
-            await collection.WriteAsync(path);
-
-            if (!collection.ToByteArray().IsSmallEnough(out var size))
+            using var magick = new MagickSystem<MagickImageCollection>(url);
+            using var image = new MagickImage(magick.Collection[0]); 
+            magick.Collection.Add(image);
+            magick.Resize(width, height);
+            
+            await magick.WriteAsync(path);
+            
+            if (!magick.Collection.ToByteArray().IsSmallEnough(out var size))
             {
                 return $"File size too large ({size})";
             }
             
             try
             {
-                using var img = new Image(path);
+                using var img = magick.ToImage();
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return string.Empty;
             }

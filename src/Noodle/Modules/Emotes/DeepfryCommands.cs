@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Discord.Commands;
 using ImageMagick;
+using Noodle.TypeReaders;
 
 namespace Noodle.Modules
 {
@@ -41,7 +42,8 @@ namespace Noodle.Modules
                             image.Settings.AntiAlias = false;
                         }
                         
-                        await Context.Channel.SendFileAsync(new MemoryStream(image.ToByteArray()), "fried.png");
+                        using var stream = new MemoryStream(image.ToByteArray());
+                        await Context.Channel.SendFileAsync(stream, "fried.png");
                         break;
                     }
                     case "gif":
@@ -62,7 +64,8 @@ namespace Noodle.Modules
 
                         }
                         
-                        await Context.Channel.SendFileAsync(new MemoryStream(collection.ToByteArray()), "fried.gif");
+                        using var stream = new MemoryStream(collection.ToByteArray());
+                        await Context.Channel.SendFileAsync(stream, "fried.gif");
                         break;
                     }
                 }
@@ -72,25 +75,26 @@ namespace Noodle.Modules
         [Command("shake")]
         [Summary("Shakes an image or gif")]
         [Remarks("shake <extension> <url> <count [default = 0]>")]
-        public async Task ShakeAsync([Summary("The extension of the file to shake")] string extension, 
+        public async Task ShakeAsync([Summary("The extension of the file to shake")] EmoteType extension, 
                                      [Summary("The url of the image or gif")] string url)
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                extension = extension.ToLowerInvariant();
                 switch (extension)
                 {
-                    case "png":
+                    case EmoteType.Png:
                     {
                         var image = await GetAsMagickAsync<MagickImage>(url);
                         image.Sharpen(20, 20, Channels.RGB);
                         image.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
                         image.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
                         image.RotationalBlur(-20);
-                        await Context.Channel.SendFileAsync(new MemoryStream(image.ToByteArray()), "shook.png");
+                        
+                        using var stream = new MemoryStream(image.ToByteArray());
+                        await Context.Channel.SendFileAsync(stream, "shook.png");
                         break;
                     }
-                    case "gif":
+                    case EmoteType.Gif:
                     {
                         using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
                         foreach (var image in collection)
@@ -101,7 +105,8 @@ namespace Noodle.Modules
                             image.RotationalBlur(-20);
                         }
             
-                        await Context.Channel.SendFileAsync(new MemoryStream(collection.ToByteArray()), "shook.gif");
+                        using var stream = new MemoryStream(collection.ToByteArray());
+                        await Context.Channel.SendFileAsync(stream, "shook.gif");
                         break;
                     }
                 }

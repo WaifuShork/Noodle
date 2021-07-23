@@ -46,13 +46,12 @@ namespace Noodle.Extensions
                 .AppendLine($"**Module**: {command.Module.Name.SanitizeModule()}")
                 .AppendLine($"**Usage**: {(string.IsNullOrWhiteSpace(command.Remarks) ? _noUsage : prefix + command.Remarks)}");
 
-            var embed = new EmbedBuilder()
+
+            await context.Channel.SendAsync(new EmbedBuilder()
                 .WithTitle(title)
                 .WithColor(Color.Blue)
                 .WithDescription(description.ToString())
-                .WithFields(command.Parameters.Select(InfoToEmbedField))
-                .Build();
-            await context.Channel.SendMessageAsync(string.Empty, false, embed);
+                .WithFields(command.Parameters.Select(InfoToEmbedField)));
         }
         
         public static async Task DisplayModuleHelpAsync(this ModuleInfo module, ICommandContext context, string prefix)
@@ -78,7 +77,7 @@ namespace Noodle.Extensions
                     builder.WithDescription(module.Summary);
                 }
 
-                await context.Channel.SendMessageAsync(string.Empty, false, builder.Build());
+                await context.Channel.SendAsync(builder);
             }
         }
         

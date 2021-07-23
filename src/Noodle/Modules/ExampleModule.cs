@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Discord.Commands;
 
 using Noodle.Attributes;
+using Noodle.TypeReaders;
 
 namespace Noodle.Modules
 {

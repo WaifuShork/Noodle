@@ -32,3 +32,6 @@ Discord.Net.HttpException: The server responded with error 400: BadRequest
 2021-07-22 11:04:10.690 -04:00 [INF] Starting Noodle
 2021-07-22 11:04:43.559 -04:00 [INF] Starting Noodle
 2021-07-22 11:15:04.382 -04:00 [INF] Starting Noodle
+2021-07-22 12:06:53.969 -04:00 [INF] Starting Noodle
+2021-07-22 12:10:19.021 -04:00 [INF] Starting Noodle
+2021-07-22 12:10:53.422 -04:00 [INF] Starting Noodle

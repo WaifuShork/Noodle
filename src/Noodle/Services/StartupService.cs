@@ -2,10 +2,12 @@
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Addons.Hosting;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
+using Noodle.TypeReaders;
 using SQLitePCL;
 
 namespace Noodle.Services
@@ -37,6 +39,8 @@ namespace Noodle.Services
                 return;
             }
 
+            _commandService.AddTypeReader(typeof(EmoteType), new FileExtensionTypeReader());
+            _commandService.AddTypeReader(typeof(Emote), new EmoteTypeReader());
             await _commandService.AddModulesAsync(Assembly.GetExecutingAssembly(), _provider);
         }
     }
