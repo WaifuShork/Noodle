@@ -8,6 +8,7 @@ using ImageMagick;
 using Noodle.Extensions;
 using Noodle.Models;
 using Noodle.TypeReaders;
+using Serilog;
 
 namespace Noodle.Modules
 {
@@ -94,33 +95,19 @@ namespace Noodle.Modules
                     await Context.Channel.SendErrorEmbedAsync(error);
                     return;
                 }
-                
-                await message.ModifyAsync(m =>
-                {
-                    m.Embed = CreateEmbed()
-                        .WithTitle("Success")
-                        .WithColor(Color.Green)
-                        .WithDescription($"Added :{name}:")
-                        .Build();
-                });
+
+                await message.DeleteAsync();
+                await Context.Channel.SendSuccessEmbedAsync($"Added :{name}:");
             }
         }
         
         private async Task<string> UploadNormalAsync(string url, string name, int width, int height)
         {
-            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.png");
-            await using var magick = new MagickSystem<MagickImage>(url);
-            magick.Resize(width, height);
-            await magick.WriteAsync(path);
-            
-            if (!magick.Image.ToByteArray().IsSmallEnough(out var sizes))
-            {
-                return $"File size too large ({sizes})";
-            }
-            
+            using var magick = new MagickSystem<MagickImage>(url);
+
             try
             {
-                using var img = magick.ToImage();
+                using var img = magick.ToEmote(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return string.Empty;
             }
@@ -132,19 +119,11 @@ namespace Noodle.Modules
 
         private async Task<string> UploadAnimatedAsync(string url, string name, int width, int height)
         {
-            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
-            await using var magick = new MagickSystem<MagickImageCollection>(url);
-            magick.Resize(width, height);
-            await magick.WriteAsync(path);
-            
-            if (!magick.Collection.ToByteArray().IsSmallEnough(out var size))
-            {
-                return $"File size too large ({size})";
-            }
+            using var magick = new MagickSystem<MagickImageCollection>(url);
             
             try
             {
-                using var img = magick.ToImage();
+                using var img = magick.ToEmote(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return string.Empty;
             }
@@ -156,23 +135,11 @@ namespace Noodle.Modules
 
         private async Task<string> UploadHackedAsync(string url, string name, int width, int height)
         {
-            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
-
             using var magick = new MagickSystem<MagickImageCollection>(url);
-            using var image = new MagickImage(magick.Collection[0]); 
-            magick.Collection.Add(image);
-            magick.Resize(width, height);
-            
-            await magick.WriteAsync(path);
-            
-            if (!magick.Collection.ToByteArray().IsSmallEnough(out var size))
-            {
-                return $"File size too large ({size})";
-            }
             
             try
             {
-                using var img = magick.ToImage();
+                using var img = magick.ToHacked(name, width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return string.Empty;
             }

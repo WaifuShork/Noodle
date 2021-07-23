@@ -7,3 +7,56 @@
 2021-07-23 10:39:14.446 -04:00 [INF] Starting Noodle
 2021-07-23 10:40:22.769 -04:00 [INF] Starting Noodle
 2021-07-23 10:46:34.766 -04:00 [INF] Starting Noodle
+2021-07-23 11:07:40.354 -04:00 [INF] Starting Noodle
+2021-07-23 11:10:22.490 -04:00 [INF] Starting Noodle
+2021-07-23 11:17:33.640 -04:00 [INF] Starting Noodle
+2021-07-23 11:17:40.611 -04:00 [INF] 
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.StreamHelpers.ValidateCopyToArgs(Stream source, Stream destination, Int32 bufferSize)
+   at System.IO.MemoryStream.CopyTo(Stream destination, Int32 bufferSize)
+   at System.IO.Stream.CopyTo(Stream destination)
+   at Discord.Net.Converters.ImageConverter.WriteJson(JsonWriter writer, Object value, JsonSerializer serializer)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeConvertable(JsonWriter writer, JsonConverter converter, Object value, JsonContract contract, JsonContainerContract collectionContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeValue(JsonWriter writer, Object value, JsonContract valueContract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeObject(JsonWriter writer, Object value, JsonObjectContract contract, JsonProperty member, JsonContainerContract collectionContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeValue(JsonWriter writer, Object value, JsonContract valueContract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.Serialize(JsonWriter jsonWriter, Object value, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.SerializeInternal(JsonWriter jsonWriter, Object value, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Serialize(JsonWriter jsonWriter, Object value)
+   at Discord.API.DiscordRestApiClient.SerializeJson(Object value)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadAnimatedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 133
+2021-07-23 11:18:02.880 -04:00 [INF] Starting Noodle
+2021-07-23 11:18:11.586 -04:00 [INF] 
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.StreamHelpers.ValidateCopyToArgs(Stream source, Stream destination, Int32 bufferSize)
+   at System.IO.MemoryStream.CopyTo(Stream destination, Int32 bufferSize)
+   at System.IO.Stream.CopyTo(Stream destination)
+   at Discord.Net.Converters.ImageConverter.WriteJson(JsonWriter writer, Object value, JsonSerializer serializer)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeConvertable(JsonWriter writer, JsonConverter converter, Object value, JsonContract contract, JsonContainerContract collectionContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeValue(JsonWriter writer, Object value, JsonContract valueContract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeObject(JsonWriter writer, Object value, JsonObjectContract contract, JsonProperty member, JsonContainerContract collectionContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeValue(JsonWriter writer, Object value, JsonContract valueContract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.Serialize(JsonWriter jsonWriter, Object value, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.SerializeInternal(JsonWriter jsonWriter, Object value, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Serialize(JsonWriter jsonWriter, Object value)
+   at Discord.API.DiscordRestApiClient.SerializeJson(Object value)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateGuildEmoteAsync(UInt64 guildId, CreateGuildEmoteParams args, RequestOptions options)
+   at Discord.Rest.GuildHelper.CreateEmoteAsync(IGuild guild, BaseDiscordClient client, String name, Image image, Optional`1 roles, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UploadAnimatedAsync(String url, String name, Int32 width, Int32 height) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\AddEmoteCommand.cs:line 133
+2021-07-23 11:21:01.073 -04:00 [INF] Starting Noodle
+2021-07-23 11:29:46.599 -04:00 [INF] Starting Noodle
+2021-07-23 16:42:01.078 -04:00 [INF] Starting Noodle
+2021-07-23 16:47:04.055 -04:00 [INF] Starting Noodle
+2021-07-23 17:08:03.231 -04:00 [INF] Starting Noodle
+2021-07-23 17:08:55.442 -04:00 [INF] Starting Noodle
+2021-07-23 17:15:12.818 -04:00 [INF] Starting Noodle
+2021-07-23 17:18:57.061 -04:00 [INF] Starting Noodle
+2021-07-23 17:22:04.922 -04:00 [INF] Starting Noodle
+2021-07-23 17:28:08.464 -04:00 [INF] Starting Noodle
+2021-07-23 17:37:48.680 -04:00 [INF] Starting Noodle
+2021-07-23 17:39:01.081 -04:00 [INF] Starting Noodle
+2021-07-23 17:39:27.561 -04:00 [INF] Starting Noodle

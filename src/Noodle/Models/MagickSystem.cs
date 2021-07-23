@@ -4,7 +4,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Discord;
 using ImageMagick;
+using Microsoft.Extensions.Logging;
 using Noodle.Extensions;
+using Serilog;
 
 namespace Noodle.Models
 {
@@ -14,7 +16,7 @@ namespace Noodle.Models
         public MagickImageCollection Collection { get; private set; }
 
         private readonly bool _isImage;
-      
+
         public MagickSystem(string url)
         {
             using var client = new HttpClient();
@@ -41,10 +43,7 @@ namespace Noodle.Models
                 return;
             }
 
-            foreach (var image in Collection)
-            {
-                image.Flip();
-            }
+            Collection.Flip();
         }
         
         public void Flop()
@@ -55,24 +54,18 @@ namespace Noodle.Models
                 return;
             }
 
-            foreach (var image in Collection)
-            {
-                image.Flop();
-            }
+            Collection.Flop();
         }
 
         public void Negate()
         {
             if (_isImage)
             {
-                Image.Negate();
+                Image.Negate(Channels.RGB);
                 return;
             }
 
-            foreach (var image in Collection)
-            {
-                image.Negate();
-            }
+            Collection.Negate(Channels.RGB);
         }
 
         public void Resize(int width, int height, bool ignoreRatio = true)
@@ -90,10 +83,7 @@ namespace Noodle.Models
                 return;
             }
 
-            foreach (var image in Collection)
-            {
-                image.Resize(size);
-            }
+            Collection.Resize(size);
         }
 
         public void Rotate(double degrees)
@@ -103,19 +93,8 @@ namespace Noodle.Models
                 Image.Rotate(degrees);
                 return;
             }
-
-            foreach (var image in Collection)
-            {
-                image.Rotate(degrees);
-            }
-        }
-
-        public void Foreach(Action<IMagickImage> action)
-        {
-            foreach (var image in Collection)
-            {
-                action(image);
-            }
+            
+            Collection.Rotate(degrees);
         }
 
         public async Task WriteAsync(string path)
@@ -144,18 +123,65 @@ namespace Noodle.Models
             return new MemoryStream(Collection.ToByteArray());
         }
 
-        public Image ToImage()
+        public byte[] ToByteArray()
         {
             if (_isImage)
             {
-                using var imageStream = new MemoryStream(Image.ToByteArray());
-                return new Image(imageStream);
+                return Image.ToByteArray();
             }
-            
-            using var collectionStream = new MemoryStream(Collection.ToByteArray());
-            return new Image(collectionStream);
+
+            return Collection.ToByteArray();
         }
 
+        public Image ToEmote(int width, int height)
+        {
+            Resize(width, height);
+
+            var fileSize = ToByteArray().Length;
+            if (fileSize >= 256000)
+            {
+                var size = ((long) fileSize).FormatSize();
+                throw new Exception($"File size too large ({size})");
+            }
+
+            try
+            {
+                var stream = ToStream();
+                return new Image(stream);
+            }
+            catch (Exception exception)
+            {
+                Log.Warning(exception, "Unknown error");
+                return new Image();
+            }
+        }
+
+        public Image ToHacked(string name, int width, int height)
+        {
+            var path = Path.Combine("emotes", $"{name}.gif");
+            using var image = new MagickImage(Collection[0]);
+            Collection.Add(image);
+            Resize(width, height);
+            Collection.WriteAsync(path).GetAwaiter().GetResult();
+            
+            var fileSize = ToByteArray().Length;
+            if (fileSize >= 256000)
+            {
+                var size = ((long) fileSize).FormatSize();
+                throw new Exception($"File size too large ({size})");
+            }
+
+            try
+            {
+                return new Image(path);
+            }
+            catch (Exception exception)
+            {
+                Log.Warning(exception, "Unknown error");
+                return new Image();
+            }
+        }
+        
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
