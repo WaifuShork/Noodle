@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Discord;
 using ImageMagick;
-using Microsoft.Extensions.Logging;
 using Noodle.Extensions;
 using Serilog;
 
