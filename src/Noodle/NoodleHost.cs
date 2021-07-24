@@ -23,10 +23,8 @@ namespace Noodle
     {
         public static async Task<int> RunAsync()
         {
-            var path = Path.Combine("logs", "log.txt");
+            var path = Path.Combine("assets", "logs", "log-.txt");
             
-            // Create a new logger that appends a new log file to `logs/log.txt' with the date appended to the end every 24hrs
-            // Also sends the same logs to the console
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Error)

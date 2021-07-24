@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -26,8 +27,6 @@ namespace Noodle.Modules
             using (var _ = Context.Channel.EnterTypingState())
             {
                 name = name.SanitizeEmoteName();
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
                 var (normalCap, animatedCap) = Context.Guild.GetEmoteCap();
@@ -35,36 +34,22 @@ namespace Noodle.Modules
 
                 var animated = emotes.Where(e => e.Animated).ToList();
                 var normal = emotes.Where(e => !e.Animated).ToList();
-                
-                var error = string.Empty;
 
+                string error = null;
+                
                 switch (extension)
                 {
                     case EmoteType.Gif or EmoteType.Hack:
                         if (animated.Count >= animatedCap)
                         {
-                            await message.ModifyAsync(m =>
-                            {
-                                m.Embed = CreateEmbed()
-                                    .WithTitle("Emote Limit Reached")
-                                    .AddField("Normal Emotes", normal.Count)
-                                    .AddField("Animated Emotes", animated.Count)
-                                    .Build();
-                            });
+                            await message.NotifyEmoteCapReachedAsync(normal.Count, animated.Count);
                             return;
                         }
                         break;
                     case EmoteType.Png:
                         if (normal.Count >= normalCap)
                         {
-                            await message.ModifyAsync(m =>
-                            {
-                                m.Embed = CreateEmbed()
-                                    .WithTitle("Emote Limit Reached")
-                                    .AddField("Normal Emotes", normal.Count)
-                                    .AddField("Animated Emotes", animated.Count)
-                                    .Build();
-                            });
+                            await message.NotifyEmoteCapReachedAsync(normal.Count, animated.Count);
                             return;
                         }
                         break;
@@ -88,10 +73,9 @@ namespace Noodle.Modules
                         break;
                     }
                 }
-                
-                if (!string.IsNullOrWhiteSpace(error))
+
+                if (error != null)
                 {
-                    await message.DeleteAsync();
                     await Context.Channel.SendErrorEmbedAsync(error);
                     return;
                 }
@@ -103,50 +87,64 @@ namespace Noodle.Modules
         
         private async Task<string> UploadNormalAsync(string url, string name, int width, int height)
         {
-            using var magick = new MagickSystem<MagickImage>(url);
-
             try
             {
+                using var magick = new MagickSystem<MagickImage>(_httpClient, url);
                 using var img = magick.ToEmote(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
-                return string.Empty;
+                return null;
             }
             catch (Exception exception)
             {
-                return exception.Message;
+                return ErrorFromException(exception);
             }
         }
 
         private async Task<string> UploadAnimatedAsync(string url, string name, int width, int height)
         {
-            using var magick = new MagickSystem<MagickImageCollection>(url);
-            
             try
             {
+                using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
                 using var img = magick.ToEmote(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
-                return string.Empty;
+                return null;
             }
             catch (Exception exception)
             {
-                return exception.Message;
+                return ErrorFromException(exception);        
             }
         }
 
         private async Task<string> UploadHackedAsync(string url, string name, int width, int height)
         {
-            using var magick = new MagickSystem<MagickImageCollection>(url);
-            
             try
             {
+                using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
                 using var img = magick.ToHacked(name, width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
-                return string.Empty;
+                return null;
             }
             catch (Exception exception)
             {
-                return exception.Message;
+                return ErrorFromException(exception);
             }
+        }
+
+        private string ErrorFromException(Exception exception)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"{exception.Message}\n");
+            if (!string.IsNullOrWhiteSpace(exception.StackTrace))
+            {
+                var lines = exception.StackTrace.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
+                sb.AppendLine("**Stack Trace**");
+                foreach (var line in lines)
+                {
+                    sb.AppendLine($"• {line}");
+                }
+            }
+            
+            return sb.ToString();
         }
     }
 }

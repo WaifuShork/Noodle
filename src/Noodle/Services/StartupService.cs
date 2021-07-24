@@ -18,7 +18,7 @@ namespace Noodle.Services
         private readonly IServiceProvider _provider;
         
         public StartupService(DiscordSocketClient client, 
-                              ILogger<DiscordClientService> logger, 
+                              ILogger<StartupService> logger, 
                               CommandService commandService,
                               IServiceProvider provider) : base(client, logger)
         {

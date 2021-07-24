@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Discord.Commands;
 using ImageMagick;
+using Noodle.Models;
 using Noodle.TypeReaders;
 
 namespace Noodle.Modules
@@ -21,50 +22,46 @@ namespace Noodle.Modules
                 {
                     case "png":
                     {
-                        var image = await GetAsMagickAsync<MagickImage>(url);
-
+                        await using var magick = new MagickSystem<MagickImage>(_httpClient, url);
                         for (var k = 0; k <= count; k++)
                         {
-                            image.Sharpen(20, 20, Channels.RGB);
-                            image.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                            image.Colorize(new MagickColor(100, 0, 0), new Percentage(45));
+                            magick.Sharpen(20, 20, Channels.RGB);
+                            magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
                             for (var i = 0; i < 10; i++)
                             {
-                                image.Contrast(true);
+                                magick.Contrast(true);
                             }
-
-                            image.BrightnessContrast(new Percentage(5), new Percentage(0), Channels.RGB);
-
-                            image.Quality = -10;
                             
-                            image.RotationalBlur(2, Channels.RGB);
-                            image.Settings.Format = MagickFormat.Jpeg;
-                            image.Settings.AntiAlias = false;
+                            magick.BrightnessContrast(new Percentage(5), new Percentage(0), Channels.RGB);
+                            magick.SetQuality(-10);
+                            magick.RotationalBlur(2, Channels.RGB);
+                            magick.SetFormat(MagickFormat.Jpeg);
+                            magick.SetAntialiasing(false);
                         }
-                        
-                        using var stream = new MemoryStream(image.ToByteArray());
+
+                        using var stream = magick.ToStream();
                         await Context.Channel.SendFileAsync(stream, "fried.png");
                         break;
                     }
                     case "gif":
                     {
-                        var collection = await GetAsMagickAsync<MagickImageCollection>(url);
+                        await using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
                         for (var k = 0; k <= count; k++)
                         {
-                            foreach (var image in collection)
+                            magick.Sharpen(20, 20, Channels.RGB);
+                            magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
+                            for (var i = 0; i < 10; i++)
                             {
-                                image.Sharpen(20, 20, Channels.RGB);
-                                image.AddNoise(NoiseType.MultiplicativeGaussian, 1000, Channels.RGB);
-                                image.Colorize(new MagickColor(100, 0, 0), new Percentage(45));
-                                for (var i = 0; i < 10; i++)
-                                {
-                                    image.Contrast(true);
-                                }
+                                magick.Contrast(true);
                             }
-
+                            
+                            magick.BrightnessContrast(new Percentage(5), new Percentage(0), Channels.RGB);
+                            magick.SetQuality(-10);
+                            magick.RotationalBlur(2, Channels.RGB);
+                            magick.SetAntialiasing(false);
                         }
-                        
-                        using var stream = new MemoryStream(collection.ToByteArray());
+
+                        using var stream = magick.ToStream();
                         await Context.Channel.SendFileAsync(stream, "fried.gif");
                         break;
                     }
@@ -84,28 +81,23 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        var image = await GetAsMagickAsync<MagickImage>(url);
-                        image.Sharpen(20, 20, Channels.RGB);
-                        image.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                        image.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
-                        image.RotationalBlur(-20);
-                        
-                        using var stream = new MemoryStream(image.ToByteArray());
+                        await using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        magick.Sharpen(20, 20, Channels.RGB);
+                        magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
+                        magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
+                        magick.RotationalBlur(20);
+                        using var stream = magick.ToStream();
                         await Context.Channel.SendFileAsync(stream, "shook.png");
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
-                        foreach (var image in collection)
-                        {
-                            image.Sharpen(20, 20, Channels.RGB);
-                            image.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                            image.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
-                            image.RotationalBlur(-20);
-                        }
-            
-                        using var stream = new MemoryStream(collection.ToByteArray());
+                        await using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                        magick.Sharpen(20, 20, Channels.RGB);
+                        magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
+                        magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
+                        magick.RotationalBlur(20);
+                        using var stream = magick.ToStream();
                         await Context.Channel.SendFileAsync(stream, "shook.gif");
                         break;
                     }
