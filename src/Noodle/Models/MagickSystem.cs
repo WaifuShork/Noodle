@@ -10,77 +10,81 @@ using Serilog;
 
 namespace Noodle.Models
 {
-    public class MagickSystem<T> : IDisposable, IAsyncDisposable
+    public class MagickSystem : IDisposable, IAsyncDisposable
     {
-        public MagickImage Image { get; private set; }
+        private MagickImage _image;
 
-        public MagickImageCollection Collection { get; private set; }
+        private MagickImageCollection _collection;
         
-        private readonly bool _isImage;
+        private bool _isImage;
 
-        public MagickSystem(HttpClient client, string url)
+        public static async Task<MagickSystem> CreateAsync<T>(HttpClient client, string url)
         {
             if (client == null)
             {
                 throw new ArgumentNullException(nameof(client), "Client was not properly injected");
             }
 
-            var response = client.GetAsync(url.SanitizeUrl()).GetAwaiter().GetResult();
+            var response = await client.GetAsync(url.SanitizeUrl());
             if (response.StatusCode != HttpStatusCode.OK)
             {
                 throw new HttpRequestException("Status did not return OK");
             }
-            
-            using var stream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+
+            using var stream = await response.Content.ReadAsStreamAsync();
+
+            var magick = new MagickSystem();
             
             if (typeof(T) == typeof(MagickImage))
             {
-                _isImage = true;
-                Image = new MagickImage(stream);
-                return;
+                magick._isImage = true;
+                magick._image = new MagickImage(stream);
+                magick._collection = null;
+                return magick;
             }
 
             if (typeof(T) == typeof(MagickImageCollection))
             {
-                _isImage = false;
-                Collection = new MagickImageCollection(stream);
-                return;
+                magick._isImage = false;
+                magick._collection = new MagickImageCollection(stream);
+                magick._image = null;
+                return magick;
             }
 
-            Log.Information("Unable to resolve type of T");
+            throw new ArgumentException("TType can only be MagickImage or MagickImageCollection", nameof(T));
         }
-
+        
         public void Flip()
         {
             if (_isImage)
             {
-                Image.Flip();
+                _image.Flip();
                 return;
             }
 
-            Collection.Flip();
+            _collection.Flip();
         }
         
         public void Flop()
         {
             if (_isImage)
             {
-                Image.Flop();
+                _image.Flop();
                 return;
             }
 
-            Collection.Flop();
+            _collection.Flop();
         }
 
         public void Negate()
         {
             if (_isImage)
             {
-                Image.Negate(Channels.RGB);
+                _image.Negate(Channels.RGB);
                 return;
             }
 
-            Collection.Negate(Channels.RGB);
+            _collection.Negate(Channels.RGB);
         }
 
         public void Resize(int width, int height, bool ignoreRatio = true)
@@ -94,22 +98,22 @@ namespace Noodle.Models
             
             if (_isImage)
             {
-                Image.Resize(size);
+                _image.Resize(size);
                 return;
             }
 
-            Collection.Resize(size);
+            _collection.Resize(size);
         }
 
         public void Rotate(double degrees)
         {
             if (_isImage)
             {
-                Image.Rotate(degrees);
+                _image.Rotate(degrees);
                 return;
             }
 
-            Collection.Rotate(degrees);
+            _collection.Rotate(degrees);
         }
 
         public void Reverse()
@@ -119,18 +123,18 @@ namespace Noodle.Models
                 throw new Exception("Reverse is only available on Collections");
             }
             
-            Collection.Reverse();
+            _collection.Reverse();
         }
 
         public void Colorize(MagickColor color, Percentage alpha)
         {
             if (_isImage)
             {
-                Image.Colorize(color, alpha);
+                _image.Colorize(color, alpha);
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.Colorize(color, alpha);
             }
@@ -140,11 +144,11 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.Sharpen(radius, sigma, channels);
+                _image.Sharpen(radius, sigma, channels);
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.Sharpen(radius, sigma, channels);
             }
@@ -154,11 +158,11 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.AddNoise(noiseType, channels);
+                _image.AddNoise(noiseType, channels);
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.AddNoise(noiseType, channels);
             }
@@ -168,11 +172,11 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.RotationalBlur(angle);
+                _image.RotationalBlur(angle);
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.RotationalBlur(angle);
             }
@@ -182,11 +186,11 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.RotationalBlur(angle, channels);
+                _image.RotationalBlur(angle, channels);
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.RotationalBlur(angle, channels);
             }
@@ -196,11 +200,11 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.Contrast(enhance);
+                _image.Contrast(enhance);
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.Contrast(enhance);
             }
@@ -210,22 +214,22 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.Settings.Format = format;
+                _image.Settings.Format = format;
                 return;
             }
 
-            throw new ArgumentException("Type must be MagickImage", nameof(T));
+            throw new ArgumentException("Type must be MagickImage");
         }
 
         public void SetAntialiasing(bool antialiasing)
         {
             if (_isImage)
             {
-                Image.Settings.AntiAlias = antialiasing;
+                _image.Settings.AntiAlias = antialiasing;
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.Settings.AntiAlias = antialiasing;
             }
@@ -235,11 +239,11 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.Quality = quality;
+                _image.Quality = quality;
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.Quality = quality;
             }
@@ -249,11 +253,11 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.ColorFuzz = fuzziness;
+                _image.ColorFuzz = fuzziness;
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.ColorFuzz = fuzziness;
             }
@@ -263,25 +267,48 @@ namespace Noodle.Models
         {
             if (_isImage)
             {
-                Image.Transparent(color);
+                _image.Transparent(color);
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.Transparent(color);
             }
+        }
+
+        public void SetSpeed(int speedPercentile)
+        {
+            if (_isImage)
+            {
+                throw new ArgumentException("Type must be MagickImageCollection");
+            }
+
+            foreach (var image in _collection)
+            {
+                image.AnimationDelay = speedPercentile;
+            }
+        }
+
+        public void Coalesce()
+        {
+            if (_isImage)
+            {
+                throw new ArgumentException("Type must be MagickImageCollection");
+            }
+            
+            _collection.Coalesce();
         }
         
         public void BrightnessContrast( Percentage brightness, Percentage contrast, Channels channels)
         {
             if (_isImage)
             {
-                Image.BrightnessContrast(brightness, contrast, channels);
+                _image.BrightnessContrast(brightness, contrast, channels);
                 return;
             }
 
-            foreach (var image in Collection)
+            foreach (var image in _collection)
             {
                 image.BrightnessContrast(brightness, contrast, channels);
             }
@@ -296,31 +323,31 @@ namespace Noodle.Models
 
             if (_isImage)
             {
-                await Image.WriteAsync(path);
+                await _image.WriteAsync(path);
                 return;
             }
 
-            await Collection.WriteAsync(path);
+            await _collection.WriteAsync(path);
         }
 
         public Stream ToStream()
         {
             if (_isImage)
             {
-                return new MemoryStream(Image.ToByteArray());
+                return new MemoryStream(_image.ToByteArray());
             }
             
-            return new MemoryStream(Collection.ToByteArray());
+            return new MemoryStream(_collection.ToByteArray());
         }
 
         public byte[] ToByteArray()
         {
             if (_isImage)
             {
-                return Image.ToByteArray();
+                return _image.ToByteArray();
             }
 
-            return Collection.ToByteArray();
+            return _collection.ToByteArray();
         }
 
         public Image ToEmote(int width, int height)
@@ -341,10 +368,10 @@ namespace Noodle.Models
         public Image ToHacked(string name, int width, int height)
         {
             var path = Path.Combine("assets", "emotes", $"{name}.gif");
-            using var image = new MagickImage(Collection[0]);
-            Collection.Add(image);
+            using var image = new MagickImage(_collection[0]);
+            _collection.Add(image);
             Resize(width, height);
-            Collection.WriteAsync(path).GetAwaiter().GetResult();
+            _collection.WriteAsync(path).GetAwaiter().GetResult();
             
             var fileSize = ToByteArray().LongLength;
             if (fileSize >= 256000)
@@ -360,12 +387,12 @@ namespace Noodle.Models
         {
             if (disposing)
             {
-                Collection?.Dispose();
-                Image?.Dispose();
+                _collection?.Dispose();
+                _image?.Dispose();
             }
 
-            Collection = null;
-            Image = null;
+            _collection = null;
+            _image = null;
         }
         
         public void Dispose()
@@ -378,11 +405,11 @@ namespace Noodle.Models
         {
             await Task.Run(() =>
             {
-                Collection?.Dispose();
-                Image?.Dispose();
+                _collection?.Dispose();
+                _image?.Dispose();
 
-                Collection = null;
-                Image = null;
+                _collection = null;
+                _image = null;
             });
         }
         

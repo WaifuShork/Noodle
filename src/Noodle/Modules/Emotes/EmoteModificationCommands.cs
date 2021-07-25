@@ -42,7 +42,7 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        await using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                         magick.Rotate(degrees);
                         magick.SetColorFuzz(new Percentage(4));
                         magick.SetTransparency(MagickColors.White);
@@ -53,7 +53,7 @@ namespace Noodle.Modules
                     }
                     case EmoteType.Gif:
                     {
-                        await using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                         magick.Rotate(degrees);
                         magick.SetColorFuzz(new Percentage(4));
                         magick.SetTransparency(MagickColors.White);
@@ -82,7 +82,7 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                         magick.Flip();
                         magick.Flop();
 
@@ -92,7 +92,7 @@ namespace Noodle.Modules
                     }
                     case EmoteType.Gif:
                     {
-                        using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
                         magick.Flip();
                         magick.Flop();
 
@@ -120,7 +120,7 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                         magick.Flop();
 
                         using var stream = magick.ToStream();
@@ -129,7 +129,7 @@ namespace Noodle.Modules
                     }
                     case EmoteType.Gif:
                     {
-                        using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
                         magick.Flop();
 
                         using var stream = magick.ToStream();
@@ -156,7 +156,7 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        await using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                         
                         magick.Flip();
                         await Context.Channel.SendFileAsync(magick.ToStream(), "yflip.png");
@@ -164,7 +164,7 @@ namespace Noodle.Modules
                     }
                     case EmoteType.Gif:
                     {
-                        await using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
                         
                         magick.Flip();
                         await Context.Channel.SendFileAsync(magick.ToStream(), "yflip.gif");
@@ -193,7 +193,7 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                         magick.Resize(width, height);
 
                         using var stream = magick.ToStream();
@@ -202,7 +202,7 @@ namespace Noodle.Modules
                     }
                     case EmoteType.Gif:
                     {
-                        using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
                         magick.Resize(width, height);
 
                         using var stream = magick.ToStream();
@@ -229,7 +229,7 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                         magick.Negate();
 
                         using var stream = magick.ToStream();
@@ -238,7 +238,7 @@ namespace Noodle.Modules
                     }
                     case EmoteType.Gif:
                     {
-                        using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
                         magick.Negate();
 
                         using var stream = magick.ToStream();
@@ -258,7 +258,7 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                await using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
                 magick.Reverse();
                 using var stream = magick.ToStream();
                 await Context.Channel.SendFileAsync(stream, "reversed.gif");
@@ -279,7 +279,7 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        await using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                         magick.SetQuality(-20000);
                         magick.SetFormat(MagickFormat.Jpeg);
 
@@ -295,6 +295,19 @@ namespace Noodle.Modules
                 }
             
                 await message.DeleteAsync();
+            }
+        }
+
+
+        [Command("speed")]
+        public async Task SetSpeedAsync(int speed, string url)
+        {
+            using (var _ = Context.Channel.EnterTypingState())
+            {
+                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
+                magick.SetSpeed(speed);
+                using var stream = magick.ToStream();
+                await Context.Channel.SendFileAsync(stream, "speed.gif");
             }
         }
     }

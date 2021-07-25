@@ -64,6 +64,8 @@ namespace Noodle.Modules
                     }
                     case EmoteType.Gif:
                     {
+                        width = 50;
+                        height = 50;
                         error = await UploadAnimatedAsync(url, name, width, height);
                         break;
                     }
@@ -89,7 +91,7 @@ namespace Noodle.Modules
         {
             try
             {
-                using var magick = new MagickSystem<MagickImage>(_httpClient, url);
+                using var magick =  await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
                 using var img = magick.ToEmote(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return null;
@@ -104,7 +106,7 @@ namespace Noodle.Modules
         {
             try
             {
-                using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
                 using var img = magick.ToEmote(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return null;
@@ -119,7 +121,7 @@ namespace Noodle.Modules
         {
             try
             {
-                using var magick = new MagickSystem<MagickImageCollection>(_httpClient, url);
+                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
                 using var img = magick.ToHacked(name, width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return null;
