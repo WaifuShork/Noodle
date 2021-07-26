@@ -108,7 +108,6 @@ namespace Noodle.Services
                             .WithDescription("Access denied."));
                         break;
                     case CommandError.Exception:
-
                         if (result is ExecuteResult er)
                         {
                             await context.Channel.SendAsync(new EmbedBuilder()

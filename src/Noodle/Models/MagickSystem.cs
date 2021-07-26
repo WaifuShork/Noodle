@@ -6,19 +6,26 @@ using System.Threading.Tasks;
 using Discord;
 using ImageMagick;
 using Noodle.Extensions;
-using Serilog;
 
 namespace Noodle.Models
 {
     public class MagickSystem : IDisposable, IAsyncDisposable
     {
         private MagickImage _image;
-
         private MagickImageCollection _collection;
         
         private bool _isImage;
+        private string _databasePath = Path.Combine("assets", "emotes.json");
 
-        public static async Task<MagickSystem> CreateAsync<T>(HttpClient client, string url)
+        public string FilePath
+        {
+            get => _filePath;
+            set => _filePath = value;
+        }
+
+        private static string _filePath;
+
+        public static async Task<MagickSystem> CreateAsync<T>(HttpClient client, string url, string name)
         {
             if (client == null)
             {
@@ -40,6 +47,7 @@ namespace Noodle.Models
                 magick._isImage = true;
                 magick._image = new MagickImage(stream);
                 magick._collection = null;
+                _filePath = Path.Combine("assets", "emotes", $"{name}-{Guid.NewGuid().ToString()}.png");
                 return magick;
             }
 
@@ -48,6 +56,7 @@ namespace Noodle.Models
                 magick._isImage = false;
                 magick._collection = new MagickImageCollection(stream);
                 magick._image = null;
+                _filePath = Path.Combine("assets", "emotes", $"{name}-{Guid.NewGuid().ToString()}.gif");                
                 return magick;
             }
 
@@ -179,6 +188,20 @@ namespace Noodle.Models
             foreach (var image in _collection)
             {
                 image.RotationalBlur(angle);
+            }
+        }
+
+        public void Blur(double radius, double sigma, Channels channels)
+        {
+            if (_isImage)
+            {
+                _image.Blur(radius, sigma, channels);
+                return;
+            }
+
+            foreach (var image in _collection)
+            {
+                image.Blur(radius, sigma, channels);
             }
         }
         
@@ -313,6 +336,60 @@ namespace Noodle.Models
                 image.BrightnessContrast(brightness, contrast, channels);
             }
         }
+
+        public void DrawText(string text, 
+                             string fillColorName, 
+                             string strokeColorName, 
+                             int fontSize, 
+                             int xCoord,
+                             int yCoord,
+                             bool ignoreAspect,
+                             TextAlignment alignment,
+                             FontStyleType fontStyleType,
+                             FontWeight fontWeight,
+                             FontStretch fontStretch)
+        {
+            if (string.IsNullOrWhiteSpace(fillColorName))
+            {
+                throw new ArgumentNullException(nameof(fillColorName), "Fill color cannot be null");
+            }
+            
+            if (string.IsNullOrWhiteSpace(strokeColorName))
+            {
+                throw new ArgumentNullException(nameof(fillColorName), "Stroke color cannot be null");
+            }
+
+            if (fontSize <= 0)
+            {
+                throw new ArgumentException("Font size must be greater than 0", nameof(fontSize));
+            }
+            
+            Resize(256, 256, ignoreAspect);
+            var drawable = new Drawables()
+                .FontPointSize(fontSize);
+         
+            var colorName = System.Drawing.Color.FromName(fillColorName);
+            var fillColor = MagickColor.FromRgba(colorName.R, colorName.G, colorName.B, colorName.A);
+            drawable.FillColor(fillColor);
+            
+            colorName = System.Drawing.Color.FromName(strokeColorName);
+            var strokeColor = MagickColor.FromRgba(colorName.R, colorName.G, colorName.B, colorName.A);
+            drawable.StrokeColor(strokeColor)
+                    .Font("Comic Sans", fontStyleType, fontWeight, fontStretch)
+                    .Text(xCoord, yCoord, text)
+                    .TextAlignment(alignment);
+
+            if (_isImage)
+            {
+                drawable.Draw(_image);
+                return;
+            }
+
+            foreach (var image in _collection)
+            {
+                drawable.Draw(image);
+            }
+        }
         
         public async Task WriteAsync(string path)
         {
@@ -360,18 +437,16 @@ namespace Noodle.Models
                 var size = fileSize.FormatSize();
                 throw new Exception($"File size too large ({size})");
             }
-            
-            var stream = ToStream();
-            return new Image(stream);
+
+            WriteAsync(_filePath).GetAwaiter().GetResult();
+            return new Image(_filePath);
         }
 
         public Image ToHacked(string name, int width, int height)
         {
-            var path = Path.Combine("assets", "emotes", $"{name}.gif");
             using var image = new MagickImage(_collection[0]);
             _collection.Add(image);
             Resize(width, height);
-            _collection.WriteAsync(path).GetAwaiter().GetResult();
             
             var fileSize = ToByteArray().LongLength;
             if (fileSize >= 256000)
@@ -379,8 +454,9 @@ namespace Noodle.Models
                 var size = fileSize.FormatSize();
                 throw new Exception($"File size too large ({size})");
             }
-
-            return new Image(path);
+            
+            WriteAsync(_filePath).GetAwaiter().GetResult();
+            return new Image(_filePath);
         }
         
         protected virtual void Dispose(bool disposing)

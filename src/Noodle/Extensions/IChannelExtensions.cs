@@ -27,8 +27,6 @@ namespace Noodle.Extensions
 
         public static async Task<IMessage> SendErrorEmbedAsync(this IChannel channel, string contents)
         {
-            
-            
             return await channel.SendAsync(new EmbedBuilder()
                 .WithTitle("Error")
                 .WithColor(Color.Red)

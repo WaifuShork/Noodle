@@ -6,6 +6,7 @@ using Discord;
 using Discord.Addons.Hosting;
 using Discord.Commands;
 using Discord.WebSocket;
+using ImageMagick;
 using Microsoft.Extensions.Logging;
 using Noodle.TypeReaders;
 using SQLitePCL;
@@ -40,6 +41,11 @@ namespace Noodle.Services
             }
 
             _commandService.AddTypeReader(typeof(EmoteType), new FileExtensionTypeReader());
+            _commandService.AddTypeReader(typeof(TextAlignment), new TextAlignmentTypeReader());
+            _commandService.AddTypeReader(typeof(FontStyleType), new FontStyleTypeTypeReader());
+            _commandService.AddTypeReader(typeof(FontWeight), new FontWeightTypeReader());
+            _commandService.AddTypeReader(typeof(FontStretch), new FontStretchTypeReader());
+            
             _commandService.AddTypeReader(typeof(Emote), new EmoteTypeReader());
             await _commandService.AddModulesAsync(Assembly.GetExecutingAssembly(), _provider);
         }

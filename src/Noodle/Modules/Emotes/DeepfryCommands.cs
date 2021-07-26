@@ -22,7 +22,7 @@ namespace Noodle.Modules
                 {
                     case "png":
                     {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "fried");
                         for (var k = 0; k <= count; k++)
                         {
                             magick.Sharpen(20, 20, Channels.RGB);
@@ -40,12 +40,12 @@ namespace Noodle.Modules
                         }
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "fried.png");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                     case "gif":
                     {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "fried");
                         for (var k = 0; k <= count; k++)
                         {
                             magick.Sharpen(20, 20, Channels.RGB);
@@ -62,7 +62,7 @@ namespace Noodle.Modules
                         }
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "fried.gif");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                 }
@@ -81,24 +81,24 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "shook");
                         magick.Sharpen(20, 20, Channels.RGB);
                         magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
                         magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
                         magick.RotationalBlur(20);
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "shook.png");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "shook");
                         magick.Sharpen(20, 20, Channels.RGB);
                         magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
                         magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
                         magick.RotationalBlur(20);
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "shook.gif");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                 }
