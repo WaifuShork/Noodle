@@ -6,10 +6,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Noodle.Utilities;
 using Serilog;
-using JsonConverter = Newtonsoft.Json.JsonConverter;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Noodle.Models
 {
@@ -21,33 +19,34 @@ namespace Noodle.Models
     
     public class EmoteModel
     {
-        [JsonPropertyName("name")]
         public string Name { get; set; }
-        [JsonPropertyName("base64")]
         public string Base64 { get; set; }
-        [JsonPropertyName("url")]
-        public string Url { get; set; } // as a backup
-        [JsonPropertyName("category")]
+        public string Url { get; set; }
         public string Category { get; set; }
+        public bool IsAnimated { get; set; }
     }
 
     public static class DatabaseUtilities
     {
+        private static JsonSerializerOptions _options;
+
+        static DatabaseUtilities()
+        {
+            _options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+        }
+            
         public static async Task<Root> LoadAsync(string path)
         {
-            var content = await File.ReadAllTextAsync(path);
-            var bytes = Encoding.UTF8.GetBytes(content);
-            using var stream = new MemoryStream(bytes);
-            return await JsonSerializer.DeserializeAsync<Root>(stream);
+            return await JsonUtilities.DeserializeAsync<Root>(path, _options);
         }
         
         public static async Task SaveAsync(Root root, string path)
         {
-            var options = new JsonSerializerOptions {WriteIndented = true};
-            using var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, root, options);
-            await using var fs = File.Create(path);
-            await stream.CopyToAsync(fs);
+            await JsonUtilities.SerializeAsync(root, path, _options);
         }
 
         public static async Task AddAsync(EmoteModel emote, string path)
@@ -57,22 +56,29 @@ namespace Noodle.Models
             await SaveAsync(root, path);
         }
 
-        public static async Task<EmoteModel> GetAsync(string name, string path)
-        {
-            var root = await LoadAsync(path);
-            return root.Emotes.FirstOrDefault(e => e.Name == name);
-        }
-
-        public static async Task RemoveAsync(string name, string category, string path)
+        public static async Task<EmoteModel> GetAsync(string name, string path, string category = "null")
         {
             var root = await LoadAsync(path);
             var emote = root.Emotes.FirstOrDefault(e => e.Name == name && e.Category == category);
             if (emote == null)
             {
-                throw new ArgumentNullException(nameof(emote), $"Unable to locate {name} in the category {category}");
+                throw new NullReferenceException($"Unable to locate **{name}** in the category **{category}**");
             }
-            
-            root.Emotes.Remove(emote);
+
+            return emote;
+        }
+
+        public static async Task<IEnumerable<EmoteModel>> GetAllAsync(string path)
+        {
+            var root = await LoadAsync(path);
+            return root.Emotes ?? new List<EmoteModel>();
+        }
+
+        public static async Task RemoveAsync(string name, string category, string path)
+        {
+            var root = await LoadAsync(path);
+            var emote = await GetAsync(name, path, category);
+            root.Emotes.RemoveAll(e => e.Name == emote.Name);
             await SaveAsync(root, path);
         }
     }

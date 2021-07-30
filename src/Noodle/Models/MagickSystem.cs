@@ -16,6 +16,7 @@ namespace Noodle.Models
         
         private bool _isImage;
         private string _databasePath = Path.Combine("assets", "emotes.json");
+        private static string _filePath;
 
         public string FilePath
         {
@@ -23,7 +24,31 @@ namespace Noodle.Models
             set => _filePath = value;
         }
 
-        private static string _filePath;
+        public int Width
+        {
+            get
+            {
+                if (_isImage)
+                {
+                    return _image.Width;
+                }
+
+                return _collection[0].Width;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                if (_isImage)
+                {
+                    return _image.Height;
+                }
+
+                return _collection[0].Height;
+            }
+        }
 
         public static async Task<MagickSystem> CreateAsync<T>(HttpClient client, string url, string name)
         {
@@ -390,7 +415,7 @@ namespace Noodle.Models
                 drawable.Draw(image);
             }
         }
-        
+
         public async Task WriteAsync(string path)
         {
             if (string.IsNullOrWhiteSpace(path))

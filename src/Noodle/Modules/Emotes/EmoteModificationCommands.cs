@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -6,6 +9,7 @@ using ImageMagick;
 using Noodle.Extensions;
 using Noodle.Models;
 using Noodle.TypeReaders;
+using Serilog;
 
 namespace Noodle.Modules
 {
@@ -38,6 +42,11 @@ namespace Noodle.Modules
             {
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
@@ -78,6 +87,11 @@ namespace Noodle.Modules
             {
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
@@ -116,6 +130,11 @@ namespace Noodle.Modules
             {
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
@@ -146,12 +165,17 @@ namespace Noodle.Modules
         [Summary("The image to flip vertically")]
         [Remarks("yflip <url>")]
         public async Task FlipEmoteY([Summary("The extension of the image or gif")] EmoteType extension, 
-                                     [Summary("The url of the gif or image to flip vertically")]  string url)
+                                     [Summary("The url of the gif or image to flip vertically")] string url)
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
@@ -189,6 +213,11 @@ namespace Noodle.Modules
             {
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
                 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
@@ -225,6 +254,11 @@ namespace Noodle.Modules
             {
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
@@ -308,6 +342,43 @@ namespace Noodle.Modules
                 magick.SetSpeed(speed);
                 using var stream = magick.ToStream();
                 await Context.Channel.SendFileAsync(stream, magick.FilePath);
+            }
+        }
+
+        [Command("update")]
+        public async Task UpdateEmoteAsync(Emote emote, EmoteType type, string url)
+        {
+            using (var _ = Context.Channel.EnterTypingState())
+            {
+                if (!Context.Guild.Emotes.Contains(emote))
+                {
+                    await Context.Channel.SendErrorEmbedAsync($"Unable to locate **:{emote.Name}:** in the current guild");
+                    return;
+                }
+                
+                switch (type)
+                {
+                    case EmoteType.Png:
+                    {
+                        await using var oldEmote = await MagickSystem.CreateAsync<MagickImage>(_httpClient, emote.Url, emote.Name);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, emote.Name);
+                        using var image = magick.ToEmote(oldEmote.Width, oldEmote.Height);
+                        await Context.Guild.DeleteEmoteAsync(await Context.Guild.GetEmoteAsync(emote.Id));
+                        await Context.Guild.CreateEmoteAsync(emote.Name, image);
+                        break;
+                    }
+                    case EmoteType.Gif:
+                    {
+                        await using var oldEmote = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, emote.Url, emote.Name);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, emote.Name);
+                        using var image = magick.ToEmote(oldEmote.Width, oldEmote.Height);
+                        await Context.Guild.DeleteEmoteAsync(await Context.Guild.GetEmoteAsync(emote.Id));
+                        await Context.Guild.CreateEmoteAsync(emote.Name, image);
+                        break;
+                    }
+                }
+
+                await Context.Channel.SendSuccessEmbedAsync($"Updated **{emote.Name}**");
             }
         }
     }

@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
-
+using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -10,6 +11,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using Noodle.Extensions;
 using Noodle.Models;
 using Noodle.TypeReaders;
+using Serilog;
 
 namespace Noodle.Modules
 {
@@ -51,36 +53,122 @@ namespace Noodle.Modules
             await Context.Channel.SendAsync(builder);
         }
 
+        private readonly string _emoteDatabase = Path.Combine("assets", "emotes.json");
+        
         [Command("save")]
-        public async Task SaveEmoteAsync([OverrideTypeReader(typeof(EmoteTypeReader))] Emote emote)
+        public async Task SaveEmoteAsync(EmoteType type, string input, string category = "null")
         {
-            var path = Path.Combine("assets", "emotes.json");
-            await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, emote.Url, emote.Name);
+            var animated = false;
+            switch (type)
+            {
+                case EmoteType.Gif:
+                    animated = true;
+                    break;
+                case EmoteType.Png:
+                    animated = false;
+                    break;
+            }
+            var url = input;
+            if (Emote.TryParse(input, out var emote))
+            {
+                url = emote.Url;
+            }
+            
+            await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, emote.Name);
             var base64 = Convert.ToBase64String(magick.ToByteArray());
             
             var emoteModel = new EmoteModel
             {
                 Name = emote.Name,
-                Url = emote.Url,
+                Url = url,
                 Base64 = base64,
-                Category = "null"
+                Category = category,
+                IsAnimated = animated
             };
             
-            await DatabaseUtilities.AddAsync(emoteModel, path);
+            await DatabaseUtilities.AddAsync(emoteModel, _emoteDatabase);
+            await Context.Channel.SendSuccessEmbedAsync($"Added **{emote.Name}** to the database");
+        }
+
+        [Command("addall")]
+        public async Task AddAllAsync()
+        {
+            foreach (var emote in Context.Guild.Emotes)
+            {
+                var animated = emote.Animated;
+                var url = emote.Url;
+
+                await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, emote.Name);
+                var base64 = Convert.ToBase64String(magick.ToByteArray());
+            
+                var emoteModel = new EmoteModel
+                {
+                    Name = emote.Name,
+                    Url = url,
+                    Base64 = base64,
+                    Category = "null",
+                    IsAnimated = animated
+                };
+            
+                await DatabaseUtilities.AddAsync(emoteModel, _emoteDatabase);
+            }
+        }
+
+        [Command("getall")]
+        public async Task GetAllAsync()
+        {
+            var emotes = await DatabaseUtilities.GetAllAsync(_emoteDatabase);
+
+            var sb = new StringBuilder();
+            foreach (var emote in emotes)
+            {
+                sb.AppendLine($"**{emote.Name}**");
+            }
+
+            var description = sb.ToString();
+            if (description.Length > EmbedBuilder.MaxDescriptionLength)
+            {
+                description = description.TrimTo(EmbedBuilder.MaxDescriptionLength, true);
+            }
+            
+            await Context.Channel.SendAsync(CreateEmbed("Emotes").WithDescription(description));
+        }
+
+        [Command("load")]
+        public async Task LoadEmoteAsync(string input, string category)
+        {
+            var name = input;
+            if (Emote.TryParse(input, out var emote))
+            {
+                name = emote.Name;
+            }
+
+            try
+            {
+                var emoteModel = await DatabaseUtilities.GetAsync(name, _emoteDatabase, category);
+                await Context.Channel.SendAsync(CreateEmbed(name)
+                    .WithColor(Color.Blue)
+                    .WithImageUrl(emoteModel.Url));
+            }
+            catch (NullReferenceException exception)
+            {
+                await Context.Channel.SendErrorEmbedAsync(exception.Message);
+            }
+        }
+
+        [Command("remove")]
+        public async Task RemoveEmoteAsync(string emoteName, string category = "null")
+        {
+            var name = emoteName;
+            if (Emote.TryParse(emoteName, out var emote))
+            {
+                name = emote.Name;
+            }
+            
+            await DatabaseUtilities.RemoveAsync(name, category, _emoteDatabase);
+            await Context.Channel.SendSuccessEmbedAsync($"Removed **{name}** from the database");
         }
         
-        [Command("load")]
-        public async Task LoadEmoteAsync([OverrideTypeReader(typeof(EmoteTypeReader))] Emote emote)
-        {
-            var path = Path.Combine("assets", "emotes.json");
-
-            var model = await DatabaseUtilities.GetAsync(emote.Name, path);
-
-            var bytes = Convert.FromBase64String(model.Base64);
-            using var stream = new MemoryStream(bytes);
-            await Context.Channel.SendFileAsync(stream, $"{emote.Name}.gif");
-        }
-
         [Command("draw")]
         public async Task DrawAsync([Summary("The extension of the logo")] EmoteType type, 
                                     [Summary("The url of the gif or image")] string url, 
@@ -98,6 +186,11 @@ namespace Noodle.Modules
         {  
             using (var _ = Context.Channel.EnterTypingState())
             {
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (type)
                 {
                     case EmoteType.Png:

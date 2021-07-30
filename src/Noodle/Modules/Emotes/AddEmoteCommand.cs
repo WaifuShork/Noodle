@@ -26,6 +26,11 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 name = name.SanitizeEmoteName();
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
@@ -42,7 +47,7 @@ namespace Noodle.Modules
                     case EmoteType.Gif or EmoteType.Hack:
                         if (animated.Count >= animatedCap)
                         {
-                            await message.NotifyEmoteCapReachedAsync(normal.Count, animated.Count);
+                            await message.NotifyEmoteCapReachedAsync(animated.Count, animated.Count);
                             return;
                         }
                         break;
@@ -59,14 +64,16 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        error = await UploadNormalAsync(url, name, width, height);
+                        error = await UploadEmoteAsync(url, name, width, height);
                         break;
                     }
+                    // This is separated for now because of file sizing issues with gifs, we find that 50x50 is the best 
+                    // result to get the lowest file size and retain quality
                     case EmoteType.Gif:
                     {
                         width = 50;
                         height = 50;
-                        error = await UploadAnimatedAsync(url, name, width, height);
+                        error = await UploadEmoteAsync(url, name, width, height);
                         break;
                     }
                     case EmoteType.Hack:
@@ -87,7 +94,7 @@ namespace Noodle.Modules
             }
         }
         
-        private async Task<string> UploadNormalAsync(string url, string name, int width, int height)
+        private async Task<string> UploadEmoteAsync(string url, string name, int width, int height)
         {
             try
             {
@@ -99,21 +106,6 @@ namespace Noodle.Modules
             catch (Exception exception)
             {
                 return ErrorFromException(exception);
-            }
-        }
-
-        private async Task<string> UploadAnimatedAsync(string url, string name, int width, int height)
-        {
-            try
-            {
-                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, name);
-                using var img = magick.ToEmote(width, height);
-                await Context.Guild.CreateEmoteAsync(name, img);
-                return null;
-            }
-            catch (Exception exception)
-            {
-                return ErrorFromException(exception);        
             }
         }
 

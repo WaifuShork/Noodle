@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using ImageMagick;
 using Noodle.Models;
@@ -18,6 +19,11 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case "png":
@@ -77,6 +83,11 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
