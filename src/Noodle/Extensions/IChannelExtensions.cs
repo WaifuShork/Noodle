@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Discord;
+using Discord.Rest;
 
 namespace Noodle.Extensions
 {
@@ -30,6 +31,23 @@ namespace Noodle.Extensions
                 .WithTitle("Error")
                 .WithColor(Color.Red)
                 .WithDescription(contents));
+        }
+
+        public static async Task NotifyEmoteCapReachedAsync(this IMessage message, int normalCount, int animatedCount)
+        {
+            if (message is not RestUserMessage restMessage)
+            {
+                return;
+            }
+            
+            await restMessage.ModifyAsync(m =>
+            {
+                m.Embed = new EmbedBuilder()
+                    .WithTitle("Emote Limit Reached")
+                    .AddField("Normal Emotes", normalCount)
+                    .AddField("Animated Emotes", animatedCount)
+                    .Build();
+            });
         }
     }
 }

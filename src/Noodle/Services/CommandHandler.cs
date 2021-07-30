@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net.Sockets;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
@@ -10,7 +8,6 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Noodle.Extensions;
-using Serilog;
 
 namespace Noodle.Services
 {
@@ -21,7 +18,7 @@ namespace Noodle.Services
         private readonly IConfiguration _config;
         
         public CommandHandler(DiscordSocketClient client, 
-                              ILogger<DiscordClientService> logger,
+                              ILogger<CommandHandler> logger,
                               CommandService commandService,
                               IServiceProvider provider,
                               IConfiguration configuration) : base(client, logger)
@@ -111,10 +108,22 @@ namespace Noodle.Services
                             .WithDescription("Access denied."));
                         break;
                     case CommandError.Exception:
-                        await context.Channel.SendAsync(new EmbedBuilder()
-                            .WithTitle("Exception")
-                            .WithColor(Color.Red)
-                            .WithDescription(result.ErrorReason));
+                        if (result is ExecuteResult er)
+                        {
+                            await context.Channel.SendAsync(new EmbedBuilder()
+                                .WithTitle("Exception")
+                                .WithColor(Color.Red)
+                                .AddField("Source", er.Exception.Source)
+                                .AddField("Message", er.Exception.Message)
+                                .AddField("Inner Exception", er.Exception.InnerException));
+                        }
+                        else
+                        {
+                            await context.Channel.SendAsync(new EmbedBuilder()
+                                .WithTitle("Exception")
+                                .WithColor(Color.Red)
+                                .WithDescription(result.ErrorReason));
+                        }
                         break;
                     case CommandError.Unsuccessful:
                         await context.Channel.SendAsync(new EmbedBuilder()

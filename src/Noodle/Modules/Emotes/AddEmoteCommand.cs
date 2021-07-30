@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -8,6 +9,7 @@ using ImageMagick;
 using Noodle.Extensions;
 using Noodle.Models;
 using Noodle.TypeReaders;
+using Serilog;
 
 namespace Noodle.Modules
 {
@@ -24,9 +26,12 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 name = name.SanitizeEmoteName();
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
                 var (normalCap, animatedCap) = Context.Guild.GetEmoteCap();
@@ -34,36 +39,22 @@ namespace Noodle.Modules
 
                 var animated = emotes.Where(e => e.Animated).ToList();
                 var normal = emotes.Where(e => !e.Animated).ToList();
-                
-                var error = string.Empty;
 
+                string error = null;
+                
                 switch (extension)
                 {
                     case EmoteType.Gif or EmoteType.Hack:
                         if (animated.Count >= animatedCap)
                         {
-                            await message.ModifyAsync(m =>
-                            {
-                                m.Embed = CreateEmbed()
-                                    .WithTitle("Emote Limit Reached")
-                                    .AddField("Normal Emotes", normal.Count)
-                                    .AddField("Animated Emotes", animated.Count)
-                                    .Build();
-                            });
+                            await message.NotifyEmoteCapReachedAsync(animated.Count, animated.Count);
                             return;
                         }
                         break;
                     case EmoteType.Png:
                         if (normal.Count >= normalCap)
                         {
-                            await message.ModifyAsync(m =>
-                            {
-                                m.Embed = CreateEmbed()
-                                    .WithTitle("Emote Limit Reached")
-                                    .AddField("Normal Emotes", normal.Count)
-                                    .AddField("Animated Emotes", animated.Count)
-                                    .Build();
-                            });
+                            await message.NotifyEmoteCapReachedAsync(normal.Count, animated.Count);
                             return;
                         }
                         break;
@@ -73,12 +64,16 @@ namespace Noodle.Modules
                 {
                     case EmoteType.Png:
                     {
-                        error = await UploadNormalAsync(url, name, width, height);
+                        error = await UploadEmoteAsync(url, name, width, height);
                         break;
                     }
+                    // This is separated for now because of file sizing issues with gifs, we find that 50x50 is the best 
+                    // result to get the lowest file size and retain quality
                     case EmoteType.Gif:
                     {
-                        error = await UploadAnimatedAsync(url, name, width, height);
+                        width = 50;
+                        height = 50;
+                        error = await UploadEmoteAsync(url, name, width, height);
                         break;
                     }
                     case EmoteType.Hack:
@@ -87,99 +82,63 @@ namespace Noodle.Modules
                         break;
                     }
                 }
-                
-                if (!string.IsNullOrWhiteSpace(error))
+
+                if (error != null)
                 {
-                    await message.DeleteAsync();
                     await Context.Channel.SendErrorEmbedAsync(error);
                     return;
                 }
-                
-                await message.ModifyAsync(m =>
-                {
-                    m.Embed = CreateEmbed()
-                        .WithTitle("Success")
-                        .WithColor(Color.Green)
-                        .WithDescription($"Added :{name}:")
-                        .Build();
-                });
+
+                await message.DeleteAsync();
+                await Context.Channel.SendSuccessEmbedAsync($"Added :{name}:");
             }
         }
         
-        private async Task<string> UploadNormalAsync(string url, string name, int width, int height)
+        private async Task<string> UploadEmoteAsync(string url, string name, int width, int height)
         {
-            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.png");
-            await using var magick = new MagickSystem<MagickImage>(url);
-            magick.Resize(width, height);
-            await magick.WriteAsync(path);
-            
-            if (!magick.Image.ToByteArray().IsSmallEnough(out var sizes))
-            {
-                return $"File size too large ({sizes})";
-            }
-            
             try
             {
-                using var img = magick.ToImage();
+                using var magick =  await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, name);
+                using var img = magick.ToEmote(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
-                return string.Empty;
+                return null;
             }
             catch (Exception exception)
             {
-                return exception.Message;
-            }
-        }
-
-        private async Task<string> UploadAnimatedAsync(string url, string name, int width, int height)
-        {
-            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
-            await using var magick = new MagickSystem<MagickImageCollection>(url);
-            magick.Resize(width, height);
-            await magick.WriteAsync(path);
-            
-            if (!magick.Collection.ToByteArray().IsSmallEnough(out var size))
-            {
-                return $"File size too large ({size})";
-            }
-            
-            try
-            {
-                using var img = magick.ToImage();
-                await Context.Guild.CreateEmoteAsync(name, img);
-                return string.Empty;
-            }
-            catch (Exception exception)
-            {
-                return exception.Message;
+                return ErrorFromException(exception);
             }
         }
 
         private async Task<string> UploadHackedAsync(string url, string name, int width, int height)
         {
-            var path = Path.Combine("emotes", $"{name}-{Guid.NewGuid()}.gif");
-
-            using var magick = new MagickSystem<MagickImageCollection>(url);
-            using var image = new MagickImage(magick.Collection[0]); 
-            magick.Collection.Add(image);
-            magick.Resize(width, height);
-            
-            await magick.WriteAsync(path);
-            
-            if (!magick.Collection.ToByteArray().IsSmallEnough(out var size))
-            {
-                return $"File size too large ({size})";
-            }
-            
             try
             {
-                using var img = magick.ToImage();
+                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, name);
+                using var img = magick.ToHacked(name, width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
-                return string.Empty;
+                return null;
             }
             catch (Exception exception)
             {
-                return exception.Message;
+                return ErrorFromException(exception);
             }
+        }
+
+        private string ErrorFromException(Exception exception)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"{exception.Message}\n");
+            if (!string.IsNullOrWhiteSpace(exception.StackTrace))
+            {
+                var lines = exception.StackTrace.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
+                sb.AppendLine("**Stack Trace**");
+                foreach (var line in lines)
+                {
+                    sb.AppendLine($"• {line}");
+                }
+            }
+            
+            return sb.ToString();
         }
     }
 }

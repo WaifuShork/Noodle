@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -6,6 +9,7 @@ using ImageMagick;
 using Noodle.Extensions;
 using Noodle.Models;
 using Noodle.TypeReaders;
+using Serilog;
 
 namespace Noodle.Modules
 {
@@ -36,31 +40,35 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
                     {
-                        using var image = await GetAsMagickAsync<MagickImage>(url);
-            
-                        image.Rotate(degrees);
-                        image.ColorFuzz = new Percentage(4);
-                        image.Transparent(MagickColors.White);
-                        
-                        using var stream = new MemoryStream(image.ToByteArray());
-                        await Context.Channel.SendFileAsync(stream, "rotated.png");
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "rotated");
+                        magick.Rotate(degrees);
+                        magick.SetColorFuzz(new Percentage(4));
+                        magick.SetTransparency(MagickColors.White);
+
+                        using var stream = magick.ToStream();
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
-                        collection.Rotate(degrees);
-                        
-                        using var stream = new MemoryStream(collection.ToByteArray());
-                        await Context.Channel.SendFileAsync(stream, "rotated.gif");                        
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "rotated");
+                        magick.Rotate(degrees);
+                        magick.SetColorFuzz(new Percentage(4));
+                        magick.SetTransparency(MagickColors.White);
+
+                        using var stream = magick.ToStream();
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);                        
                         break;
                     }
                 }
@@ -77,30 +85,33 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
                     {
-                        using var magick = new MagickSystem<MagickImage>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "flipflop");
                         magick.Flip();
                         magick.Flop();
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "flipflop.png");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        using var magick = new MagickSystem<MagickImageCollection>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "flipflop");
                         magick.Flip();
                         magick.Flop();
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "flipflop.gif");                     
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);                     
                         break;
                     }
                 }
@@ -117,28 +128,31 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
                     {
-                        using var magick = new MagickSystem<MagickImage>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "xflip");
                         magick.Flop();
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "xflip.png");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        using var magick = new MagickSystem<MagickImageCollection>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "xflip");
                         magick.Flop();
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "xflip.gif");                   
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);                   
                         break;
                     }
                 }
@@ -151,30 +165,33 @@ namespace Noodle.Modules
         [Summary("The image to flip vertically")]
         [Remarks("yflip <url>")]
         public async Task FlipEmoteY([Summary("The extension of the image or gif")] EmoteType extension, 
-                                     [Summary("The url of the gif or image to flip vertically")]  string url)
+                                     [Summary("The url of the gif or image to flip vertically")] string url)
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
                     {
-                        await using var magick = new MagickSystem<MagickImage>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "yflip");
                         
                         magick.Flip();
-                        await Context.Channel.SendFileAsync(magick.ToStream(), "yflip.png");
+                        await Context.Channel.SendFileAsync(magick.ToStream(), magick.FilePath);
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        await using var magick = new MagickSystem<MagickImageCollection>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "yflip");
                         
                         magick.Flip();
-                        await Context.Channel.SendFileAsync(magick.ToStream(), "yflip.gif");
+                        await Context.Channel.SendFileAsync(magick.ToStream(), magick.FilePath);
                         break;
                     }
                 }
@@ -194,28 +211,31 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
+                
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
                 
                 switch (extension)
                 {
                     case EmoteType.Png:
                     {
-                        using var magick = new MagickSystem<MagickImage>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "resized");
                         magick.Resize(width, height);
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "resized.png");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        using var magick = new MagickSystem<MagickImageCollection>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "resized");
                         magick.Resize(width, height);
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "resized.gif");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                 }
@@ -224,7 +244,7 @@ namespace Noodle.Modules
             }
         }
         
-        [Command("invert")]
+        [Command("invert"), Alias("negate")]
         [Summary("Invert an images colorspace via url")]
         [Remarks("invert <extension> <url>")]
         public async Task InvertImageAsync([Summary("The extension of the gif or image")] EmoteType extension, 
@@ -232,33 +252,50 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
+                if (Emote.TryParse(url, out var emote))
+                {
+                    url = emote.Url;
+                }
+                
                 switch (extension)
                 {
                     case EmoteType.Png:
                     {
-                        using var magick = new MagickSystem<MagickImage>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "negated");
                         magick.Negate();
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "negated.png");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        using var magick = new MagickSystem<MagickImageCollection>(url);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "negated");
                         magick.Negate();
 
                         using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "negated.gif");
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                 }
             
                 await message.DeleteAsync();
+            }
+        }
+
+        [Command("reverse")]
+        [Summary("Reverses a gif")]
+        [Remarks("reverse <url>")]
+        public async Task ReverseGifAsync([Summary("The url of the gif")] string url)
+        {
+            using (var _ = Context.Channel.EnterTypingState())
+            {
+                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "reversed");
+                magick.Reverse();
+                using var stream = magick.ToStream();
+                await Context.Channel.SendFileAsync(stream, magick.FilePath);
             }
         }
 
@@ -270,38 +307,78 @@ namespace Noodle.Modules
         {
             using (var _ = Context.Channel.EnterTypingState())
             {
-                url = url.SanitizeUrl();
-
                 var message = await Context.Channel.SendMessageAsync("This may take a minute...");
 
                 switch (extension)
                 {
                     case EmoteType.Png:
                     {
-                        using var image = await GetAsMagickAsync<MagickImage>(url);
-                        image.Quality = -20000;
-                        image.Format = MagickFormat.Jpeg;
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "jpeg");
+                        magick.SetQuality(-20000);
+                        magick.SetFormat(MagickFormat.Jpeg);
 
-                        using var stream = new MemoryStream(image.ToByteArray());
-                        await Context.Channel.SendFileAsync(stream, "jpeg.png");
+                        using var stream = magick.ToStream();
+                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
                         break;
                     }
                     case EmoteType.Gif:
                     {
-                        using var collection = await GetAsMagickAsync<MagickImageCollection>(url);
-                        foreach (var image in collection)
-                        {
-                            image.Quality = -20000;
-                            image.Format = MagickFormat.Jpeg;
-                        }
-                        
-                        using var stream = new MemoryStream(collection.ToByteArray());
-                        await Context.Channel.SendFileAsync(stream, "jpeg.gif");
+                        await Context.Channel.SendErrorEmbedAsync("This feature is currently unavailable for animated gifs");
                         break;
                     }
                 }
             
                 await message.DeleteAsync();
+            }
+        }
+
+
+        [Command("speed")]
+        public async Task SetSpeedAsync(int speed, string url)
+        {
+            using (var _ = Context.Channel.EnterTypingState())
+            {
+                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "speed");
+                magick.SetSpeed(speed);
+                using var stream = magick.ToStream();
+                await Context.Channel.SendFileAsync(stream, magick.FilePath);
+            }
+        }
+
+        [Command("update")]
+        public async Task UpdateEmoteAsync(Emote emote, EmoteType type, string url)
+        {
+            using (var _ = Context.Channel.EnterTypingState())
+            {
+                if (!Context.Guild.Emotes.Contains(emote))
+                {
+                    await Context.Channel.SendErrorEmbedAsync($"Unable to locate **:{emote.Name}:** in the current guild");
+                    return;
+                }
+                
+                switch (type)
+                {
+                    case EmoteType.Png:
+                    {
+                        await using var oldEmote = await MagickSystem.CreateAsync<MagickImage>(_httpClient, emote.Url, emote.Name);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, emote.Name);
+                        using var image = magick.ToEmote(oldEmote.Width, oldEmote.Height);
+                        await Context.Guild.DeleteEmoteAsync(await Context.Guild.GetEmoteAsync(emote.Id));
+                        await Context.Guild.CreateEmoteAsync(emote.Name, image);
+                        break;
+                    }
+                    case EmoteType.Gif:
+                    {
+                        await using var oldEmote = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, emote.Url, emote.Name);
+                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, emote.Name);
+                        using var image = magick.ToEmote(oldEmote.Width, oldEmote.Height);
+                        await Context.Guild.DeleteEmoteAsync(await Context.Guild.GetEmoteAsync(emote.Id));
+                        await Context.Guild.CreateEmoteAsync(emote.Name, image);
+                        break;
+                    }
+                }
+
+                await Context.Channel.SendSuccessEmbedAsync($"Updated **{emote.Name}**");
             }
         }
     }

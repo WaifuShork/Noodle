@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Serilog;
 
 namespace Noodle.Extensions
 {
@@ -19,7 +20,7 @@ namespace Noodle.Extensions
         
         public static string SanitizeEmoteName(this string emoteName)
         {
-            return emoteName.Trim().Replace(" ", "_").TrimTo(32);
+            return emoteName.Trim().Replace(" ", "_").TrimTo(32, true);
         }
         
         public static string TrimTo(this string str, int maxLength, bool hideDots = false)

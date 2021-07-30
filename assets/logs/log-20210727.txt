@@ -1,0 +1,41 @@
+2021-07-27 13:42:52.141 -04:00 [INF] Starting Noodle
+2021-07-27 13:43:39.187 -04:00 [INF] Starting Noodle
+2021-07-27 13:45:11.936 -04:00 [INF] Starting Noodle
+2021-07-27 13:47:14.138 -04:00 [INF] Starting Noodle
+2021-07-27 13:47:17.720 -04:00 [INF] PikaTiredOfLife
+2021-07-27 13:58:53.018 -04:00 [INF] Starting Noodle
+2021-07-27 13:58:53.866 -04:00 [FTL] Host terminated unexpectedly
+System.InvalidOperationException: No type reader found for type GuildEmote, one must be specified
+   at Discord.Commands.Builders.ParameterBuilder.Build(CommandInfo info)
+   at Discord.Commands.CommandInfo.<>c__DisplayClass40_0.<.ctor>b__2(ParameterBuilder x)
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Collections.Immutable.ImmutableArray.CreateRange[T](IEnumerable`1 items)
+   at System.Collections.Immutable.ImmutableArray.ToImmutableArray[TSource](IEnumerable`1 items)
+   at Discord.Commands.CommandInfo..ctor(CommandBuilder builder, ModuleInfo module, CommandService service)
+   at Discord.Commands.Builders.CommandBuilder.Build(ModuleInfo info, CommandService service)
+   at Discord.Commands.ModuleInfo.<>c__DisplayClass35_0.<.ctor>b__0(CommandBuilder x)
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Collections.Immutable.ImmutableArray.CreateRange[T](IEnumerable`1 items)
+   at System.Collections.Immutable.ImmutableArray.ToImmutableArray[TSource](IEnumerable`1 items)
+   at Discord.Commands.ModuleInfo..ctor(ModuleBuilder builder, CommandService service, IServiceProvider services, ModuleInfo parent)
+   at Discord.Commands.Builders.ModuleBuilder.BuildImpl(CommandService service, IServiceProvider services, ModuleInfo parent)
+   at Discord.Commands.ModuleClassBuilder.BuildAsync(IEnumerable`1 validTypes, CommandService service, IServiceProvider services)
+   at Discord.Commands.CommandService.AddModulesAsync(Assembly assembly, IServiceProvider services)
+   at Noodle.Services.StartupService.RunAsync(CancellationToken cancellationToken) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Services\StartupService.cs:line 50
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Noodle.NoodleHost.RunAsync() in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\NoodleHost.cs:line 42
+2021-07-27 14:12:52.711 -04:00 [INF] Starting Noodle
+2021-07-27 14:19:42.417 -04:00 [INF] Starting Noodle
+2021-07-27 14:28:28.766 -04:00 [INF] Starting Noodle
+2021-07-27 14:30:42.687 -04:00 [INF] Starting Noodle
+2021-07-27 14:31:23.299 -04:00 [INF] Starting Noodle
+2021-07-27 14:31:29.742 -04:00 [INF] Unable to delete GuildEmote
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Discord.WebSocket.SocketGuild.DeleteEmoteAsync(GuildEmote emote, RequestOptions options)
+   at Noodle.Modules.EmoteModule.UpdateEmoteAsync(Emote emote, EmoteType type, String url) in C:\Users\death\Desktop\Ash's Shit\Noodle\src\Noodle\Modules\Emotes\EmoteModificationCommands.cs:line 339
+2021-07-27 14:32:53.348 -04:00 [INF] Starting Noodle
+2021-07-27 14:33:29.288 -04:00 [INF] Starting Noodle
