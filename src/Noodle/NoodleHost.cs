@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 using Discord;
-using Discord.Addons.Hosting;
+using Noodle.Hosting;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
@@ -98,7 +98,7 @@ namespace Noodle
                     
                     config.Token = context.Configuration["token"];
                 })
-                .UseCommandService((_, config) =>
+                .ConfigureCommandService((_, config) =>
                 {
                     config.ThrowOnError = true;
                     config.CaseSensitiveCommands = false;

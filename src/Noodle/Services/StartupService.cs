@@ -4,11 +4,11 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
-using Discord.Addons.Hosting;
 using Discord.Commands;
 using Discord.WebSocket;
 using ImageMagick;
 using Microsoft.Extensions.Logging;
+using Noodle.Hosting;
 using Noodle.TypeReaders;
 
 namespace Noodle.Services

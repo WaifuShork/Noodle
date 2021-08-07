@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noodle", "src\Noodle\Noodle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noodle.Common", "src\Noodle.Common\Noodle.Common.csproj", "{CCA89EB3-70CE-4615-BCF7-6C9923A7AEA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noodle.Hosting", "src\Noodle.Hosting\Noodle.Hosting.csproj", "{3745EF9E-9B64-4977-B907-26837FD53F9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{CCA89EB3-70CE-4615-BCF7-6C9923A7AEA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCA89EB3-70CE-4615-BCF7-6C9923A7AEA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCA89EB3-70CE-4615-BCF7-6C9923A7AEA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3745EF9E-9B64-4977-B907-26837FD53F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3745EF9E-9B64-4977-B907-26837FD53F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3745EF9E-9B64-4977-B907-26837FD53F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3745EF9E-9B64-4977-B907-26837FD53F9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

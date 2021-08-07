@@ -32,12 +32,8 @@
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Discord.Addons.Hosting, Version=4.0.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>C:\dotnet-workspace\Noodle\lib\Discord.Addons.Hosting.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Noodle.Common\Noodle.Common.csproj" />
+    <ProjectReference Include="..\Noodle.Hosting\Noodle.Hosting.csproj" />
   </ItemGroup>
   
 </Project>
