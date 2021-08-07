@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Noodle.Extensions;
 using Noodle.TypeReaders;
+using System.Threading.Tasks;
 
 namespace Noodle.Modules
 {
@@ -17,11 +17,11 @@ namespace Noodle.Modules
             try
             {
                 await Context.Guild.DeleteEmoteAsync(em);
-                await Context.Channel.SendSuccessEmbedAsync($"Deleted **{emote.Name}**");
+                await Context.Channel.SendSuccessAsync($"Deleted **{emote.Name}**");
             }
             catch
             {
-                await Context.Channel.SendErrorEmbedAsync($"Unable to delete **{emote.Name}**");
+                await Context.Channel.SendErrorAsync($"Unable to delete **{emote.Name}**");
             }
         }
     }

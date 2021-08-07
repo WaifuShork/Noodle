@@ -6,28 +6,18 @@ using Serilog;
 using Discord;
 using Discord.Net;
 using Discord.Commands;
-using Discord.Addons.Interactive;
 
 namespace Noodle
 {
-    public abstract class NoodleModuleBase : InteractiveBase<SocketCommandContext>
+    public abstract class NoodleModuleBase : ModuleBase<SocketCommandContext>
     {
-        protected async Task<IMessage> NextMessageAsync(TimeSpan seconds)
-        {
-            return await NextMessageAsync(true, true, seconds);
-        }
-
-        protected async Task<IMessage> NextMessageAsync(double seconds)
-        {
-            return await NextMessageAsync(true, true, TimeSpan.FromSeconds(seconds));
-        }
+        public IServiceProvider Provider { get; init; }
 
         protected async Task TimedDeletionAsync(string contents, bool isTTS, Embed embed, TimeSpan timeSpan)
         {
             try
             {
                 var message = await Context.Channel.SendMessageAsync(contents, isTTS, embed);
-                // Task.Delay provides a non-blocking timer for delays, avoid using Thread.Sleep in asynchronous operations 
                 await Task.Delay(timeSpan);
                 await message.DeleteAsync();
             }
@@ -37,16 +27,17 @@ namespace Noodle
             }
         }
 
-        protected EmbedBuilder CreateEmbed(string title)
+        protected static EmbedBuilder CreateEmbed(string title)
         {
             return new EmbedBuilder()
-                .WithTitle(title)
+                .WithTitle($"__{title}__")
                 .WithCurrentTimestamp();
         }
 
-        protected EmbedBuilder CreateEmbed()
+        protected static EmbedBuilder CreateEmbed()
         {
-            return new EmbedBuilder().WithCurrentTimestamp();
+            return new EmbedBuilder()
+                .WithCurrentTimestamp();
         }
     }
 }

@@ -10,7 +10,9 @@ using Noodle.Extensions;
 
 namespace Noodle.Modules
 {
-    [ModuleName("Emote")]
+    [ModuleName("Emotes/Imaging")]
+    [Summary("An extensive set of commands for emote/image/gif manipulation.\n" +
+             "Notes: A few of these commands have long running execution cycles and shouldn't be abused.")]
     [RequireContext(ContextType.Guild)]
     [RequireUserPermission(GuildPermission.Administrator)]
     public sealed partial class EmoteModule : NoodleModuleBase

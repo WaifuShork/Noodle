@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Noodle.Utilities;
-using Serilog;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace Noodle.Models
+namespace Noodle.Common.Models
 {
     public class Root
     {
@@ -28,7 +25,7 @@ namespace Noodle.Models
 
     public static class DatabaseUtilities
     {
-        private static JsonSerializerOptions _options;
+        private static readonly JsonSerializerOptions _options;
 
         static DatabaseUtilities()
         {
@@ -41,12 +38,12 @@ namespace Noodle.Models
             
         public static async Task<Root> LoadAsync(string path)
         {
-            return await JsonUtilities.DeserializeAsync<Root>(path, _options);
+            return await JsonUtilities.ReadFromFile<Root>(path, _options);
         }
         
         public static async Task SaveAsync(Root root, string path)
         {
-            await JsonUtilities.SerializeAsync(root, path, _options);
+            await JsonUtilities.WriteToFile(root, path, _options);
         }
 
         public static async Task AddAsync(EmoteModel emote, string path)

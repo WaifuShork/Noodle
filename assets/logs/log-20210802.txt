@@ -1,0 +1,686 @@
+2021-08-02 18:42:53.434 -04:00 [INF] Starting Noodle
+2021-08-02 18:42:54.703 -04:00 [FTL] Host terminated unexpectedly
+System.IO.FileNotFoundException: The configuration file 'appsettings.json' was not found and is not optional. The physical path is 'D:\dotnet-workspace\Noodle\appsettings.json'.
+   at Microsoft.Extensions.Configuration.FileConfigurationProvider.HandleException(ExceptionDispatchInfo info)
+   at Microsoft.Extensions.Configuration.FileConfigurationProvider.Load(Boolean reload)
+   at Microsoft.Extensions.Configuration.FileConfigurationProvider.Load()
+   at Microsoft.Extensions.Configuration.ConfigurationRoot..ctor(IList`1 providers)
+   at Microsoft.Extensions.Configuration.ConfigurationBuilder.Build()
+   at Noodle.NoodleHost.<>c.<CreateDefaultBuilder>b__1_0(IConfigurationBuilder x) in D:\dotnet-workspace\Noodle\src\Noodle\NoodleHost.cs:line 64
+   at Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.<>c__DisplayClass6_0.<ConfigureAppConfiguration>b__0(HostBuilderContext context, IConfigurationBuilder builder)
+   at Microsoft.Extensions.Hosting.HostBuilder.BuildAppConfiguration()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at Noodle.NoodleHost.RunAsync() in D:\dotnet-workspace\Noodle\src\Noodle\NoodleHost.cs:line 43
+2021-08-02 18:45:55.238 -04:00 [INF] Starting Noodle
+2021-08-02 18:45:55.678 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 18:45:55.682 -04:00 [INF] Discord: Discord.Net v2.4.0 (API v6)
+2021-08-02 18:45:56.074 -04:00 [INF] Gateway: Connecting
+2021-08-02 18:45:56.571 -04:00 [INF] Gateway: Connected
+2021-08-02 18:45:57.083 -04:00 [INF] Gateway: Ready
+2021-08-02 18:56:08.426 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 18:56:08.427 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 18:56:40.176 -04:00 [INF] Starting Noodle
+2021-08-02 18:56:40.184 -04:00 [INF] Creating 'assets\emotes'
+2021-08-02 18:56:40.294 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 18:56:40.298 -04:00 [INF] Discord: Discord.Net v2.4.0 (API v6)
+2021-08-02 18:56:40.585 -04:00 [INF] Gateway: Connecting
+2021-08-02 18:56:40.988 -04:00 [INF] Gateway: Connected
+2021-08-02 18:56:41.504 -04:00 [INF] Gateway: Ready
+2021-08-02 21:51:42.358 -04:00 [INF] Starting Noodle API v9
+2021-08-02 21:51:43.300 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 21:51:43.304 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 21:51:43.309 -04:00 [INF] Gateway: Connecting
+2021-08-02 21:51:43.921 -04:00 [INF] Gateway: Connected
+2021-08-02 21:51:44.452 -04:00 [INF] Gateway: Ready
+2021-08-02 21:52:04.593 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 21:52:04.595 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 21:52:04.596 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 21:52:04.601 -04:00 [INF] Gateway: Disconnected
+2021-08-02 21:52:08.509 -04:00 [INF] Starting Noodle
+2021-08-02 21:52:08.621 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 21:52:08.626 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 21:52:08.631 -04:00 [INF] Gateway: Connecting
+2021-08-02 21:52:09.260 -04:00 [INF] Gateway: Connected
+2021-08-02 21:52:09.779 -04:00 [INF] Gateway: Ready
+2021-08-02 22:11:28.220 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:11:28.221 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:11:28.221 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:11:28.226 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:11:32.389 -04:00 [INF] Starting Noodle
+2021-08-02 22:11:32.509 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:11:32.514 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:11:32.521 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:11:33.264 -04:00 [INF] Gateway: Connected
+2021-08-02 22:11:33.785 -04:00 [INF] Gateway: Ready
+2021-08-02 22:12:22.713 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:12:22.714 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:12:22.714 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:12:22.719 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:12:25.971 -04:00 [INF] Starting Noodle
+2021-08-02 22:12:26.089 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:12:26.093 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:12:26.098 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:12:26.678 -04:00 [INF] Gateway: Connected
+2021-08-02 22:12:27.193 -04:00 [INF] Gateway: Ready
+2021-08-02 22:14:24.958 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:14:24.959 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:14:24.959 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:14:24.964 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:14:27.866 -04:00 [INF] Starting Noodle
+2021-08-02 22:14:27.977 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:14:27.981 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:14:27.986 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:14:28.631 -04:00 [INF] Gateway: Connected
+2021-08-02 22:14:29.145 -04:00 [INF] Gateway: Ready
+2021-08-02 22:15:53.745 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:15:53.746 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:15:53.746 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:15:53.752 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:15:56.761 -04:00 [INF] Starting Noodle
+2021-08-02 22:15:56.878 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:15:56.882 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:15:56.887 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:15:57.542 -04:00 [INF] Gateway: Connected
+2021-08-02 22:15:58.048 -04:00 [INF] Gateway: Ready
+2021-08-02 22:19:33.291 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:19:33.291 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:19:33.292 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:19:33.296 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:19:36.315 -04:00 [INF] Starting Noodle
+2021-08-02 22:19:36.426 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:19:36.429 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:19:36.435 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:19:37.069 -04:00 [INF] Gateway: Connected
+2021-08-02 22:19:37.588 -04:00 [INF] Gateway: Ready
+2021-08-02 22:23:20.335 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:23:20.336 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:23:20.336 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:23:20.341 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:23:24.104 -04:00 [INF] Starting Noodle
+2021-08-02 22:23:24.218 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:23:24.221 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:23:24.226 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:23:24.791 -04:00 [INF] Gateway: Connected
+2021-08-02 22:23:25.305 -04:00 [INF] Gateway: Ready
+2021-08-02 22:27:55.026 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:27:55.027 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:27:55.027 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:27:55.032 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:27:58.498 -04:00 [INF] Starting Noodle
+2021-08-02 22:27:58.610 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:27:58.614 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:27:58.619 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:27:59.161 -04:00 [INF] Gateway: Connected
+2021-08-02 22:27:59.681 -04:00 [INF] Gateway: Ready
+2021-08-02 22:31:51.014 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:31:51.015 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:31:51.015 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:31:51.020 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:31:54.063 -04:00 [INF] Starting Noodle
+2021-08-02 22:31:54.176 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:31:54.180 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:31:54.185 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:31:54.768 -04:00 [INF] Gateway: Connected
+2021-08-02 22:31:55.296 -04:00 [INF] Gateway: Ready
+2021-08-02 22:32:34.966 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:32:34.967 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:32:34.968 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:32:34.973 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:33:25.981 -04:00 [INF] Starting Noodle
+2021-08-02 22:33:26.092 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:33:26.095 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:33:26.100 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:33:26.720 -04:00 [INF] Gateway: Connected
+2021-08-02 22:33:27.240 -04:00 [INF] Gateway: Ready
+2021-08-02 22:34:23.047 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:34:23.047 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:34:23.048 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:34:23.053 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:34:26.083 -04:00 [INF] Starting Noodle
+2021-08-02 22:34:26.192 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:34:26.196 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:34:26.201 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:34:26.707 -04:00 [INF] Gateway: Connected
+2021-08-02 22:34:27.220 -04:00 [INF] Gateway: Ready
+2021-08-02 22:40:25.561 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:40:25.562 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:40:25.562 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:40:25.567 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:40:28.389 -04:00 [INF] Starting Noodle
+2021-08-02 22:40:28.504 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:40:28.508 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:40:28.513 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:40:29.084 -04:00 [INF] Gateway: Connected
+2021-08-02 22:40:29.602 -04:00 [INF] Gateway: Ready
+2021-08-02 22:41:31.349 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:41:31.350 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:41:31.350 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:41:31.355 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:41:34.130 -04:00 [INF] Starting Noodle
+2021-08-02 22:41:34.253 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:41:34.257 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:41:34.262 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:41:34.799 -04:00 [INF] Gateway: Connected
+2021-08-02 22:41:35.322 -04:00 [INF] Gateway: Ready
+2021-08-02 22:45:11.159 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:45:11.160 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:45:11.160 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:45:11.165 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:45:14.152 -04:00 [INF] Starting Noodle
+2021-08-02 22:45:14.273 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:45:14.277 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:45:14.282 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:45:14.852 -04:00 [INF] Gateway: Connected
+2021-08-02 22:45:15.361 -04:00 [INF] Gateway: Ready
+2021-08-02 22:45:40.147 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:45:40.148 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:45:40.148 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:45:40.153 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:45:41.960 -04:00 [INF] Starting Noodle
+2021-08-02 22:45:42.077 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:45:42.081 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:45:42.085 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:45:42.680 -04:00 [INF] Gateway: Connected
+2021-08-02 22:45:43.197 -04:00 [INF] Gateway: Ready
+2021-08-02 22:45:54.000 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:45:54.001 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:45:54.001 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:45:54.006 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:45:56.805 -04:00 [INF] Starting Noodle
+2021-08-02 22:45:56.919 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:45:56.922 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:45:56.927 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:45:57.440 -04:00 [INF] Gateway: Connected
+2021-08-02 22:45:57.963 -04:00 [INF] Gateway: Ready
+2021-08-02 22:46:49.490 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:46:49.491 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:46:49.491 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:46:49.496 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:46:52.412 -04:00 [INF] Starting Noodle
+2021-08-02 22:46:52.527 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:46:52.531 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:46:52.536 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:46:53.099 -04:00 [INF] Gateway: Connected
+2021-08-02 22:46:53.611 -04:00 [INF] Gateway: Ready
+2021-08-02 22:47:31.150 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:47:31.151 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:47:31.151 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:47:31.157 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:47:35.727 -04:00 [INF] Starting Noodle
+2021-08-02 22:47:35.841 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:47:35.844 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:47:35.849 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:47:36.383 -04:00 [INF] Gateway: Connected
+2021-08-02 22:47:36.896 -04:00 [INF] Gateway: Ready
+2021-08-02 22:48:42.604 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:48:42.605 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:48:42.605 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:48:42.610 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:48:45.710 -04:00 [INF] Starting Noodle
+2021-08-02 22:48:45.825 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:48:45.829 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:48:45.834 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:48:46.435 -04:00 [INF] Gateway: Connected
+2021-08-02 22:48:46.941 -04:00 [INF] Gateway: Ready
+2021-08-02 22:49:53.540 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:49:53.541 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:49:53.541 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:49:53.546 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:49:58.771 -04:00 [INF] Starting Noodle
+2021-08-02 22:49:58.882 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:49:58.885 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:49:58.890 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:49:59.434 -04:00 [INF] Gateway: Connected
+2021-08-02 22:49:59.951 -04:00 [INF] Gateway: Ready
+2021-08-02 22:52:36.059 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:52:36.059 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:52:36.060 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:52:36.064 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:52:39.030 -04:00 [INF] Starting Noodle
+2021-08-02 22:52:39.144 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:52:39.147 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:52:39.153 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:52:39.840 -04:00 [INF] Gateway: Connected
+2021-08-02 22:52:40.351 -04:00 [INF] Gateway: Ready
+2021-08-02 22:52:41.468 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:52:41.470 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:52:41.470 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:52:41.475 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:53:08.590 -04:00 [INF] Starting Noodle
+2021-08-02 22:53:08.702 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:53:08.706 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:53:08.711 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:53:09.235 -04:00 [INF] Gateway: Connected
+2021-08-02 22:53:09.762 -04:00 [INF] Gateway: Ready
+2021-08-02 22:53:12.455 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 22:53:12.457 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 22:53:12.458 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 22:53:12.463 -04:00 [INF] Gateway: Disconnected
+2021-08-02 22:54:55.775 -04:00 [INF] Starting Noodle
+2021-08-02 22:54:55.886 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 22:54:55.890 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 22:54:55.895 -04:00 [INF] Application fully started
+2021-08-02 22:54:55.895 -04:00 [INF] Gateway: Connecting
+2021-08-02 22:54:56.455 -04:00 [INF] Gateway: Connected
+2021-08-02 22:54:56.982 -04:00 [INF] Gateway: Ready
+2021-08-02 23:32:26.003 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:32:26.004 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:32:26.004 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:32:26.009 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:32:28.670 -04:00 [INF] Starting Noodle
+2021-08-02 23:32:28.786 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:32:28.790 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:32:28.795 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:32:29.383 -04:00 [INF] Gateway: Connected
+2021-08-02 23:32:29.899 -04:00 [INF] Gateway: Ready
+2021-08-02 23:33:37.043 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:33:37.044 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:33:37.044 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:33:37.050 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:33:40.358 -04:00 [INF] Starting Noodle
+2021-08-02 23:33:40.477 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:33:40.480 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:33:40.486 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:33:41.014 -04:00 [INF] Gateway: Connected
+2021-08-02 23:33:41.540 -04:00 [INF] Gateway: Ready
+2021-08-02 23:34:08.475 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:34:08.476 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:34:08.476 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:34:08.481 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:34:11.173 -04:00 [INF] Starting Noodle
+2021-08-02 23:34:11.286 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:34:11.290 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:34:11.295 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:34:11.314 -04:00 [FTL] Host terminated unexpectedly
+System.InvalidOperationException: Failed to create "Noodle.Modules.EmoteModule", dependency "ServiceCollection" was not found.
+   at Discord.Commands.ReflectionUtils.GetMember(CommandService commands, IServiceProvider services, Type memberType, TypeInfo ownerType)
+   at Discord.Commands.ReflectionUtils.<>c__DisplayClass2_0`1.<CreateBuilder>b__0(IServiceProvider services)
+   at Discord.Commands.ReflectionUtils.CreateObject[T](TypeInfo typeInfo, CommandService commands, IServiceProvider services)
+   at Discord.Commands.Builders.ModuleBuilder.BuildImpl(CommandService service, IServiceProvider services, ModuleInfo parent)
+   at Discord.Commands.Builders.ModuleBuilder.Build(CommandService service, IServiceProvider services)
+   at Discord.Commands.ModuleClassBuilder.BuildAsync(IEnumerable`1 validTypes, CommandService service, IServiceProvider services)
+   at Discord.Commands.CommandService.AddModulesAsync(Assembly assembly, IServiceProvider services)
+   at Noodle.Services.StartupService.ExecuteAsync(CancellationToken cancellationToken) in D:\dotnet-workspace\Noodle\src\Noodle\Services\StartupService.cs:line 44
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Noodle.NoodleHost.RunAsync() in D:\dotnet-workspace\Noodle\src\Noodle\NoodleHost.cs:line 42
+2021-08-02 23:34:41.638 -04:00 [INF] Starting Noodle
+2021-08-02 23:34:41.756 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:34:41.760 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:34:41.765 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:34:41.784 -04:00 [FTL] Host terminated unexpectedly
+System.InvalidOperationException: Failed to create "Noodle.Modules.EmoteModule", dependency "ServiceCollection" was not found.
+   at Discord.Commands.ReflectionUtils.GetMember(CommandService commands, IServiceProvider services, Type memberType, TypeInfo ownerType)
+   at Discord.Commands.ReflectionUtils.<>c__DisplayClass2_0`1.<CreateBuilder>b__0(IServiceProvider services)
+   at Discord.Commands.ReflectionUtils.CreateObject[T](TypeInfo typeInfo, CommandService commands, IServiceProvider services)
+   at Discord.Commands.Builders.ModuleBuilder.BuildImpl(CommandService service, IServiceProvider services, ModuleInfo parent)
+   at Discord.Commands.Builders.ModuleBuilder.Build(CommandService service, IServiceProvider services)
+   at Discord.Commands.ModuleClassBuilder.BuildAsync(IEnumerable`1 validTypes, CommandService service, IServiceProvider services)
+   at Discord.Commands.CommandService.AddModulesAsync(Assembly assembly, IServiceProvider services)
+   at Noodle.Services.StartupService.ExecuteAsync(CancellationToken cancellationToken) in D:\dotnet-workspace\Noodle\src\Noodle\Services\StartupService.cs:line 44
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Noodle.NoodleHost.RunAsync() in D:\dotnet-workspace\Noodle\src\Noodle\NoodleHost.cs:line 42
+2021-08-02 23:35:23.808 -04:00 [INF] Starting Noodle
+2021-08-02 23:35:23.920 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:35:23.924 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:35:23.929 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:35:24.628 -04:00 [INF] Gateway: Connected
+2021-08-02 23:35:25.152 -04:00 [INF] Gateway: Ready
+2021-08-02 23:35:28.697 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+2021-08-02 23:35:34.775 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:35:34.776 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:35:34.776 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:35:34.781 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:35:36.606 -04:00 [INF] Starting Noodle
+2021-08-02 23:35:36.717 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:35:36.721 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:35:36.726 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:35:37.193 -04:00 [INF] Gateway: Connected
+2021-08-02 23:35:37.706 -04:00 [INF] Gateway: Ready
+2021-08-02 23:35:40.219 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+2021-08-02 23:35:42.829 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.ArgumentException: Message content is too long, length must be less or equal to 2000. (Parameter 'Content')
+   at Discord.API.DiscordRestApiClient.CreateMessageAsync(UInt64 channelId, CreateMessageParams args, RequestOptions options)
+   at Discord.Rest.ChannelHelper.SendMessageAsync(IMessageChannel channel, BaseDiscordClient client, String text, Boolean isTTS, Embed embed, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component, RequestOptions options)
+   at Discord.WebSocket.SocketTextChannel.Discord.IMessageChannel.SendMessageAsync(String text, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Discord.Commands.ModuleBase`1.ReplyAsync(String message, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 23
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:35:42.829 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.ArgumentException: Message content is too long, length must be less or equal to 2000. (Parameter 'Content')
+   at Discord.API.DiscordRestApiClient.CreateMessageAsync(UInt64 channelId, CreateMessageParams args, RequestOptions options)
+   at Discord.Rest.ChannelHelper.SendMessageAsync(IMessageChannel channel, BaseDiscordClient client, String text, Boolean isTTS, Embed embed, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component, RequestOptions options)
+   at Discord.WebSocket.SocketTextChannel.Discord.IMessageChannel.SendMessageAsync(String text, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Discord.Commands.ModuleBase`1.ReplyAsync(String message, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 23
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:35:42.830 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+2021-08-02 23:37:56.059 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:37:56.059 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:37:56.060 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:37:56.065 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:37:58.950 -04:00 [INF] Starting Noodle
+2021-08-02 23:37:59.064 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:37:59.068 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:37:59.073 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:37:59.599 -04:00 [INF] Gateway: Connected
+2021-08-02 23:38:00.120 -04:00 [INF] Gateway: Ready
+2021-08-02 23:38:01.871 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.ArgumentException: Message content is too long, length must be less or equal to 2000. (Parameter 'Content')
+   at Discord.API.DiscordRestApiClient.CreateMessageAsync(UInt64 channelId, CreateMessageParams args, RequestOptions options)
+   at Discord.Rest.ChannelHelper.SendMessageAsync(IMessageChannel channel, BaseDiscordClient client, String text, Boolean isTTS, Embed embed, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component, RequestOptions options)
+   at Discord.WebSocket.SocketTextChannel.Discord.IMessageChannel.SendMessageAsync(String text, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Discord.Commands.ModuleBase`1.ReplyAsync(String message, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 25
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:38:01.871 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.ArgumentException: Message content is too long, length must be less or equal to 2000. (Parameter 'Content')
+   at Discord.API.DiscordRestApiClient.CreateMessageAsync(UInt64 channelId, CreateMessageParams args, RequestOptions options)
+   at Discord.Rest.ChannelHelper.SendMessageAsync(IMessageChannel channel, BaseDiscordClient client, String text, Boolean isTTS, Embed embed, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component, RequestOptions options)
+   at Discord.WebSocket.SocketTextChannel.Discord.IMessageChannel.SendMessageAsync(String text, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Discord.Commands.ModuleBase`1.ReplyAsync(String message, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 25
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:38:12.486 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:38:12.487 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:38:12.487 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:38:12.493 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:38:16.153 -04:00 [INF] Starting Noodle
+2021-08-02 23:38:16.266 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:38:16.269 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:38:16.275 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:38:16.806 -04:00 [INF] Gateway: Connected
+2021-08-02 23:38:17.314 -04:00 [INF] Gateway: Ready
+2021-08-02 23:40:16.670 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:40:16.671 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:40:16.671 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:40:16.677 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:40:19.477 -04:00 [INF] Starting Noodle
+2021-08-02 23:40:19.592 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:40:19.596 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:40:19.601 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:40:20.219 -04:00 [INF] Gateway: Connected
+2021-08-02 23:40:20.740 -04:00 [INF] Gateway: Ready
+2021-08-02 23:42:27.042 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:42:27.043 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:42:27.043 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:42:27.048 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:42:35.841 -04:00 [INF] Starting Noodle
+2021-08-02 23:42:35.954 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:42:35.958 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:42:35.963 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:42:36.554 -04:00 [INF] Gateway: Connected
+2021-08-02 23:42:37.061 -04:00 [INF] Gateway: Ready
+2021-08-02 23:44:53.010 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:44:53.011 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:44:53.012 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:44:53.017 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:44:56.035 -04:00 [INF] Starting Noodle
+2021-08-02 23:44:56.155 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:44:56.161 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:44:56.167 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:44:56.738 -04:00 [INF] Gateway: Connected
+2021-08-02 23:44:57.261 -04:00 [INF] Gateway: Ready
+2021-08-02 23:52:57.825 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:52:57.826 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:52:57.827 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:52:57.831 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:53:00.876 -04:00 [INF] Starting Noodle
+2021-08-02 23:53:00.988 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:53:00.992 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:53:00.997 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:53:01.520 -04:00 [INF] Gateway: Connected
+2021-08-02 23:53:02.040 -04:00 [INF] Gateway: Ready
+2021-08-02 23:53:05.021 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 23
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:53:05.022 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 23
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:53:19.002 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:53:19.003 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:53:19.003 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:53:19.009 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:53:21.474 -04:00 [INF] Starting Noodle
+2021-08-02 23:53:21.586 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:53:21.590 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:53:21.595 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:53:22.264 -04:00 [INF] Gateway: Connected
+2021-08-02 23:53:22.787 -04:00 [INF] Gateway: Ready
+2021-08-02 23:53:27.976 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 24
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:53:27.976 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 24
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:54:52.090 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:54:52.090 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:54:52.091 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:54:52.096 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:54:54.682 -04:00 [INF] Starting Noodle
+2021-08-02 23:54:54.804 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:54:54.808 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:54:54.812 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:54:55.385 -04:00 [INF] Gateway: Connected
+2021-08-02 23:54:55.904 -04:00 [INF] Gateway: Ready
+2021-08-02 23:54:57.612 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 24
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:54:57.612 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 24
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:57:19.081 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:57:19.082 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:57:19.082 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:57:19.087 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:57:25.336 -04:00 [INF] Starting Noodle
+2021-08-02 23:57:25.453 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:57:25.457 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:57:25.462 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:57:26.028 -04:00 [INF] Gateway: Connected
+2021-08-02 23:57:26.537 -04:00 [INF] Gateway: Ready
+2021-08-02 23:57:28.052 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at Noodle.Extensions.StringBuilderExtensions.TAppendLine[T](StringBuilder builder, T item, Int32 newLines) in D:\dotnet-workspace\Noodle\src\Noodle\Extensions\StringBuilderExtensions.cs:line 16
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 24
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:57:28.052 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at Noodle.Extensions.StringBuilderExtensions.TAppendLine[T](StringBuilder builder, T item, Int32 newLines) in D:\dotnet-workspace\Noodle\src\Noodle\Extensions\StringBuilderExtensions.cs:line 16
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 24
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:57:56.605 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:57:56.606 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:57:56.606 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:57:56.611 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:58:00.055 -04:00 [INF] Starting Noodle
+2021-08-02 23:58:00.168 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:58:00.172 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:58:00.176 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:58:00.740 -04:00 [INF] Gateway: Connected
+2021-08-02 23:58:01.260 -04:00 [INF] Gateway: Ready
+2021-08-02 23:58:29.637 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:58:29.639 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:58:29.639 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:58:29.645 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:58:32.295 -04:00 [INF] Starting Noodle
+2021-08-02 23:58:32.409 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:58:32.413 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:58:32.418 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:58:33.043 -04:00 [INF] Gateway: Connected
+2021-08-02 23:58:33.558 -04:00 [INF] Gateway: Ready
+2021-08-02 23:59:00.820 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:59:00.821 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:59:00.821 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:59:00.826 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:59:02.670 -04:00 [INF] Starting Noodle
+2021-08-02 23:59:02.784 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:59:02.788 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:59:02.793 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:59:03.327 -04:00 [INF] Gateway: Connected
+2021-08-02 23:59:03.833 -04:00 [INF] Gateway: Ready
+2021-08-02 23:59:06.508 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Unable to locate service
+   at Noodle.Extensions.ServiceExtensions.GetService[T](IServiceCollection collection) in D:\dotnet-workspace\Noodle\src\Noodle\Extensions\ServiceExtensions.cs:line 14
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 22
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:59:06.509 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> System.NullReferenceException: Unable to locate service
+   at Noodle.Extensions.ServiceExtensions.GetService[T](IServiceCollection collection) in D:\dotnet-workspace\Noodle\src\Noodle\Extensions\ServiceExtensions.cs:line 14
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 22
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-02 23:59:52.555 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-02 23:59:52.556 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-02 23:59:52.556 -04:00 [INF] Gateway: Disconnecting
+2021-08-02 23:59:52.561 -04:00 [INF] Gateway: Disconnected
+2021-08-02 23:59:56.259 -04:00 [INF] Starting Noodle
+2021-08-02 23:59:56.374 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-02 23:59:56.378 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-02 23:59:56.383 -04:00 [INF] Gateway: Connecting
+2021-08-02 23:59:56.934 -04:00 [INF] Gateway: Connected
+2021-08-02 23:59:57.451 -04:00 [INF] Gateway: Ready

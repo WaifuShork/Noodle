@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -6,12 +7,10 @@ using System.Threading.Tasks;
 
 using Discord;
 using Discord.Addons.Hosting;
-using Discord.Addons.Interactive;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Noodle.Services;
@@ -37,7 +36,7 @@ namespace Noodle
             
             try
             {
-                AppDomain.CurrentDomain.UnhandledException += (sender, args) => OnUnhandledException(sender, args);
+                AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
                 
                 Log.Information("Starting Noodle");
                 using var host = CreateDefaultBuilder().Build();
@@ -57,15 +56,30 @@ namespace Noodle
 
         private static IHostBuilder CreateDefaultBuilder()
         {
+            var emoteDirectory = Path.Combine("assets", "emotes");
+            if (!Directory.Exists(emoteDirectory))
+            {
+                try
+                {
+                    Log.Information("Creating '{EmoteDirectory}'", emoteDirectory);
+                    Directory.CreateDirectory(emoteDirectory);
+                }
+                catch (Exception exception)
+                {
+                    Log.Fatal(exception, "Unable to create '{EmoteDirectory}', terminating...", emoteDirectory);
+                }
+            }
+
             return Host.CreateDefaultBuilder()
                 .UseSerilog()
                 .ConfigureAppConfiguration(x =>
                 {
+                    // TODO: Saving (The configuration file 'appsettings.json' was not found and is not optional. The physical path is '\Noodle\appsettings.json')
                     var configuration = new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())
                         .AddJsonFile("appsettings.json", false, true)
                         .Build();
-
+                    
                     x.AddConfiguration(configuration);
                 })
                 .ConfigureLogging(x =>
@@ -77,11 +91,9 @@ namespace Noodle
                 {
                     config.SocketConfig = new DiscordSocketConfig
                     {
-                        RateLimitPrecision = RateLimitPrecision.Millisecond,
                         LogLevel = LogSeverity.Verbose,
                         AlwaysDownloadUsers = true,
                         MessageCacheSize = 200,
-                        ExclusiveBulkDelete = false
                     };
                     
                     config.Token = context.Configuration["token"];
@@ -98,10 +110,13 @@ namespace Noodle
                     services
                         .AddHostedService<StartupService>()
                         .AddHostedService<CommandHandler>();
-                    
                     services
-                        .AddSingleton<HttpClient>()
-                        .AddSingleton<InteractiveService>();
+                        .AddSingleton(services)
+                        .AddSingleton<HttpClient>();
+
+                    // This is added so I have access to all the services in 'NamorokaModuleBase', allowing me to pull a service at will,
+                    // mostly pointless but a small QoL feature
+                    services.AddSingleton(services.BuildServiceProvider());
                 })
                 .UseConsoleLifetime();
         }

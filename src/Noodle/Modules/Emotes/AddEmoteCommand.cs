@@ -1,15 +1,13 @@
 ﻿using System;
-using System.IO;
+using Discord;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Discord;
-using Discord.Commands;
 using ImageMagick;
+using Discord.Commands;
 using Noodle.Extensions;
-using Noodle.Models;
 using Noodle.TypeReaders;
-using Serilog;
+using Noodle.Common.Models;
+using System.Threading.Tasks;
 
 namespace Noodle.Modules
 {
@@ -24,82 +22,79 @@ namespace Noodle.Modules
                                         [Summary("The width of the image/gif")] int width = 100,
                                         [Summary("The height of the image/gif")] int height = 100)
         {
-            using (var _ = Context.Channel.EnterTypingState())
+            if (Emote.TryParse(url, out var emote))
             {
-                if (Emote.TryParse(url, out var emote))
-                {
-                    url = emote.Url;
-                }
-                
-                name = name.SanitizeEmoteName();
-                var message = await Context.Channel.SendMessageAsync("This may take a minute...");
-
-                var (normalCap, animatedCap) = Context.Guild.GetEmoteCap();
-                var emotes = await Context.Guild.GetEmotesAsync();
-
-                var animated = emotes.Where(e => e.Animated).ToList();
-                var normal = emotes.Where(e => !e.Animated).ToList();
-
-                string error = null;
-                
-                switch (extension)
-                {
-                    case EmoteType.Gif or EmoteType.Hack:
-                        if (animated.Count >= animatedCap)
-                        {
-                            await message.NotifyEmoteCapReachedAsync(animated.Count, animated.Count);
-                            return;
-                        }
-                        break;
-                    case EmoteType.Png:
-                        if (normal.Count >= normalCap)
-                        {
-                            await message.NotifyEmoteCapReachedAsync(normal.Count, animated.Count);
-                            return;
-                        }
-                        break;
-                }
-
-                switch (extension)
-                {
-                    case EmoteType.Png:
-                    {
-                        error = await UploadEmoteAsync(url, name, width, height);
-                        break;
-                    }
-                    // This is separated for now because of file sizing issues with gifs, we find that 50x50 is the best 
-                    // result to get the lowest file size and retain quality
-                    case EmoteType.Gif:
-                    {
-                        width = 50;
-                        height = 50;
-                        error = await UploadEmoteAsync(url, name, width, height);
-                        break;
-                    }
-                    case EmoteType.Hack:
-                    {
-                        error = await UploadHackedAsync(url, name, width, height);
-                        break;
-                    }
-                }
-
-                if (error != null)
-                {
-                    await Context.Channel.SendErrorEmbedAsync(error);
-                    return;
-                }
-
-                await message.DeleteAsync();
-                await Context.Channel.SendSuccessEmbedAsync($"Added :{name}:");
+                url = emote.Url;
             }
+                
+            name = name.SanitizeEmoteName();
+            var message = await Context.Channel.SendMessageAsync("This may take a minute...");
+
+            var (normalCap, animatedCap) = Context.Guild.GetEmoteCap();
+            var emotes = await Context.Guild.GetEmotesAsync();
+
+            var animated = emotes.Where(e => e.Animated).ToList();
+            var normal = emotes.Where(e => !e.Animated).ToList();
+
+            string error = null;
+                
+            switch (extension)
+            {
+                case EmoteType.Gif or EmoteType.Hack:
+                    if (animated.Count >= animatedCap)
+                    {
+                        await message.NotifyEmoteCapReachedAsync(animated.Count, animated.Count);
+                        return;
+                    }
+                    break;
+                case EmoteType.Png:
+                    if (normal.Count >= normalCap)
+                    {
+                        await message.NotifyEmoteCapReachedAsync(normal.Count, animated.Count);
+                        return;
+                    }
+                    break;
+            }
+
+            switch (extension)
+            {
+                case EmoteType.Png:
+                {
+                    error = await UploadEmoteAsync(url, name, width, height);
+                    break;
+                }
+                // This is separated for now because of file sizing issues with gifs, we find that 50x50 is the best 
+                // result to get the lowest file size and retain quality
+                case EmoteType.Gif:
+                {
+                    width = 50;
+                    height = 50;
+                    error = await UploadEmoteAsync(url, name, width, height);
+                    break;
+                }
+                case EmoteType.Hack:
+                {
+                    error = await UploadHackedAsync(url, name, width, height);
+                    break;
+                }
+            }
+
+            if (error != null)
+            {
+                await Context.Channel.SendErrorAsync(error);
+                return;
+            }
+
+            await message.DeleteAsync();
+            await Context.Channel.SendSuccessAsync($"Added :{name}:");
         }
         
         private async Task<string> UploadEmoteAsync(string url, string name, int width, int height)
         {
             try
             {
-                using var magick =  await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, name);
-                using var img = magick.ToEmote(width, height);
+                await using var magick =  await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, name);
+                using var img = await magick.ToEmoteAsync(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return null;
             }
@@ -114,7 +109,7 @@ namespace Noodle.Modules
             try
             {
                 await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, name);
-                using var img = magick.ToHacked(name, width, height);
+                using var img = await magick.ToHackedAsync(width, height);
                 await Context.Guild.CreateEmoteAsync(name, img);
                 return null;
             }

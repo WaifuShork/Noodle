@@ -1,10 +1,12 @@
 ﻿using Discord.Commands;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Noodle.Attributes;
 
 namespace Noodle.Modules
 {
     [ModuleName("Information")]
+    [Summary("Provides information about the bot, users, server, or commands")]
     public sealed partial class InformationModule : NoodleModuleBase
     {
         private readonly IConfiguration _configuration;

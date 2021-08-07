@@ -8,13 +8,15 @@ namespace Noodle.Utilities
 {
     public static class JsonUtilities
     {
-        public static async Task SerializeAsync<T>(T item, string path, JsonSerializerOptions options = null) where T : notnull
+        private static readonly JsonSerializerOptions JsonSerializerOptions = new()
         {
-            options ??= new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+        
+        public static async Task WriteToFile<T>(T item, string path, JsonSerializerOptions options = null) where T : notnull
+        {
+            options ??= JsonSerializerOptions;
 
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -28,16 +30,12 @@ namespace Noodle.Utilities
             
             await using var stream = new MemoryStream();
             await JsonSerializer.SerializeAsync(stream, item, options);
-            await File.WriteAllTextAsync(path, Encoding.UTF8.GetString(stream.ToArray()));
+            await File.WriteAllTextAsync(path, Utilities.UTF8.GetString(stream.ToArray()));
         }
 
-        public static async Task<T> DeserializeAsync<T>(string path, JsonSerializerOptions options = null)
+        public static async Task<T> ReadFromFile<T>(string path, JsonSerializerOptions options = null)
         {
-            options ??= new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
+            options ??= JsonSerializerOptions;
             
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -45,7 +43,7 @@ namespace Noodle.Utilities
             }
             
             var contents = await File.ReadAllTextAsync(path);
-            await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(contents));
+            await using var stream = new MemoryStream(Utilities.UTF8.GetBytes(contents));
             return await JsonSerializer.DeserializeAsync<T>(stream, options);
         }
     }

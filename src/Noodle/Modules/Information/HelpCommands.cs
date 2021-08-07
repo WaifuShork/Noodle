@@ -1,9 +1,9 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
+using System.Text;
 using Discord.Commands;
-using Noodle.Attributes;
 using Noodle.Extensions;
+using Noodle.Attributes;
+using System.Threading.Tasks;
 
 namespace Noodle.Modules
 {
@@ -24,12 +24,12 @@ namespace Noodle.Modules
             foreach (var module in availableModules)
             {
                 var moduleName = module.GetAttribute<ModuleNameAttribute>();
-                sb.AppendLine($"• {moduleName.Name}");
+                sb.AppendLine($"• **{moduleName.Name}**");
                 sb.AppendLine($"⠀⠀- {module.Summary}");
                 sb.AppendLine();
             }
 
-            await Context.Channel.SendAsync(CreateEmbed("[Command Modules]")
+            await Context.Channel.SendAsync(CreateEmbed("[ Command Modules ]")
                 .WithColor(Color.Blue)
                 .WithDescription(sb.ToString()));
         }
@@ -46,7 +46,7 @@ namespace Noodle.Modules
             
             if (commandInfo == null && moduleInfo == null)
             {
-                await Context.Channel.SendErrorEmbedAsync($"Unable to locate any command or module by the name of '{identifier}'");
+                await Context.Channel.SendErrorAsync($"Unable to locate any command or module by the name of '{identifier}'");
             }
 
             if (commandInfo != null && moduleInfo == null)

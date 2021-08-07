@@ -23,7 +23,7 @@ namespace Noodle.Extensions
             return emoteName.Trim().Replace(" ", "_").TrimTo(32, true);
         }
         
-        public static string TrimTo(this string str, int maxLength, bool hideDots = false)
+        public static string TrimTo(this string str, int maxLength, bool showDots = false)
         {
             if (maxLength < 0)
             {
@@ -42,7 +42,7 @@ namespace Noodle.Extensions
                 return str;
             }
 
-            if (hideDots)
+            if (showDots == false)
             {
                 return string.Concat(str.Take(maxLength));
             }

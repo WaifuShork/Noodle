@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Diagnostics.Eventing.Reader;
+using Discord;
 using System.IO;
+using ImageMagick;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Discord;
 using Discord.Commands;
-using ImageMagick;
-using Microsoft.VisualBasic.CompilerServices;
 using Noodle.Extensions;
-using Noodle.Models;
 using Noodle.TypeReaders;
-using Serilog;
+using Noodle.Common.Models;
+using System.Threading.Tasks;
+using Humanizer;
 
 namespace Noodle.Modules
 {
@@ -23,9 +21,8 @@ namespace Noodle.Modules
         public async Task DisplayEmoteCountAsync(bool showAll = false)
         {
             var guilds = Context.User.MutualGuilds;
-
             var counter = guilds.Where(guild => guild.Name.Contains("ShorkMotes")).Sum(guild => guild.Emotes.Count);
-
+            
             var emotes = await Context.Guild.GetEmotesAsync();
             var animatedEmotes = emotes.Where(e => e.Animated).ToList();
             var normalEmotes = emotes.Where(e => !e.Animated).ToList();
@@ -44,8 +41,8 @@ namespace Noodle.Modules
             
                 foreach (var guild in emoteGuilds)
                 {
-                    var template = $"Normal: {guild.Emotes.Where(e => !e.Animated).Count()}\n" +
-                                   $"Animated: {guild.Emotes.Where(e => e.Animated).Count()}";
+                    var template = $"Normal: {guild.Emotes.Count(e => !e.Animated)}\n" +
+                                        $"Animated: {guild.Emotes.Count(e => e.Animated)}";
                     builder.AddField(guild.Name, template);
                 }
             }
@@ -58,16 +55,8 @@ namespace Noodle.Modules
         [Command("save")]
         public async Task SaveEmoteAsync(EmoteType type, string input, string category = "null")
         {
-            var animated = false;
-            switch (type)
-            {
-                case EmoteType.Gif:
-                    animated = true;
-                    break;
-                case EmoteType.Png:
-                    animated = false;
-                    break;
-            }
+            var animated = type == EmoteType.Gif;
+            
             var url = input;
             if (Emote.TryParse(input, out var emote))
             {
@@ -87,7 +76,7 @@ namespace Noodle.Modules
             };
             
             await DatabaseUtilities.AddAsync(emoteModel, _emoteDatabase);
-            await Context.Channel.SendSuccessEmbedAsync($"Added **{emote.Name}** to the database");
+            await Context.Channel.SendSuccessAsync($"Added **{emote.Name}** to the database");
         }
 
         [Command("addall")]
@@ -135,7 +124,7 @@ namespace Noodle.Modules
         }
 
         [Command("load")]
-        public async Task LoadEmoteAsync(string input, string category)
+        public async Task LoadEmoteAsync(string input, string category = "null")
         {
             var name = input;
             if (Emote.TryParse(input, out var emote))
@@ -152,7 +141,7 @@ namespace Noodle.Modules
             }
             catch (NullReferenceException exception)
             {
-                await Context.Channel.SendErrorEmbedAsync(exception.Message);
+                await Context.Channel.SendErrorAsync(exception.Message);
             }
         }
 
@@ -166,7 +155,7 @@ namespace Noodle.Modules
             }
             
             await DatabaseUtilities.RemoveAsync(name, category, _emoteDatabase);
-            await Context.Channel.SendSuccessEmbedAsync($"Removed **{name}** from the database");
+            await Context.Channel.SendSuccessAsync($"Removed **{name}** from the database");
         }
         
         [Command("draw")]
@@ -183,35 +172,38 @@ namespace Noodle.Modules
                                     [Summary("The font style")] FontStyleType style = FontStyleType.Undefined,
                                     [Summary("The font weight")] FontWeight weight = FontWeight.Undefined,
                                     [Summary("The font stretching")] FontStretch stretch = FontStretch.Undefined)
-        {  
-            using (var _ = Context.Channel.EnterTypingState())
+        {
+            if (Emote.TryParse(url, out var emote))
             {
-                if (Emote.TryParse(url, out var emote))
-                {
-                    url = emote.Url;
-                }
+                url = emote.Url;
+            }
                 
-                switch (type)
+            switch (type)
+            {
+                case EmoteType.Png:
                 {
-                    case EmoteType.Png:
-                    {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "test.png");
-                        magick.DrawText(text, fillColor, strokeColor, fontSize, xCoord, yCoord, ignoreAspect, alignment, style, weight, stretch);
-                        using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "test.png");
-                        break;
-                    }
-                    case EmoteType.Gif:
-                    {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "test.png");
-                        magick.DrawText(text, fillColor, strokeColor, fontSize, xCoord, yCoord, ignoreAspect, alignment, style, weight, stretch);
-                        using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, "test.gif");
-                        break;
-                    }
-                    default:
-                        await Context.Channel.SendErrorEmbedAsync("Unsupported file type");
-                        break;
+                    await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "test.png");
+                    magick.DrawText(text, fillColor, strokeColor, fontSize, xCoord, yCoord, ignoreAspect, alignment, style, weight, stretch);
+                    await using var stream = magick.ToStream();
+                    await Context.Channel.SendFileAsync(stream, "test.png");
+                    break;
+                }
+                case EmoteType.Gif:
+                {
+                    await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "test.png");
+                    magick.DrawText(text, fillColor, strokeColor, fontSize, xCoord, yCoord, ignoreAspect, alignment, style, weight, stretch);
+                    await using var stream = magick.ToStream();
+                    await Context.Channel.SendFileAsync(stream, "test.gif");
+                    break;
+                }
+                case EmoteType.Hack:
+                {
+                    await Context.Channel.SendUnsupportedAsync($"`{type.Humanize()}` is not valid for `{nameof(DrawAsync)}`");
+                    break;
+                }
+                default:
+                {
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
             }
         }
@@ -219,16 +211,13 @@ namespace Noodle.Modules
         [Command("sizeof")]
         public async Task SizeOfFileAsync(EmoteType type, string url)
         {
-            using (var _ = Context.Channel.EnterTypingState())
+            if (Emote.TryParse(url, out var emote))
             {
-                if (Emote.TryParse(url, out var emote))
-                {
-                    await SendFileSize(type, emote.Url);
-                    return;
-                }
-                
-                await SendFileSize(type, url);
+                await SendFileSize(type, emote.Url);
+                return;
             }
+                
+            await SendFileSize(type, url);
         }
         
         private async Task SendFileSize(EmoteType type, string url)
@@ -255,9 +244,15 @@ namespace Noodle.Modules
                         .WithDescription($"Size: {size}"));
                     break;
                 }
-                default:
-                    await Context.Channel.SendErrorEmbedAsync("Unsupported file type");
+                case EmoteType.Hack:
+                {
+                    await Context.Channel.SendUnsupportedAsync($"`{type.Humanize()}` is not valid for `{nameof(SizeOfFileAsync)}`");
                     break;
+                }
+                default:
+                {
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                }
             }
         }
     }

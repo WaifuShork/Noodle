@@ -1,15 +1,15 @@
 ﻿using System;
+using Discord;
 using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Discord;
 using ImageMagick;
+using System.Net.Http;
 using Noodle.Extensions;
+using System.Threading.Tasks;
 
-namespace Noodle.Models
+namespace Noodle.Common.Models
 {
-    public class MagickSystem : IDisposable, IAsyncDisposable
+    public sealed class MagickSystem : IDisposable, IAsyncDisposable
     {
         private MagickImage _image;
         private MagickImageCollection _collection;
@@ -18,11 +18,7 @@ namespace Noodle.Models
         private string _databasePath = Path.Combine("assets", "emotes.json");
         private static string _filePath;
 
-        public string FilePath
-        {
-            get => _filePath;
-            set => _filePath = value;
-        }
+        public string FilePath => _filePath;
 
         public int Width
         {
@@ -50,11 +46,11 @@ namespace Noodle.Models
             }
         }
 
-        public static async Task<MagickSystem> CreateAsync<T>(HttpClient client, string url, string name)
+        public static async Task<MagickSystem> CreateAsync<TType>(HttpClient client, string url, string name)
         {
             if (client == null)
             {
-                throw new ArgumentNullException(nameof(client), "Client was not properly injected");
+                throw new ArgumentNullException(nameof(client), "Client cannot be null or uninitialized");
             }
 
             var response = await client.GetAsync(url.SanitizeUrl());
@@ -63,11 +59,10 @@ namespace Noodle.Models
                 throw new HttpRequestException("Status did not return OK");
             }
 
-            using var stream = await response.Content.ReadAsStreamAsync();
-
+            await using var stream = await response.Content.ReadAsStreamAsync();
             var magick = new MagickSystem();
             
-            if (typeof(T) == typeof(MagickImage))
+            if (typeof(TType) == typeof(MagickImage))
             {
                 magick._isImage = true;
                 magick._image = new MagickImage(stream);
@@ -76,7 +71,7 @@ namespace Noodle.Models
                 return magick;
             }
 
-            if (typeof(T) == typeof(MagickImageCollection))
+            if (typeof(TType) == typeof(MagickImageCollection))
             {
                 magick._isImage = false;
                 magick._collection = new MagickImageCollection(stream);
@@ -85,7 +80,7 @@ namespace Noodle.Models
                 return magick;
             }
 
-            throw new ArgumentException("TType can only be MagickImage or MagickImageCollection", nameof(T));
+            throw new ArgumentException("TType can only be MagickImage or MagickImageCollection", nameof(TType));
         }
         
         public void Flip()
@@ -452,7 +447,7 @@ namespace Noodle.Models
             return _collection.ToByteArray();
         }
 
-        public Image ToEmote(int width, int height)
+        public async Task<Image> ToEmoteAsync(int width, int height)
         {
             Resize(width, height);
 
@@ -463,11 +458,11 @@ namespace Noodle.Models
                 throw new Exception($"File size too large ({size})");
             }
 
-            WriteAsync(_filePath).GetAwaiter().GetResult();
+            await WriteAsync(_filePath);
             return new Image(_filePath);
         }
 
-        public Image ToHacked(string name, int width, int height)
+        public async Task<Image> ToHackedAsync(int width, int height)
         {
             using var image = new MagickImage(_collection[0]);
             _collection.Add(image);
@@ -479,12 +474,12 @@ namespace Noodle.Models
                 var size = fileSize.FormatSize();
                 throw new Exception($"File size too large ({size})");
             }
-            
-            WriteAsync(_filePath).GetAwaiter().GetResult();
+
+            await WriteAsync(_filePath);
             return new Image(_filePath);
         }
-        
-        protected virtual void Dispose(bool disposing)
+
+        private void Dispose(bool disposing)
         {
             if (disposing)
             {
@@ -502,7 +497,7 @@ namespace Noodle.Models
             GC.SuppressFinalize(this);
         }
 
-        protected virtual async ValueTask DisposeAsyncCore()
+        private async ValueTask DisposeAsyncCore()
         {
             await Task.Run(() =>
             {

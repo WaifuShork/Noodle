@@ -1,0 +1,554 @@
+2021-08-06 20:28:12.793 -04:00 [INF] Starting Noodle
+2021-08-06 20:28:13.843 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 20:28:13.847 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 20:28:13.853 -04:00 [INF] Gateway: Connecting
+2021-08-06 20:28:14.481 -04:00 [INF] Gateway: Connected
+2021-08-06 20:28:15.000 -04:00 [INF] Gateway: Ready
+2021-08-06 20:30:03.741 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 20:30:03.846 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 20:31:08.004 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 20:31:08.005 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 20:31:08.006 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 20:31:08.011 -04:00 [INF] Gateway: Disconnected
+2021-08-06 20:31:11.441 -04:00 [INF] Starting Noodle
+2021-08-06 20:31:11.567 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 20:31:11.570 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 20:31:11.576 -04:00 [INF] Gateway: Connecting
+2021-08-06 20:31:12.117 -04:00 [INF] Gateway: Connected
+2021-08-06 20:31:12.630 -04:00 [INF] Gateway: Ready
+2021-08-06 20:31:31.674 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 20:31:31.723 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 20:31:36.867 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 20:31:36.912 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 20:32:45.885 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 20:32:45.886 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 20:32:45.886 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 20:32:45.892 -04:00 [INF] Gateway: Disconnected
+2021-08-06 20:41:28.779 -04:00 [INF] Starting Noodle
+2021-08-06 20:41:28.929 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 20:41:28.933 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 20:41:28.938 -04:00 [INF] Gateway: Connecting
+2021-08-06 20:41:29.620 -04:00 [INF] Gateway: Connected
+2021-08-06 20:41:30.136 -04:00 [INF] Gateway: Ready
+2021-08-06 20:53:55.076 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 20:53:55.077 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 20:53:55.078 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 20:53:55.082 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:18:36.955 -04:00 [INF] Starting Noodle
+2021-08-06 21:18:37.077 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:18:37.081 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:18:37.086 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:18:37.682 -04:00 [INF] Gateway: Connected
+2021-08-06 21:18:38.196 -04:00 [INF] Gateway: Ready
+2021-08-06 21:18:55.991 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:18:55.992 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:18:55.993 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:18:55.998 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:21:52.630 -04:00 [INF] Starting Noodle
+2021-08-06 21:21:52.747 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:21:52.751 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:21:52.756 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:21:53.374 -04:00 [INF] Gateway: Connected
+2021-08-06 21:21:53.903 -04:00 [INF] Gateway: Ready
+2021-08-06 21:22:11.791 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:22:11.855 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:22:52.042 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:22:52.043 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:22:52.044 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:22:52.050 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:22:54.968 -04:00 [INF] Starting Noodle
+2021-08-06 21:22:55.082 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:22:55.085 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:22:55.090 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:22:55.710 -04:00 [INF] Gateway: Connected
+2021-08-06 21:22:56.232 -04:00 [INF] Gateway: Ready
+2021-08-06 21:25:29.037 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:25:29.038 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:25:29.039 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:25:29.043 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:25:32.715 -04:00 [INF] Starting Noodle
+2021-08-06 21:25:32.828 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:25:32.832 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:25:32.837 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:25:33.408 -04:00 [INF] Gateway: Connected
+2021-08-06 21:25:33.918 -04:00 [INF] Gateway: Ready
+2021-08-06 21:26:55.847 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:30:08.732 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:33:24.379 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:33:24.480 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:35:14.373 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:39:50.277 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:41:33.863 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:41:33.864 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:41:33.864 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:41:33.869 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:41:38.018 -04:00 [INF] Starting Noodle
+2021-08-06 21:41:38.134 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:41:38.138 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:41:38.143 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:41:38.726 -04:00 [INF] Gateway: Connected
+2021-08-06 21:41:39.241 -04:00 [INF] Gateway: Ready
+2021-08-06 21:44:02.369 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:44:02.370 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:44:02.371 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:44:02.376 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:44:05.321 -04:00 [INF] Starting Noodle
+2021-08-06 21:44:05.449 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:44:05.453 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:44:05.458 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:44:06.021 -04:00 [INF] Gateway: Connected
+2021-08-06 21:44:06.539 -04:00 [INF] Gateway: Ready
+2021-08-06 21:50:07.800 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:50:07.801 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:50:07.801 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:50:07.806 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:50:10.364 -04:00 [INF] Starting Noodle
+2021-08-06 21:50:10.476 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:50:10.479 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:50:10.484 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:50:11.089 -04:00 [INF] Gateway: Connected
+2021-08-06 21:50:11.597 -04:00 [INF] Gateway: Ready
+2021-08-06 21:50:29.383 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:50:29.385 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:50:29.385 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:50:29.390 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:50:31.315 -04:00 [INF] Starting Noodle
+2021-08-06 21:50:31.430 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:50:31.433 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:50:31.438 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:50:32.064 -04:00 [INF] Gateway: Connected
+2021-08-06 21:50:32.584 -04:00 [INF] Gateway: Ready
+2021-08-06 21:50:49.171 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:50:49.172 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:50:49.172 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:50:49.178 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:50:51.594 -04:00 [INF] Starting Noodle
+2021-08-06 21:50:51.708 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:50:51.712 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:50:51.717 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:50:52.372 -04:00 [INF] Gateway: Connected
+2021-08-06 21:50:52.880 -04:00 [INF] Gateway: Ready
+2021-08-06 21:53:06.532 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:56:42.652 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:57:01.379 -04:00 [WRN] Gateway: Unknown Dispatch (GUILD_APPLICATION_COMMAND_COUNTS_UPDATE)
+2021-08-06 21:57:04.246 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:57:04.247 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:57:04.248 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:57:04.253 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:57:07.060 -04:00 [INF] Starting Noodle
+2021-08-06 21:57:07.171 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:57:07.174 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:57:07.180 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:57:07.202 -04:00 [FTL] Host terminated unexpectedly
+System.InvalidOperationException: Cannot add commands to the root node.
+   at Discord.Commands.CommandMapNode.AddCommand(CommandService service, String text, Int32 index, CommandInfo command)
+   at Discord.Commands.CommandMap.AddCommand(CommandInfo command)
+   at Discord.Commands.CommandService.LoadModuleInternal(ModuleInfo module)
+   at Discord.Commands.CommandService.AddModulesAsync(Assembly assembly, IServiceProvider services)
+   at Noodle.Services.StartupService.ExecuteAsync(CancellationToken cancellationToken) in D:\dotnet-workspace\Noodle\src\Noodle\Services\StartupService.cs:line 44
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Noodle.NoodleHost.RunAsync() in D:\dotnet-workspace\Noodle\src\Noodle\NoodleHost.cs:line 43
+2021-08-06 21:57:14.567 -04:00 [INF] Starting Noodle
+2021-08-06 21:57:14.683 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:57:14.687 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:57:14.692 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:57:15.250 -04:00 [INF] Gateway: Connected
+2021-08-06 21:57:15.771 -04:00 [INF] Gateway: Ready
+2021-08-06 21:57:19.931 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> Discord.Net.HttpException: The server responded with error 50035: Invalid Form Body
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateMessageAsync(UInt64 channelId, CreateMessageParams args, RequestOptions options)
+   at Discord.Rest.ChannelHelper.SendMessageAsync(IMessageChannel channel, BaseDiscordClient client, String text, Boolean isTTS, Embed embed, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component, RequestOptions options)
+   at Discord.WebSocket.SocketTextChannel.Discord.IMessageChannel.SendMessageAsync(String text, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Noodle.Extensions.IChannelExtensions.SendAsync(IChannel channel, EmbedBuilder builder) in D:\dotnet-workspace\Noodle\src\Noodle.Common\Extensions\IChannelExtensions.cs:line 13
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 18
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-06 21:57:19.932 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> Discord.Net.HttpException: The server responded with error 50035: Invalid Form Body
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.CreateMessageAsync(UInt64 channelId, CreateMessageParams args, RequestOptions options)
+   at Discord.Rest.ChannelHelper.SendMessageAsync(IMessageChannel channel, BaseDiscordClient client, String text, Boolean isTTS, Embed embed, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component, RequestOptions options)
+   at Discord.WebSocket.SocketTextChannel.Discord.IMessageChannel.SendMessageAsync(String text, Boolean isTTS, Embed embed, RequestOptions options, AllowedMentions allowedMentions, MessageReference messageReference, MessageComponent component)
+   at Noodle.Extensions.IChannelExtensions.SendAsync(IChannel channel, EmbedBuilder builder) in D:\dotnet-workspace\Noodle\src\Noodle.Common\Extensions\IChannelExtensions.cs:line 13
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 18
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-06 21:57:44.388 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:57:44.389 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:57:44.389 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:57:44.394 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:57:47.132 -04:00 [INF] Starting Noodle
+2021-08-06 21:57:47.245 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:57:47.249 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:57:47.254 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:57:47.832 -04:00 [INF] Gateway: Connected
+2021-08-06 21:57:48.355 -04:00 [INF] Gateway: Ready
+2021-08-06 21:57:50.801 -04:00 [ERR] Command: 
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> Discord.Net.HttpException: The server responded with error 50035: Invalid Form Body
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.ModifyMessageAsync(UInt64 channelId, UInt64 messageId, ModifyMessageParams args, RequestOptions options)
+   at Discord.Rest.MessageHelper.ModifyAsync(IMessage msg, BaseDiscordClient client, Action`1 func, RequestOptions options)
+   at Discord.Rest.RestUserMessage.ModifyAsync(Action`1 func, RequestOptions options)
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 23
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-06 21:57:50.801 -04:00 [INF] An unhandled exception was thrown during an execution cycle
+Discord.Commands.CommandException: Error occurred executing "test" for WaifuShork#1337 in ShorkMotes8/general.
+ ---> Discord.Net.HttpException: The server responded with error 50035: Invalid Form Body
+   at Discord.Net.Queue.RequestBucket.SendAsync(RestRequest request)
+   at Discord.Net.Queue.RequestQueue.SendAsync(RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendInternalAsync(String method, String endpoint, RestRequest request)
+   at Discord.API.DiscordRestApiClient.SendJsonAsync[TResponse](String method, String endpoint, Object payload, BucketId bucketId, ClientBucketType clientBucket, RequestOptions options)
+   at Discord.API.DiscordRestApiClient.ModifyMessageAsync(UInt64 channelId, UInt64 messageId, ModifyMessageParams args, RequestOptions options)
+   at Discord.Rest.MessageHelper.ModifyAsync(IMessage msg, BaseDiscordClient client, Action`1 func, RequestOptions options)
+   at Discord.Rest.RestUserMessage.ModifyAsync(Action`1 func, RequestOptions options)
+   at Noodle.Modules.TestingModule.TestAsync() in D:\dotnet-workspace\Noodle\src\Noodle\Modules\Testing\TestCommands.cs:line 23
+   at Discord.Commands.ModuleClassBuilder.<>c__DisplayClass6_0.<<BuildCommand>g__ExecuteCallback|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Discord.Commands.CommandInfo.ExecuteInternalAsync(ICommandContext context, Object[] args, IServiceProvider services)
+   --- End of inner exception stack trace ---
+2021-08-06 21:58:49.175 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:58:49.176 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:58:49.176 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:58:49.181 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:58:51.935 -04:00 [INF] Starting Noodle
+2021-08-06 21:58:52.048 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:58:52.052 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:58:52.057 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:58:52.645 -04:00 [INF] Gateway: Connected
+2021-08-06 21:58:53.156 -04:00 [INF] Gateway: Ready
+2021-08-06 21:58:54.896 -04:00 [INF] ActiveBorder
+2021-08-06 21:58:54.896 -04:00 [INF] ActiveCaption
+2021-08-06 21:58:54.896 -04:00 [INF] ActiveCaptionText
+2021-08-06 21:58:54.896 -04:00 [INF] AppWorkspace
+2021-08-06 21:58:54.896 -04:00 [INF] Control
+2021-08-06 21:58:54.896 -04:00 [INF] ControlDark
+2021-08-06 21:58:54.896 -04:00 [INF] ControlDarkDark
+2021-08-06 21:58:54.896 -04:00 [INF] ControlLight
+2021-08-06 21:58:54.896 -04:00 [INF] ControlLightLight
+2021-08-06 21:58:54.896 -04:00 [INF] ControlText
+2021-08-06 21:58:54.896 -04:00 [INF] Desktop
+2021-08-06 21:58:54.896 -04:00 [INF] GrayText
+2021-08-06 21:58:54.896 -04:00 [INF] Highlight
+2021-08-06 21:58:54.896 -04:00 [INF] HighlightText
+2021-08-06 21:58:54.896 -04:00 [INF] HotTrack
+2021-08-06 21:58:54.896 -04:00 [INF] InactiveBorder
+2021-08-06 21:58:54.896 -04:00 [INF] InactiveCaption
+2021-08-06 21:58:54.896 -04:00 [INF] InactiveCaptionText
+2021-08-06 21:58:54.896 -04:00 [INF] Info
+2021-08-06 21:58:54.896 -04:00 [INF] InfoText
+2021-08-06 21:58:54.896 -04:00 [INF] Menu
+2021-08-06 21:58:54.896 -04:00 [INF] MenuText
+2021-08-06 21:58:54.896 -04:00 [INF] ScrollBar
+2021-08-06 21:58:54.896 -04:00 [INF] Window
+2021-08-06 21:58:54.896 -04:00 [INF] WindowFrame
+2021-08-06 21:58:54.896 -04:00 [INF] WindowText
+2021-08-06 21:58:54.896 -04:00 [INF] Transparent
+2021-08-06 21:58:54.896 -04:00 [INF] AliceBlue
+2021-08-06 21:58:54.896 -04:00 [INF] AntiqueWhite
+2021-08-06 21:58:54.896 -04:00 [INF] Aqua
+2021-08-06 21:58:54.896 -04:00 [INF] Aquamarine
+2021-08-06 21:58:54.896 -04:00 [INF] Azure
+2021-08-06 21:58:54.896 -04:00 [INF] Beige
+2021-08-06 21:58:54.896 -04:00 [INF] Bisque
+2021-08-06 21:58:54.896 -04:00 [INF] Black
+2021-08-06 21:58:54.896 -04:00 [INF] BlanchedAlmond
+2021-08-06 21:58:54.896 -04:00 [INF] Blue
+2021-08-06 21:58:54.896 -04:00 [INF] BlueViolet
+2021-08-06 21:58:54.896 -04:00 [INF] Brown
+2021-08-06 21:58:54.896 -04:00 [INF] BurlyWood
+2021-08-06 21:58:54.896 -04:00 [INF] CadetBlue
+2021-08-06 21:58:54.896 -04:00 [INF] Chartreuse
+2021-08-06 21:58:54.896 -04:00 [INF] Chocolate
+2021-08-06 21:58:54.896 -04:00 [INF] Coral
+2021-08-06 21:58:54.896 -04:00 [INF] CornflowerBlue
+2021-08-06 21:58:54.896 -04:00 [INF] Cornsilk
+2021-08-06 21:58:54.896 -04:00 [INF] Crimson
+2021-08-06 21:58:54.896 -04:00 [INF] Cyan
+2021-08-06 21:58:54.896 -04:00 [INF] DarkBlue
+2021-08-06 21:58:54.896 -04:00 [INF] DarkCyan
+2021-08-06 21:58:54.896 -04:00 [INF] DarkGoldenrod
+2021-08-06 21:58:54.896 -04:00 [INF] DarkGray
+2021-08-06 21:58:54.896 -04:00 [INF] DarkGreen
+2021-08-06 21:58:54.896 -04:00 [INF] DarkKhaki
+2021-08-06 21:58:54.896 -04:00 [INF] DarkMagenta
+2021-08-06 21:58:54.896 -04:00 [INF] DarkOliveGreen
+2021-08-06 21:58:54.896 -04:00 [INF] DarkOrange
+2021-08-06 21:58:54.896 -04:00 [INF] DarkOrchid
+2021-08-06 21:58:54.896 -04:00 [INF] DarkRed
+2021-08-06 21:58:54.896 -04:00 [INF] DarkSalmon
+2021-08-06 21:58:54.896 -04:00 [INF] DarkSeaGreen
+2021-08-06 21:58:54.896 -04:00 [INF] DarkSlateBlue
+2021-08-06 21:58:54.896 -04:00 [INF] DarkSlateGray
+2021-08-06 21:58:54.896 -04:00 [INF] DarkTurquoise
+2021-08-06 21:58:54.896 -04:00 [INF] DarkViolet
+2021-08-06 21:58:54.896 -04:00 [INF] DeepPink
+2021-08-06 21:58:54.896 -04:00 [INF] DeepSkyBlue
+2021-08-06 21:58:54.896 -04:00 [INF] DimGray
+2021-08-06 21:58:54.896 -04:00 [INF] DodgerBlue
+2021-08-06 21:58:54.896 -04:00 [INF] Firebrick
+2021-08-06 21:58:54.896 -04:00 [INF] FloralWhite
+2021-08-06 21:58:54.896 -04:00 [INF] ForestGreen
+2021-08-06 21:58:54.896 -04:00 [INF] Fuchsia
+2021-08-06 21:58:54.896 -04:00 [INF] Gainsboro
+2021-08-06 21:58:54.896 -04:00 [INF] GhostWhite
+2021-08-06 21:58:54.896 -04:00 [INF] Gold
+2021-08-06 21:58:54.896 -04:00 [INF] Goldenrod
+2021-08-06 21:58:54.896 -04:00 [INF] Gray
+2021-08-06 21:58:54.896 -04:00 [INF] Green
+2021-08-06 21:58:54.896 -04:00 [INF] GreenYellow
+2021-08-06 21:58:54.896 -04:00 [INF] Honeydew
+2021-08-06 21:58:54.896 -04:00 [INF] HotPink
+2021-08-06 21:58:54.896 -04:00 [INF] IndianRed
+2021-08-06 21:58:54.896 -04:00 [INF] Indigo
+2021-08-06 21:58:54.896 -04:00 [INF] Ivory
+2021-08-06 21:58:54.896 -04:00 [INF] Khaki
+2021-08-06 21:58:54.896 -04:00 [INF] Lavender
+2021-08-06 21:58:54.896 -04:00 [INF] LavenderBlush
+2021-08-06 21:58:54.896 -04:00 [INF] LawnGreen
+2021-08-06 21:58:54.896 -04:00 [INF] LemonChiffon
+2021-08-06 21:58:54.896 -04:00 [INF] LightBlue
+2021-08-06 21:58:54.896 -04:00 [INF] LightCoral
+2021-08-06 21:58:54.896 -04:00 [INF] LightCyan
+2021-08-06 21:58:54.896 -04:00 [INF] LightGoldenrodYellow
+2021-08-06 21:58:54.896 -04:00 [INF] LightGray
+2021-08-06 21:58:54.896 -04:00 [INF] LightGreen
+2021-08-06 21:58:54.896 -04:00 [INF] LightPink
+2021-08-06 21:58:54.896 -04:00 [INF] LightSalmon
+2021-08-06 21:58:54.896 -04:00 [INF] LightSeaGreen
+2021-08-06 21:58:54.896 -04:00 [INF] LightSkyBlue
+2021-08-06 21:58:54.896 -04:00 [INF] LightSlateGray
+2021-08-06 21:58:54.896 -04:00 [INF] LightSteelBlue
+2021-08-06 21:58:54.896 -04:00 [INF] LightYellow
+2021-08-06 21:58:54.896 -04:00 [INF] Lime
+2021-08-06 21:58:54.896 -04:00 [INF] LimeGreen
+2021-08-06 21:58:54.896 -04:00 [INF] Linen
+2021-08-06 21:58:54.896 -04:00 [INF] Magenta
+2021-08-06 21:58:54.896 -04:00 [INF] Maroon
+2021-08-06 21:58:54.896 -04:00 [INF] MediumAquamarine
+2021-08-06 21:58:54.896 -04:00 [INF] MediumBlue
+2021-08-06 21:58:54.896 -04:00 [INF] MediumOrchid
+2021-08-06 21:58:54.896 -04:00 [INF] MediumPurple
+2021-08-06 21:58:54.896 -04:00 [INF] MediumSeaGreen
+2021-08-06 21:58:54.896 -04:00 [INF] MediumSlateBlue
+2021-08-06 21:58:54.896 -04:00 [INF] MediumSpringGreen
+2021-08-06 21:58:54.896 -04:00 [INF] MediumTurquoise
+2021-08-06 21:58:54.896 -04:00 [INF] MediumVioletRed
+2021-08-06 21:58:54.896 -04:00 [INF] MidnightBlue
+2021-08-06 21:58:54.896 -04:00 [INF] MintCream
+2021-08-06 21:58:54.896 -04:00 [INF] MistyRose
+2021-08-06 21:58:54.896 -04:00 [INF] Moccasin
+2021-08-06 21:58:54.896 -04:00 [INF] NavajoWhite
+2021-08-06 21:58:54.896 -04:00 [INF] Navy
+2021-08-06 21:58:54.896 -04:00 [INF] OldLace
+2021-08-06 21:58:54.896 -04:00 [INF] Olive
+2021-08-06 21:58:54.896 -04:00 [INF] OliveDrab
+2021-08-06 21:58:54.896 -04:00 [INF] Orange
+2021-08-06 21:58:54.896 -04:00 [INF] OrangeRed
+2021-08-06 21:58:54.896 -04:00 [INF] Orchid
+2021-08-06 21:58:54.896 -04:00 [INF] PaleGoldenrod
+2021-08-06 21:58:54.896 -04:00 [INF] PaleGreen
+2021-08-06 21:58:54.896 -04:00 [INF] PaleTurquoise
+2021-08-06 21:58:54.896 -04:00 [INF] PaleVioletRed
+2021-08-06 21:58:54.896 -04:00 [INF] PapayaWhip
+2021-08-06 21:58:54.896 -04:00 [INF] PeachPuff
+2021-08-06 21:58:54.896 -04:00 [INF] Peru
+2021-08-06 21:58:54.896 -04:00 [INF] Pink
+2021-08-06 21:58:54.896 -04:00 [INF] Plum
+2021-08-06 21:58:54.896 -04:00 [INF] PowderBlue
+2021-08-06 21:58:54.896 -04:00 [INF] Purple
+2021-08-06 21:58:54.896 -04:00 [INF] Red
+2021-08-06 21:58:54.896 -04:00 [INF] RosyBrown
+2021-08-06 21:58:54.896 -04:00 [INF] RoyalBlue
+2021-08-06 21:58:54.896 -04:00 [INF] SaddleBrown
+2021-08-06 21:58:54.896 -04:00 [INF] Salmon
+2021-08-06 21:58:54.896 -04:00 [INF] SandyBrown
+2021-08-06 21:58:54.896 -04:00 [INF] SeaGreen
+2021-08-06 21:58:54.896 -04:00 [INF] SeaShell
+2021-08-06 21:58:54.896 -04:00 [INF] Sienna
+2021-08-06 21:58:54.896 -04:00 [INF] Silver
+2021-08-06 21:58:54.896 -04:00 [INF] SkyBlue
+2021-08-06 21:58:54.896 -04:00 [INF] SlateBlue
+2021-08-06 21:58:54.896 -04:00 [INF] SlateGray
+2021-08-06 21:58:54.896 -04:00 [INF] Snow
+2021-08-06 21:58:54.896 -04:00 [INF] SpringGreen
+2021-08-06 21:58:54.896 -04:00 [INF] SteelBlue
+2021-08-06 21:58:54.896 -04:00 [INF] Tan
+2021-08-06 21:58:54.896 -04:00 [INF] Teal
+2021-08-06 21:58:54.896 -04:00 [INF] Thistle
+2021-08-06 21:58:54.896 -04:00 [INF] Tomato
+2021-08-06 21:58:54.896 -04:00 [INF] Turquoise
+2021-08-06 21:58:54.896 -04:00 [INF] Violet
+2021-08-06 21:58:54.896 -04:00 [INF] Wheat
+2021-08-06 21:58:54.896 -04:00 [INF] White
+2021-08-06 21:58:54.896 -04:00 [INF] WhiteSmoke
+2021-08-06 21:58:54.896 -04:00 [INF] Yellow
+2021-08-06 21:58:54.896 -04:00 [INF] YellowGreen
+2021-08-06 21:58:54.896 -04:00 [INF] ButtonFace
+2021-08-06 21:58:54.896 -04:00 [INF] ButtonHighlight
+2021-08-06 21:58:54.896 -04:00 [INF] ButtonShadow
+2021-08-06 21:58:54.896 -04:00 [INF] GradientActiveCaption
+2021-08-06 21:58:54.896 -04:00 [INF] GradientInactiveCaption
+2021-08-06 21:58:54.896 -04:00 [INF] MenuBar
+2021-08-06 21:58:54.896 -04:00 [INF] MenuHighlight
+2021-08-06 21:59:03.173 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:59:03.174 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:59:03.174 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:59:03.179 -04:00 [INF] Gateway: Disconnected
+2021-08-06 21:59:06.037 -04:00 [INF] Starting Noodle
+2021-08-06 21:59:06.162 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 21:59:06.168 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 21:59:06.174 -04:00 [INF] Gateway: Connecting
+2021-08-06 21:59:06.761 -04:00 [INF] Gateway: Connected
+2021-08-06 21:59:07.279 -04:00 [INF] Gateway: Ready
+2021-08-06 21:59:09.596 -04:00 [INF] ActiveBorder
+2021-08-06 21:59:10.600 -04:00 [INF] ActiveCaption
+2021-08-06 21:59:11.607 -04:00 [INF] ActiveCaptionText
+2021-08-06 21:59:12.636 -04:00 [INF] AppWorkspace
+2021-08-06 21:59:13.647 -04:00 [INF] Control
+2021-08-06 21:59:13.807 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 21:59:13.808 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 21:59:13.808 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 21:59:13.813 -04:00 [INF] Gateway: Disconnected
+2021-08-06 22:00:10.101 -04:00 [INF] Starting Noodle
+2021-08-06 22:00:10.214 -04:00 [INF] Discord.NET hosted service is starting
+2021-08-06 22:00:10.218 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-08-06 22:00:10.223 -04:00 [INF] Gateway: Connecting
+2021-08-06 22:00:10.821 -04:00 [INF] Gateway: Connected
+2021-08-06 22:00:11.341 -04:00 [INF] Gateway: Ready
+2021-08-06 22:00:13.145 -04:00 [INF] ActiveBorder
+2021-08-06 22:00:14.217 -04:00 [INF] ActiveCaption
+2021-08-06 22:00:15.378 -04:00 [INF] ActiveCaptionText
+2021-08-06 22:00:16.499 -04:00 [INF] AppWorkspace
+2021-08-06 22:00:17.602 -04:00 [INF] Control
+2021-08-06 22:00:19.189 -04:00 [INF] ControlDark
+2021-08-06 22:00:20.275 -04:00 [INF] ControlDarkDark
+2021-08-06 22:00:21.372 -04:00 [INF] ControlLight
+2021-08-06 22:00:22.517 -04:00 [INF] ControlLightLight
+2021-08-06 22:00:23.668 -04:00 [INF] ControlText
+2021-08-06 22:00:25.303 -04:00 [INF] Desktop
+2021-08-06 22:00:26.383 -04:00 [INF] GrayText
+2021-08-06 22:00:27.506 -04:00 [INF] Highlight
+2021-08-06 22:00:28.624 -04:00 [INF] HighlightText
+2021-08-06 22:00:29.738 -04:00 [INF] HotTrack
+2021-08-06 22:00:31.158 -04:00 [INF] InactiveBorder
+2021-08-06 22:00:32.234 -04:00 [INF] InactiveCaption
+2021-08-06 22:00:33.342 -04:00 [INF] InactiveCaptionText
+2021-08-06 22:00:34.438 -04:00 [INF] Info
+2021-08-06 22:00:35.728 -04:00 [INF] InfoText
+2021-08-06 22:00:37.066 -04:00 [INF] Menu
+2021-08-06 22:00:38.179 -04:00 [INF] MenuText
+2021-08-06 22:00:39.265 -04:00 [INF] ScrollBar
+2021-08-06 22:00:40.356 -04:00 [INF] Window
+2021-08-06 22:00:41.502 -04:00 [INF] WindowFrame
+2021-08-06 22:00:43.023 -04:00 [INF] WindowText
+2021-08-06 22:00:44.206 -04:00 [INF] Transparent
+2021-08-06 22:00:45.318 -04:00 [INF] AliceBlue
+2021-08-06 22:00:46.404 -04:00 [INF] AntiqueWhite
+2021-08-06 22:00:47.483 -04:00 [INF] Aqua
+2021-08-06 22:00:48.995 -04:00 [INF] Aquamarine
+2021-08-06 22:00:50.099 -04:00 [INF] Azure
+2021-08-06 22:00:51.203 -04:00 [INF] Beige
+2021-08-06 22:00:52.324 -04:00 [INF] Bisque
+2021-08-06 22:00:53.409 -04:00 [INF] Black
+2021-08-06 22:00:54.829 -04:00 [INF] BlanchedAlmond
+2021-08-06 22:00:55.908 -04:00 [INF] Blue
+2021-08-06 22:00:57.048 -04:00 [INF] BlueViolet
+2021-08-06 22:00:58.147 -04:00 [INF] Brown
+2021-08-06 22:00:59.268 -04:00 [INF] BurlyWood
+2021-08-06 22:01:00.543 -04:00 [INF] CadetBlue
+2021-08-06 22:01:01.731 -04:00 [INF] Chartreuse
+2021-08-06 22:01:02.822 -04:00 [INF] Chocolate
+2021-08-06 22:01:03.942 -04:00 [INF] Coral
+2021-08-06 22:01:05.055 -04:00 [INF] CornflowerBlue
+2021-08-06 22:01:06.568 -04:00 [INF] Cornsilk
+2021-08-06 22:01:07.681 -04:00 [INF] Crimson
+2021-08-06 22:01:08.809 -04:00 [INF] Cyan
+2021-08-06 22:01:09.976 -04:00 [INF] DarkBlue
+2021-08-06 22:01:11.123 -04:00 [INF] DarkCyan
+2021-08-06 22:01:12.622 -04:00 [INF] DarkGoldenrod
+2021-08-06 22:01:13.856 -04:00 [INF] DarkGray
+2021-08-06 22:01:14.973 -04:00 [INF] DarkGreen
+2021-08-06 22:01:16.113 -04:00 [INF] DarkKhaki
+2021-08-06 22:01:17.242 -04:00 [INF] DarkMagenta
+2021-08-06 22:01:18.367 -04:00 [INF] DarkOliveGreen
+2021-08-06 22:01:19.504 -04:00 [INF] DarkOrange
+2021-08-06 22:01:20.593 -04:00 [INF] DarkOrchid
+2021-08-06 22:01:21.708 -04:00 [INF] DarkRed
+2021-08-06 22:01:22.787 -04:00 [INF] DarkSalmon
+2021-08-06 22:01:24.437 -04:00 [INF] DarkSeaGreen
+2021-08-06 22:01:25.517 -04:00 [INF] DarkSlateBlue
+2021-08-06 22:01:26.652 -04:00 [INF] DarkSlateGray
+2021-08-06 22:01:27.781 -04:00 [INF] DarkTurquoise
+2021-08-06 22:01:28.867 -04:00 [INF] DarkViolet
+2021-08-06 22:01:30.393 -04:00 [INF] DeepPink
+2021-08-06 22:01:31.526 -04:00 [INF] DeepSkyBlue
+2021-08-06 22:01:32.624 -04:00 [INF] DimGray
+2021-08-06 22:01:33.730 -04:00 [INF] DodgerBlue
+2021-08-06 22:01:35.091 -04:00 [INF] Firebrick
+2021-08-06 22:01:36.374 -04:00 [INF] FloralWhite
+2021-08-06 22:01:37.450 -04:00 [INF] ForestGreen
+2021-08-06 22:01:38.549 -04:00 [INF] Fuchsia
+2021-08-06 22:01:39.824 -04:00 [INF] Gainsboro
+2021-08-06 22:01:40.924 -04:00 [INF] GhostWhite
+2021-08-06 22:01:42.366 -04:00 [INF] Gold
+2021-08-06 22:01:43.445 -04:00 [INF] Goldenrod
+2021-08-06 22:01:43.994 -04:00 [INF] Discord.NET hosted service is stopping
+2021-08-06 22:01:43.995 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-08-06 22:01:43.995 -04:00 [INF] Gateway: Disconnecting
+2021-08-06 22:01:44.000 -04:00 [INF] Gateway: Disconnected

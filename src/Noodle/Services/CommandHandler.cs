@@ -8,6 +8,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Noodle.Extensions;
+using Serilog;
 
 namespace Noodle.Services
 {
@@ -15,7 +16,8 @@ namespace Noodle.Services
     {
         private readonly IServiceProvider _provider;
         private readonly CommandService _commandService;
-        private readonly IConfiguration _config;
+        private readonly string _prefix;
+        private IDisposable _typingState;
         
         public CommandHandler(DiscordSocketClient client, 
                               ILogger<CommandHandler> logger,
@@ -25,7 +27,7 @@ namespace Noodle.Services
         {
             _commandService = commandService;
             _provider = provider;
-            _config = configuration;
+            _prefix = configuration.GetValue<string>("prefix");
         }
 
         protected override Task ExecuteAsync(CancellationToken cancellationToken)
@@ -39,6 +41,18 @@ namespace Noodle.Services
             {
                 Client.MessageReceived += async (message) => await OnMessageReceivedAsync(message);
                 _commandService.CommandExecuted += async (command, context, result) => await OnCommandExecutedAsync(command, context, result);
+                _commandService.Log += async (message) => await OnLogAsync(message);
+            }, cancellationToken);
+        }
+
+        private async Task OnLogAsync(LogMessage message)
+        {
+            await Task.Run(() =>
+            {
+                if (message.Exception != null)
+                {
+                    Log.Information(message.Exception, "An unhandled exception was thrown during an execution cycle");
+                }
             });
         }
 
@@ -49,29 +63,31 @@ namespace Noodle.Services
                 return;
             }
 
-            var prefix = _config["prefix"];
-            if (string.IsNullOrWhiteSpace(prefix))
+            if (string.IsNullOrWhiteSpace(_prefix))
             {
-                prefix = "$";
+                await message.Channel.SendErrorAsync("Prefix was not defined in `appsettings.json`");
             }
 
             var argPos = 0;
-            if (!message.HasStringPrefix(prefix, ref argPos) &&
+            if (!message.HasStringPrefix(_prefix, ref argPos) &&
                 !message.HasMentionPrefix(Client.CurrentUser, ref argPos))
             {
                 return;
             }
 
             var context = new SocketCommandContext(Client, message);
-            
-            await _commandService.ExecuteAsync(context, argPos, _provider);
+            _typingState = context.Channel.EnterTypingState();
+            await _commandService.ExecuteAsync(context, argPos, _provider, MultiMatchHandling.Best);
         }
 
         private async Task OnCommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, IResult result)
         {
-            var prefix = _config["prefix"];
-
-            var content = context.Message.Content[prefix.Length..];
+            if (_typingState != null)
+            {
+                _typingState.Dispose();
+            }
+            
+            var content = context.Message.Content[_prefix.Length..];
             var commandName = content.Split(' ')[0]; 
 
             if (!result.IsSuccess)
@@ -88,7 +104,7 @@ namespace Noodle.Services
                             .WithDescription(result.ErrorReason));                        
                         break;
                     case CommandError.BadArgCount:
-                        await command.Value.DisplayCommandHelpAsync(context, prefix);
+                        await command.Value.DisplayCommandHelpAsync(context, _prefix);
                         break;
                     case CommandError.ObjectNotFound:
                         await context.Channel.SendAsync(new EmbedBuilder()
@@ -134,7 +150,7 @@ namespace Noodle.Services
                     case null:
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException(nameof(result));
                 }
             }
         }

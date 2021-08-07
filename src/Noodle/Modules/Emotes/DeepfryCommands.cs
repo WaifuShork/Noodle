@@ -1,10 +1,12 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System;
 using Discord;
-using Discord.Commands;
 using ImageMagick;
-using Noodle.Models;
+using Discord.Commands;
 using Noodle.TypeReaders;
+using Noodle.Common.Models;
+using System.Threading.Tasks;
+using Humanizer;
+using Noodle.Extensions;
 
 namespace Noodle.Modules
 {
@@ -13,64 +15,70 @@ namespace Noodle.Modules
         [Command("fry")]
         [Summary("Deep fries an image or gif")]
         [Remarks("fry <extension> <url> <count [default = 0]>")]
-        public async Task FryAsync([Summary("The extension of the file to fry")] string extension, 
+        public async Task FryAsync([Summary("The extension of the file to fry")] EmoteType extension, 
                                    [Summary("The url of the image or gif")] string url, 
                                    [Summary("The amount of times to fry the image")] int count = 0)
         {
-            using (var _ = Context.Channel.EnterTypingState())
+            if (Emote.TryParse(url, out var emote))
             {
-                if (Emote.TryParse(url, out var emote))
-                {
-                    url = emote.Url;
-                }
+                url = emote.Url;
+            }
                 
-                switch (extension)
+            switch (extension)
+            {
+                case EmoteType.Png:
                 {
-                    case "png":
+                    await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "fried");
+                    for (var k = 0; k <= count; k++)
                     {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "fried");
-                        for (var k = 0; k <= count; k++)
+                        magick.Sharpen(20, 20, Channels.RGB);
+                        magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
+                        for (var i = 0; i < 10; i++)
                         {
-                            magick.Sharpen(20, 20, Channels.RGB);
-                            magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                            for (var i = 0; i < 10; i++)
-                            {
-                                magick.Contrast(true);
-                            }
-                            
-                            magick.BrightnessContrast(new Percentage(5), new Percentage(0), Channels.RGB);
-                            magick.SetQuality(-10);
-                            magick.RotationalBlur(2, Channels.RGB);
-                            magick.SetFormat(MagickFormat.Jpeg);
-                            magick.SetAntialiasing(false);
+                            magick.Contrast(true);
                         }
-
-                        using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
-                        break;
+                            
+                        magick.BrightnessContrast(new Percentage(5), new Percentage(0), Channels.RGB);
+                        magick.SetQuality(-10);
+                        magick.RotationalBlur(2, Channels.RGB);
+                        magick.SetFormat(MagickFormat.Jpeg);
+                        magick.SetAntialiasing(false);
                     }
-                    case "gif":
+
+                    await using var stream = magick.ToStream();
+                    await Context.Channel.SendFileAsync(stream, magick.FilePath);
+                    break;
+                }
+                case EmoteType.Gif:
+                {
+                    await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "fried");
+                    for (var k = 0; k <= count; k++)
                     {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "fried");
-                        for (var k = 0; k <= count; k++)
+                        magick.Sharpen(20, 20, Channels.RGB);
+                        magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
+                        for (var i = 0; i < 10; i++)
                         {
-                            magick.Sharpen(20, 20, Channels.RGB);
-                            magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                            for (var i = 0; i < 10; i++)
-                            {
-                                magick.Contrast(true);
-                            }
-                            
-                            magick.BrightnessContrast(new Percentage(5), new Percentage(0), Channels.RGB);
-                            magick.SetQuality(-10);
-                            magick.RotationalBlur(2, Channels.RGB);
-                            magick.SetAntialiasing(false);
+                            magick.Contrast(true);
                         }
-
-                        using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
-                        break;
+                            
+                        magick.BrightnessContrast(new Percentage(5), new Percentage(0), Channels.RGB);
+                        magick.SetQuality(-10);
+                        magick.RotationalBlur(2, Channels.RGB);
+                        magick.SetAntialiasing(false);
                     }
+
+                    await using var stream = magick.ToStream();
+                    await Context.Channel.SendFileAsync(stream, magick.FilePath);
+                    break;
+                }
+                case EmoteType.Hack:
+                {
+                    await Context.Channel.SendUnsupportedAsync($"`{extension.Humanize()}` is not valid for `{nameof(FryAsync)}`");
+                    break;
+                }
+                default:
+                {
+                    throw new ArgumentOutOfRangeException(nameof(extension), extension, null);
                 }
             }
         }
@@ -81,37 +89,43 @@ namespace Noodle.Modules
         public async Task ShakeAsync([Summary("The extension of the file to shake")] EmoteType extension, 
                                      [Summary("The url of the image or gif")] string url)
         {
-            using (var _ = Context.Channel.EnterTypingState())
+            if (Emote.TryParse(url, out var emote))
             {
-                if (Emote.TryParse(url, out var emote))
-                {
-                    url = emote.Url;
-                }
+                url = emote.Url;
+            }
                 
-                switch (extension)
+            switch (extension)
+            {
+                case EmoteType.Png:
                 {
-                    case EmoteType.Png:
-                    {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "shook");
-                        magick.Sharpen(20, 20, Channels.RGB);
-                        magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                        magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
-                        magick.RotationalBlur(20);
-                        using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
-                        break;
-                    }
-                    case EmoteType.Gif:
-                    {
-                        await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "shook");
-                        magick.Sharpen(20, 20, Channels.RGB);
-                        magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
-                        magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
-                        magick.RotationalBlur(20);
-                        using var stream = magick.ToStream();
-                        await Context.Channel.SendFileAsync(stream, magick.FilePath);
-                        break;
-                    }
+                    await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "shook");
+                    magick.Sharpen(20, 20, Channels.RGB);
+                    magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
+                    magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
+                    magick.RotationalBlur(20);
+                    await using var stream = magick.ToStream();
+                    await Context.Channel.SendFileAsync(stream, magick.FilePath);
+                    break;
+                }
+                case EmoteType.Gif:
+                {
+                    await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "shook");
+                    magick.Sharpen(20, 20, Channels.RGB);
+                    magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
+                    magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
+                    magick.RotationalBlur(20);
+                    await using var stream = magick.ToStream();
+                    await Context.Channel.SendFileAsync(stream, magick.FilePath);
+                    break;
+                }
+                case EmoteType.Hack:
+                {
+                    await Context.Channel.SendUnsupportedAsync($"`{extension.Humanize()}` is not valid for `{nameof(ShakeAsync)}`");
+                    break;
+                }
+                default:
+                {
+                    throw new ArgumentOutOfRangeException(nameof(extension), extension, null);
                 }
             }
         }

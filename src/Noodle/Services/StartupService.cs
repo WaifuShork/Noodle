@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +10,6 @@ using Discord.WebSocket;
 using ImageMagick;
 using Microsoft.Extensions.Logging;
 using Noodle.TypeReaders;
-using SQLitePCL;
 
 namespace Noodle.Services
 {
@@ -25,15 +25,9 @@ namespace Noodle.Services
         {
             _commandService = commandService;
             _provider = provider;
-
         }
 
-        protected override Task ExecuteAsync(CancellationToken cancellationToken)
-        {
-            return RunAsync(cancellationToken);
-        }
-
-        private async Task RunAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -45,8 +39,8 @@ namespace Noodle.Services
             _commandService.AddTypeReader(typeof(FontStyleType), new FontStyleTypeTypeReader());
             _commandService.AddTypeReader(typeof(FontWeight), new FontWeightTypeReader());
             _commandService.AddTypeReader(typeof(FontStretch), new FontStretchTypeReader());
-            
             _commandService.AddTypeReader(typeof(Emote), new EmoteTypeReader());
+            
             await _commandService.AddModulesAsync(Assembly.GetExecutingAssembly(), _provider);
         }
     }
