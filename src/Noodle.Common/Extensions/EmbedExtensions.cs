@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
+using Serilog;
+using Serilog.Events;
 
 namespace Noodle.Extensions
 {
@@ -10,7 +12,7 @@ namespace Noodle.Extensions
             return builder.WithColor(color.R, color.G, color.B);
         }
 
-        public static Task<IMessage> SendAsync(this EmbedBuilder builder, IChannel channel)
+        public static Task<IUserMessage> SendAsync(this EmbedBuilder builder, IChannel channel)
         {
             return channel.SendAsync(builder);
         }

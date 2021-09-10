@@ -14,26 +14,9 @@ namespace Noodle.Hosting
 {
     public static class DiscordHostBuilderExtensions
     {
-        public static IHostBuilder ConfigureDiscordShardedHost(this IHostBuilder builder, Action<HostBuilderContext, DiscordHostConfiguration>? config = null)
-        {
-            builder.ConfigureDiscordHostInternal<DiscordShardedClient>(config);
-
-            return builder.ConfigureServices((_, collection) =>
-            {
-                if (collection.Any(x => x.ServiceType.BaseType == typeof(BaseSocketClient)))
-                {
-                    throw new InvalidOperationException("Cannot add more than one Discord Client to host");
-                }
-
-                collection.AddSingleton<DiscordShardedClient, InjectableDiscordShardedClient>();
-            });
-        }
-        
         public static IHostBuilder ConfigureDiscordHost(this IHostBuilder builder, Action<HostBuilderContext, DiscordHostConfiguration>? config = null)
         {
-            builder.ConfigureDiscordHostInternal<DiscordSocketClient>(config);
-
-            return builder.ConfigureServices((_, collection) =>
+            return builder.ConfigureDiscordHostInternal<DiscordSocketClient>(config).ConfigureServices((_, collection) =>
             {
                 if (collection.Any(x => x.ServiceType.BaseType == typeof(BaseSocketClient)))
                 {
@@ -68,7 +51,12 @@ namespace Noodle.Hosting
                 }
                 catch (Exception e) when (e is ArgumentNullException || e is ArgumentException)
                 {
+                    Log.Fatal($"[{token}] is not a valid Discord bot token, terminating host.");
                     return false;
+                }
+                finally
+                {
+                    Log.CloseAndFlush();
                 }
             }
         }
