@@ -35,9 +35,7 @@ namespace Noodle.Modules
 
             var animated = emotes.Where(e => e.Animated).ToList();
             var normal = emotes.Where(e => !e.Animated).ToList();
-
-            string error = null;
-                
+            
             switch (extension)
             {
                 case EmoteType.Gif or EmoteType.Hack:
@@ -60,7 +58,7 @@ namespace Noodle.Modules
             {
                 case EmoteType.Png:
                 {
-                    error = await UploadEmoteAsync(url, name, width, height);
+                    await UploadEmoteAsync(url, name, width, height);
                     break;
                 }
                 // This is separated for now because of file sizing issues with gifs, we find that 50x50 is the best 
@@ -69,71 +67,32 @@ namespace Noodle.Modules
                 {
                     width = 50;
                     height = 50;
-                    error = await UploadEmoteAsync(url, name, width, height);
+                    await UploadEmoteAsync(url, name, width, height);
                     break;
                 }
                 case EmoteType.Hack:
                 {
-                    error = await UploadHackedAsync(url, name, width, height);
+                    await UploadHackedAsync(url, name, width, height);
                     break;
                 }
             }
-
-            if (error != null)
-            {
-                await Context.Channel.SendErrorAsync(error);
-                return;
-            }
-
+            
             await message.DeleteAsync();
             await Context.Channel.SendSuccessAsync($"Added :{name}:");
         }
         
-        private async Task<string> UploadEmoteAsync(string url, string name, int width, int height)
+        private async Task UploadEmoteAsync(string url, string name, int width, int height)
         {
-            try
-            {
-                await using var magick =  await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, name);
-                using var img = await magick.ToEmoteAsync(width, height);
-                await Context.Guild.CreateEmoteAsync(name, img);
-                return null;
-            }
-            catch (Exception exception)
-            {
-                return ErrorFromException(exception);
-            }
+            using var magick =  await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, name);
+            using var img = await magick.ToEmoteAsync(width, height);
+            await Context.Guild.CreateEmoteAsync(name, img);
         }
 
-        private async Task<string> UploadHackedAsync(string url, string name, int width, int height)
+        private async Task UploadHackedAsync(string url, string name, int width, int height)
         {
-            try
-            {
-                await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, name);
-                using var img = await magick.ToHackedAsync(width, height);
-                await Context.Guild.CreateEmoteAsync(name, img);
-                return null;
-            }
-            catch (Exception exception)
-            {
-                return ErrorFromException(exception);
-            }
-        }
-
-        private string ErrorFromException(Exception exception)
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"{exception.Message}\n");
-            if (!string.IsNullOrWhiteSpace(exception.StackTrace))
-            {
-                var lines = exception.StackTrace.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
-                sb.AppendLine("**Stack Trace**");
-                foreach (var line in lines)
-                {
-                    sb.AppendLine($"• {line}");
-                }
-            }
-            
-            return sb.ToString();
+            using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, name);
+            using var img = await magick.ToHackedAsync(width, height);
+            await Context.Guild.CreateEmoteAsync(name, img);
         }
     }
 }

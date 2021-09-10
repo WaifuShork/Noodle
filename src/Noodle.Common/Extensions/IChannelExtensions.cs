@@ -5,18 +5,12 @@ namespace Noodle.Extensions
 {
     public static class IChannelExtensions
     {
-        public static async Task<IMessage> SendAsync(this IChannel channel, EmbedBuilder builder)
+        public static Task<IUserMessage> SendAsync(this IChannel channel, EmbedBuilder builder)
         {
-            if (channel is ITextChannel textChannel)
-            {
-                builder.WithCurrentTimestamp();
-                return await textChannel.SendMessageAsync(string.Empty, false, builder.Build());
-            }
-
-            return null;
+            return (channel as ITextChannel)?.SendMessageAsync(string.Empty, false, builder.Build());
         }
 
-        public static Task<IMessage> SendUnsupportedAsync(this IChannel channel, string contents)
+        public static Task<IUserMessage> SendUnsupportedAsync(this IChannel channel, string contents)
         {
             return new EmbedBuilder()
                 .WithTitle("Unsupported")
@@ -25,7 +19,7 @@ namespace Noodle.Extensions
                 .SendAsync(channel);
         }
         
-        public static Task<IMessage> SendSuccessAsync(this IChannel channel, string contents)
+        public static Task<IUserMessage> SendSuccessAsync(this IChannel channel, string contents)
         {
             return new EmbedBuilder()
                 .WithTitle("Success")
@@ -34,7 +28,7 @@ namespace Noodle.Extensions
                 .SendAsync(channel);
         }
 
-        public static Task<IMessage> SendErrorAsync(this IChannel channel, string contents)
+        public static Task<IUserMessage> SendErrorAsync(this IChannel channel, string contents)
         {
             return new EmbedBuilder()
                 .WithTitle("Error")

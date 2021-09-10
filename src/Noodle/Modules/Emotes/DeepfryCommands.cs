@@ -28,7 +28,7 @@ namespace Noodle.Modules
             {
                 case EmoteType.Png:
                 {
-                    await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "fried");
+                    using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "fried");
                     for (var k = 0; k <= count; k++)
                     {
                         magick.Sharpen(20, 20, Channels.RGB);
@@ -51,7 +51,7 @@ namespace Noodle.Modules
                 }
                 case EmoteType.Gif:
                 {
-                    await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "fried");
+                    using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "fried");
                     for (var k = 0; k <= count; k++)
                     {
                         magick.Sharpen(20, 20, Channels.RGB);
@@ -98,7 +98,7 @@ namespace Noodle.Modules
             {
                 case EmoteType.Png:
                 {
-                    await using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "shook");
+                    using var magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, "shook");
                     magick.Sharpen(20, 20, Channels.RGB);
                     magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
                     magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
@@ -109,7 +109,7 @@ namespace Noodle.Modules
                 }
                 case EmoteType.Gif:
                 {
-                    await using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "shook");
+                    using var magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, "shook");
                     magick.Sharpen(20, 20, Channels.RGB);
                     magick.AddNoise(NoiseType.MultiplicativeGaussian, Channels.RGB);
                     magick.Colorize(new MagickColor(100, 0, 0), new Percentage(10));
