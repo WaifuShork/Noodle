@@ -6,13 +6,13 @@ namespace Noodle.Extensions
 {
     public static class IMessageExtensions
     {
-        public static async Task<IMessage> NotifyEmoteCapReachedAsync(this IMessage message, int normalCount, int animatedCount)
+        public static async Task<IUserMessage> NotifyEmoteCapReachedAsync(this IMessage message, int normalCount, int animatedCount)
         {
             if (message is not RestUserMessage restMessage)
             {
                 return null;
             }
-            
+
             await restMessage.ModifyAsync(m =>
             {
                 m.Embed = new EmbedBuilder()

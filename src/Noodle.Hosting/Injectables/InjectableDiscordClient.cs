@@ -1,5 +1,5 @@
-﻿using Noodle.Hosting.Util;
-using Discord.WebSocket;
+﻿using Discord.WebSocket;
+using Noodle.Hosting.Util;
 using Microsoft.Extensions.Options;
 
 namespace Noodle.Hosting.Injectables
@@ -9,14 +9,6 @@ namespace Noodle.Hosting.Injectables
         public InjectableDiscordSocketClient(IOptions<DiscordHostConfiguration> config) : base(config.Value.SocketConfig)
         {
             this.RegisterSocketClientReady();
-        }
-    }
-    
-    internal class InjectableDiscordShardedClient : DiscordShardedClient
-    {
-        public InjectableDiscordShardedClient(IOptions<DiscordHostConfiguration> config) : base(config.Value.SocketConfig)
-        {
-            this.RegisterShardedClientReady();
         }
     }
 }

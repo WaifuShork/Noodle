@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
@@ -78,6 +79,7 @@ namespace Noodle.Services
             var context = new SocketCommandContext(Client, message);
             _typingState = context.Channel.EnterTypingState();
             await _commandService.ExecuteAsync(context, argPos, _provider, MultiMatchHandling.Best);
+            await msg.DeleteAsync();
         }
 
         private async Task OnCommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, IResult result)
@@ -124,22 +126,9 @@ namespace Noodle.Services
                             .WithDescription("Access denied."));
                         break;
                     case CommandError.Exception:
-                        if (result is ExecuteResult er)
-                        {
-                            await context.Channel.SendAsync(new EmbedBuilder()
-                                .WithTitle("Exception")
-                                .WithColor(Color.Red)
-                                .AddField("Source", er.Exception.Source)
-                                .AddField("Message", er.Exception.Message)
-                                .AddField("Inner Exception", er.Exception.InnerException));
-                        }
-                        else
-                        {
-                            await context.Channel.SendAsync(new EmbedBuilder()
-                                .WithTitle("Exception")
-                                .WithColor(Color.Red)
-                                .WithDescription(result.ErrorReason));
-                        }
+                        var exception = result is ExecuteResult er ? er.Exception : null;
+                        var error = ErrorFromException(exception);
+                        await context.Channel.SendErrorAsync(error);
                         break;
                     case CommandError.Unsuccessful:
                         await context.Channel.SendAsync(new EmbedBuilder()
@@ -153,6 +142,23 @@ namespace Noodle.Services
                         throw new ArgumentOutOfRangeException(nameof(result));
                 }
             }
+        }
+        
+        private string ErrorFromException(Exception exception)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"{exception.Message}\n");
+            if (!string.IsNullOrWhiteSpace(exception.StackTrace))
+            {
+                var lines = exception.StackTrace.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
+                sb.AppendLine("**Stack Trace**");
+                foreach (var line in lines)
+                {
+                    sb.AppendLine($"• {line}");
+                }
+            }
+            
+            return sb.ToString();
         }
     }
 }
