@@ -1,0 +1,48 @@
+2021-09-09 20:48:42.604 -04:00 [INF] Starting Noodle
+2021-09-09 20:48:43.376 -04:00 [INF] Discord.NET hosted service is starting
+2021-09-09 20:48:43.381 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-09-09 20:48:43.387 -04:00 [INF] Gateway: Connecting
+2021-09-09 20:48:44.062 -04:00 [INF] Gateway: Connected
+2021-09-09 20:48:44.570 -04:00 [INF] Gateway: Ready
+2021-09-09 20:50:25.928 -04:00 [INF] Discord.NET hosted service is stopping
+2021-09-09 20:50:25.930 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-09-09 20:50:25.930 -04:00 [INF] Gateway: Disconnecting
+2021-09-09 20:50:25.936 -04:00 [INF] Gateway: Disconnected
+2021-09-09 20:50:29.271 -04:00 [INF] Starting Noodle
+2021-09-09 20:50:29.398 -04:00 [INF] Discord.NET hosted service is starting
+2021-09-09 20:50:29.403 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-09-09 20:50:29.408 -04:00 [INF] Gateway: Connecting
+2021-09-09 20:50:29.983 -04:00 [INF] Gateway: Connected
+2021-09-09 20:50:30.503 -04:00 [INF] Gateway: Ready
+2021-09-09 20:51:16.445 -04:00 [INF] Discord.NET hosted service is stopping
+2021-09-09 20:51:16.446 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-09-09 20:51:16.447 -04:00 [INF] Gateway: Disconnecting
+2021-09-09 20:51:16.452 -04:00 [INF] Gateway: Disconnected
+2021-09-09 20:51:19.716 -04:00 [INF] Starting Noodle
+2021-09-09 20:51:19.838 -04:00 [INF] Discord.NET hosted service is starting
+2021-09-09 20:51:19.842 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-09-09 20:51:19.847 -04:00 [INF] Gateway: Connecting
+2021-09-09 20:51:20.463 -04:00 [INF] Gateway: Connected
+2021-09-09 20:51:20.970 -04:00 [INF] Gateway: Ready
+2021-09-09 20:57:54.447 -04:00 [INF] Discord.NET hosted service is stopping
+2021-09-09 20:57:54.448 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-09-09 20:57:54.449 -04:00 [INF] Gateway: Disconnecting
+2021-09-09 20:57:54.454 -04:00 [INF] Gateway: Disconnected
+2021-09-09 20:57:57.152 -04:00 [INF] Starting Noodle
+2021-09-09 20:57:57.277 -04:00 [INF] Discord.NET hosted service is starting
+2021-09-09 20:57:57.281 -04:00 [INF] Discord: Discord.Net v2.4.6 (API v9)
+2021-09-09 20:57:57.287 -04:00 [INF] Gateway: Connecting
+2021-09-09 20:57:57.926 -04:00 [INF] Gateway: Connected
+2021-09-09 20:57:58.437 -04:00 [INF] Gateway: Ready
+2021-09-09 20:58:39.233 -04:00 [INF] Discord.NET hosted service is stopping
+2021-09-09 20:58:39.234 -04:00 [WRN] Gateway: 
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
+2021-09-09 20:58:39.234 -04:00 [INF] Gateway: Disconnecting
+2021-09-09 20:58:39.240 -04:00 [INF] Gateway: Disconnected

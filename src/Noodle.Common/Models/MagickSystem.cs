@@ -67,7 +67,7 @@ namespace Noodle.Common.Models
                 magick._isImage = true;
                 magick._image = new MagickImage(stream);
                 magick._collection = null;
-                _filePath = Path.Combine("assets", "emotes", $"{name}-{Guid.NewGuid().ToString()}.png");
+                _filePath = Path.Combine("assets", "emotes", $"{name}-{Guid.NewGuid().ToString()}.gif");
                 return magick;
             }
 

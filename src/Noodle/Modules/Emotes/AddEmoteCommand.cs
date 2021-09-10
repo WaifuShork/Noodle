@@ -60,7 +60,7 @@ namespace Noodle.Modules
             {
                 case EmoteType.Png:
                 {
-                    error = await UploadEmoteAsync(url, name, width, height);
+                    error = await UploadEmoteAsync(url, name, width, height, extension);
                     break;
                 }
                 // This is separated for now because of file sizing issues with gifs, we find that 50x50 is the best 
@@ -69,7 +69,7 @@ namespace Noodle.Modules
                 {
                     width = 50;
                     height = 50;
-                    error = await UploadEmoteAsync(url, name, width, height);
+                    error = await UploadEmoteAsync(url, name, width, height, extension);
                     break;
                 }
                 case EmoteType.Hack:
@@ -89,13 +89,29 @@ namespace Noodle.Modules
             await Context.Channel.SendSuccessAsync($"Added :{name}:");
         }
         
-        private async Task<string> UploadEmoteAsync(string url, string name, int width, int height)
+        private async Task<string> UploadEmoteAsync(string url, string name, int width, int height, EmoteType type)
         {
             try
             {
-                await using var magick =  await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, name);
-                using var img = await magick.ToEmoteAsync(width, height);
-                await Context.Guild.CreateEmoteAsync(name, img);
+                MagickSystem magick = null;
+                
+                switch (type)
+                {
+                    case EmoteType.Gif:
+                        magick = await MagickSystem.CreateAsync<MagickImageCollection>(_httpClient, url, name);
+                        break;
+                    case EmoteType.Png:
+                        magick = await MagickSystem.CreateAsync<MagickImage>(_httpClient, url, name);
+                        break;
+                }
+
+                if (magick != null)
+                {
+                    using var img = await magick.ToEmoteAsync(width, height);
+                    await Context.Guild.CreateEmoteAsync(name, img);
+                    await magick.DisposeAsync();
+                }
+                
                 return null;
             }
             catch (Exception exception)
