@@ -46,3 +46,5 @@ System.Threading.Tasks.TaskCanceledException: A task was canceled.
    at Discord.ConnectionManager.<>c__DisplayClass29_0.<<StartAsync>b__0>d.MoveNext()
 2021-09-09 20:58:39.234 -04:00 [INF] Gateway: Disconnecting
 2021-09-09 20:58:39.240 -04:00 [INF] Gateway: Disconnected
+2021-09-09 21:00:42.233 -04:00 [INF] Starting Noodle
+2021-09-09 21:01:03.512 -04:00 [INF] Starting Noodle

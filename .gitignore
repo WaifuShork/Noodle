@@ -228,5 +228,7 @@ project.lock.json
 # so you don't push your token :) 
 
 emotes
-
+logs
+assets/logs
+assets/emotes.json
 appsettings.json

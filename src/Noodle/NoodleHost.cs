@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Noodle.Services;
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Noodle
 {
@@ -25,21 +27,20 @@ namespace Noodle
         {
             var path = Path.Combine("assets", "logs", "log-.txt");
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
-                .WriteTo.Async(x =>
+                .MinimumLevel.Verbose()
+                .WriteTo.Async(cf =>
                 {
-                    x.Console();
-                    x.File(path, LogEventLevel.Verbose, shared: true, rollingInterval: RollingInterval.Day);
+                    cf.Console(theme: AnsiConsoleTheme.Literate);
+                    cf.File(path, LogEventLevel.Verbose, shared: true, rollingInterval: RollingInterval.Day);
                 })
                 .CreateLogger();
             
             try
             {
                 AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-                
-                Log.Information("Starting Noodle");
                 using var host = CreateDefaultBuilder().Build();
+                var config = host.Services.GetService<Configuration>();
+                Log.Information("Starting Noodle with prefix '{Prefix}'", config?.Prefix ?? "null");
                 await host.RunAsync();
                 return 0;
             }
@@ -72,14 +73,13 @@ namespace Noodle
 
             return Host.CreateDefaultBuilder()
                 .UseSerilog()
-                .ConfigureAppConfiguration(x =>
+                .ConfigureAppConfiguration((_, x) =>
                 {
                     // TODO: Saving (The configuration file 'appsettings.json' was not found and is not optional. The physical path is '\Noodle\appsettings.json')
                     var configuration = new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())
                         .AddJsonFile("appsettings.json", false, true)
                         .Build();
-                    
                     x.AddConfiguration(configuration);
                 })
                 .ConfigureLogging(x =>
@@ -105,14 +105,19 @@ namespace Noodle
                     config.LogLevel = LogSeverity.Verbose;
                     config.DefaultRunMode = RunMode.Async;
                 })
-                .ConfigureServices((_, services) =>
+                .ConfigureServices((context, services) =>
                 {
                     services
                         .AddHostedService<StartupService>()
                         .AddHostedService<CommandHandler>();
                     services
                         .AddSingleton(services)
-                        .AddSingleton<HttpClient>();
+                        .AddSingleton<HttpClient>()
+                        .AddSingleton(new Configuration
+                        {
+                            Token = context.Configuration.GetSection("token").Value,
+                            Prefix = context.Configuration.GetSection("prefix").Value
+                        });
 
                     // This is added so I have access to all the services in 'NamorokaModuleBase', allowing me to pull a service at will,
                     // mostly pointless but a small QoL feature
